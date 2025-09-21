@@ -112,23 +112,23 @@ def ComputePower(mat_g, p,
   ridge_epsilon *= max_ev
   mat_g += ridge_epsilon * identity
 
-  temp=torch.linalg.cholesky_ex(mat_g)
-  mat_c=temp.L
-  value=temp.info
-  #value=0
-  if value==0:
-    #mat_g=mat_c
-    #p=2
-    #alpha=-1.0/2
-    inv,_=dtrtri(mat_c.numpy(), lower=1)
-    inv2,_=dtrtri(mat_c.numpy(), lower=0)
-    print(inv2)
-    #print(torch.linalg.norm(identity-mat_c@torch.Tensor(inv)),torch.linalg.norm(identity-mat_c@torch.Tensor(inv2)))
-    # lu, piv, _ = dgetrf(mat_c.numpy())
-    # inv, _ = dgetri(lu, piv)
-    #inv=torch.linalg.inv(mat_c)
-    #return torch.Tensor(inv)
-    return torch.Tensor(sqrtm_newton_schulz(torch.Tensor(inv)))
+  # temp=torch.linalg.cholesky_ex(mat_g)
+  # mat_c=temp.L
+  # value=temp.info
+  # #value=0
+  # if value==0:
+  #   #mat_g=mat_c
+  #   #p=2
+  #   #alpha=-1.0/2
+  #   inv,_=dtrtri(mat_c.numpy(), lower=1)
+  #   inv2,_=dtrtri(mat_c.numpy(), lower=0)
+  #   print(inv2)
+  #   #print(torch.linalg.norm(identity-mat_c@torch.Tensor(inv)),torch.linalg.norm(identity-mat_c@torch.Tensor(inv2)))
+  #   # lu, piv, _ = dgetrf(mat_c.numpy())
+  #   # inv, _ = dgetri(lu, piv)
+  #   #inv=torch.linalg.inv(mat_c)
+  #   #return torch.Tensor(inv)
+  #   return torch.Tensor(sqrtm_newton_schulz(torch.Tensor(inv)))
 
   # The best value for z is
   # (1 + p) * (c_max^{1/p} - c_min^{1/p}) /

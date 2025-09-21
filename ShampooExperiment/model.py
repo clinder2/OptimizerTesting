@@ -2,12 +2,15 @@ import torch
 import torch.nn as nn
 import numpy as np
 from torch.nn import functional as F
-from shampoo.shampoo import Shampoo
 
 class MatrixSimple(nn.Module):
     def __init__(self, A):
         super().__init__()
-        self.A=A
+        self.A=torch.Tensor(A)
+        self.W=nn.Parameter(torch.randn(self.A.shape))
 
-    def forward(self, X):
-        return 2*(X-self.A)
+    def forward(self):
+        G=2*(self.W-self.A)
+        with torch.no_grad():
+            self.W.grad=G
+        return G, torch.linalg.norm(self.W-self.A,ord='fro')
