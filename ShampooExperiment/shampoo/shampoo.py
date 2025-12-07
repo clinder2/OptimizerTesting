@@ -19,6 +19,7 @@ from __future__ import print_function
 
 import enum
 import itertools
+import matplotlib.pyplot as plt
 
 from dataclasses import dataclass
 import shampoo.matrix_functions
@@ -220,7 +221,7 @@ class Preconditioner:
     self._transformed_shape = var.shape
     if hps.best_effort_shape_interpretation:
       self._transformed_shape = _merge_small_dims(
-          self._original_shape, hps.block_size)
+          self._original_shape, 1) #hps.block_size
 
     reshaped_var = torch.reshape(var, self._transformed_shape)
     self._partitioner = BlockPartitioner(reshaped_var, hps)
@@ -235,7 +236,8 @@ class Preconditioner:
       eps = self._hps.matrix_eps
       self.statistics = [eps * torch.eye(s[0]) for s in shapes]
       self.preconditioners = [torch.eye(s[0]) for s in shapes]
-
+    print(self._transformed_shape, rank)
+   
   def add_statistics(self, grad):
     """Compute statistics from gradients and add to the correct state entries.
 
@@ -266,7 +268,9 @@ class Preconditioner:
     eps = self._hps.matrix_eps
     for i, stat in enumerate(self.statistics):
       self.preconditioners[i] = shampoo.matrix_functions.ComputePower(
-          stat, exp, ridge_epsilon=eps)
+          stat, exp, ridge_epsilon=eps, cholesky=True)
+      if i==1:
+        self.preconditioners[i]=self.preconditioners[i].T
 
   def preconditioned_grad(self, grad):
     """Precondition the gradient.
@@ -282,15 +286,20 @@ class Preconditioner:
     partitioned_grads = self._partitioner.partition(reshaped_grad)
     preconditioned_partitioned_grads = []
     num_splits = self._partitioner.num_splits()
+    print(self.preconditioners)
     for i, grad in enumerate(partitioned_grads):
       preconditioners_for_grad = self.preconditioners[i * num_splits:(i + 1) *
                                                       num_splits]
+      #print(i, grad, len(preconditioners_for_grad))
       rank = len(grad.shape)
       precond_grad = grad
       for j in range(rank):
         preconditioner = preconditioners_for_grad[j]
+        #print(j, preconditioner)
         precond_grad = torch.tensordot(
             precond_grad, preconditioner, [[0], [0]])
+        # if j==0:
+        #   precond_grad=precond_grad.T
       preconditioned_partitioned_grads.append(precond_grad)
     merged_grad = self._partitioner.merge_partitions(
         preconditioned_partitioned_grads)
@@ -343,7 +352,7 @@ class Shampoo(optim.Optimizer):
 
         preconditioner = state[PRECONDITIONER]
         graft = state[GRAFT]
-
+        
         # Gather statistics, compute preconditioners
         graft.add_statistics(grad)
         if state[STEP] % hps.statistics_compute_steps == 0:
@@ -356,6 +365,9 @@ class Shampoo(optim.Optimizer):
         shampoo_grad = grad
         if state[STEP] >= self.hps.start_preconditioning_step:
           shampoo_grad = preconditioner.preconditioned_grad(grad)
+          #print(np.linalg.norm(shampoo_grad))
+        else:
+          print("none")
 
         # Grafting
         graft_norm = torch.norm(graft_grad)

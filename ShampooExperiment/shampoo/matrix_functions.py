@@ -81,7 +81,7 @@ def MatPower(mat_m, p):
 def ComputePower(mat_g, p,
                  iter_count=100,
                  error_tolerance=1e-6,
-                 ridge_epsilon=1e-6):
+                 ridge_epsilon=1e-6, cholesky=False):
   """A method to compute G^{-1/p} using a coupled Newton iteration.
 
   See for example equation 3.2 on page 9 of:
@@ -101,6 +101,8 @@ def ComputePower(mat_g, p,
   Returns:
     (mat_g + rI)^{-1/p} (r = ridge_epsilon * max_eigenvalue of mat_g).
   """
+  print('NORM', torch.linalg.norm(mat_g))
+  orig=mat_g.clone()
   shape = list(mat_g.shape)
   if len(shape) == 1:
     return torch.pow(mat_g + ridge_epsilon, -1/p)
@@ -112,36 +114,16 @@ def ComputePower(mat_g, p,
   ridge_epsilon *= max_ev
   mat_g += ridge_epsilon * identity
 
-  # temp=torch.linalg.cholesky_ex(mat_g)
-  # mat_c=temp.L
-  # value=temp.info
-  # #value=0
-  # if value==0:
-  #   #mat_g=mat_c
-  #   #p=2
-  #   #alpha=-1.0/2
-  #   inv,_=dtrtri(mat_c.numpy(), lower=1)
-  #   inv2,_=dtrtri(mat_c.numpy(), lower=0)
-  #   print(inv2)
-  #   #print(torch.linalg.norm(identity-mat_c@torch.Tensor(inv)),torch.linalg.norm(identity-mat_c@torch.Tensor(inv2)))
-  #   # lu, piv, _ = dgetrf(mat_c.numpy())
-  #   # inv, _ = dgetri(lu, piv)
-  #   #inv=torch.linalg.inv(mat_c)
-  #   #return torch.Tensor(inv)
-  #   return torch.Tensor(sqrtm_newton_schulz(torch.Tensor(inv)))
+  temp=torch.linalg.cholesky_ex(mat_g)
+  mat_c=temp.L
+  value=temp.info
+  if cholesky and value==0:
+  #   # p=2
+  #   # alpha=-1.0/2
+    #mat_c=torch.tensor(torch.linalg.inv(torch.tensor(mat_c)))
+    mat_c=newton_schulz_inverse(mat_c,100)
+    return mat_c
 
-  # The best value for z is
-  # (1 + p) * (c_max^{1/p} - c_min^{1/p}) /
-  #            (c_max^{1+1/p} - c_min^{1+1/p})
-  # where c_max and c_min are the largest and smallest singular values of
-  # mat_g.
-  # The above estimate assumes that c_max > c_min * 2^p
-  # Can replace above line by the one below, but it is less accurate,
-  # hence needs more iterations to converge.
-  # z = (1 + p) / tf.trace(mat_g)
-  # If we want the method to always converge, use z = 1 / norm(mat_g)
-  # or z = 1 / tf.trace(mat_g), but these can result in many
-  # extra iterations.
   z = (1 + p) / (2 * torch.norm(mat_g))
   mat_root = identity * torch.pow(z, 1.0/p)
   mat_m = mat_g * z
@@ -158,7 +140,13 @@ def ComputePower(mat_g, p,
     error = new_error
     count += 1
   #print(p)
-  #print(torch.linalg.cond(mat_g))
+  temp=mat_c
+  b=MatPower(torch.linalg.inv(mat_root), 4)
+  a=MatPower(torch.linalg.inv(temp),4)
+  # print(mat_root)
+  # print(temp)
+  # print(torch.linalg.norm(b-orig),torch.linalg.norm(a-orig))
+  #print(mat_c*mat_c*orig*mat_c.T*mat_c.T)
   return mat_root
 
 def inverse_sqrtm_newton_schulz(matrix: torch.Tensor, num_iters: int = 100):
