@@ -27,14 +27,13 @@ def get_lr(it):
     return min_lr + coeff * (learning_rate - min_lr)
 
 n=2
-m=2
 X=torch.eye(n)
 Y=2*torch.eye(n)
 torch.manual_seed(1)
 model = MLP(n, Y)
 params = [p for p in model.parameters()]
 
-shampoo=CustomShampoo(1e-3, params, p=4, chol=False, optimized=False, debug=False) #basic custom Shampoo implementation, no kronecker factor optimization
+shampoo=CustomShampoo(1e-3, params, p=4, chol=True, optimized=False, debug=True) #basic custom Shampoo implementation, no kronecker factor optimization
 
 max_iters=100
 iter_num=0
@@ -46,7 +45,9 @@ while True:
         param_group['lr'] = lr
     temp, L=model(X)
     L.backward()
-    print(temp)
+    for p in model.parameters():
+        print(p.grad)
+    print(torch.linalg.norm(Y-temp, ord='fro').item())
     shampoo.step()
     shampoo.zero_grad(set_to_none=True)
     iter_num+=1

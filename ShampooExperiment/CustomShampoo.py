@@ -21,7 +21,10 @@ class CustomShampoo(Optimizer):
         self.state={}
         for g in self.param_groups:
             for p in g['params']:
-                self.state[p]=None #init each parameter's state
+                self.state[p]={} #init each parameter's state
+                self.state[p]['graft']=AdagradGraft(None, p) #init Adagrad grafting
+                self.state[p]['L']=torch.eye(p.shape[0])
+                self.state[p]['R']=torch.eye(p.shape[1])
         self.debug=debug
         self.iter=0
         self.beta2=.9 #for L, R exp. decay
@@ -29,30 +32,32 @@ class CustomShampoo(Optimizer):
     def step(self):
         for g in self.param_groups:
             for p in g['params']:
-                if not self.state[p]:
-                    self.state[p]=AdagradGraft(None, p) #init Adagrad grafting
-                graft=self.state[p]
+                graft=self.state[p]['graft']
                 grad=p.grad
-                self.L=self.beta2*self.L+(1-self.beta2)*grad@grad.T #update left/right preconditioners
-                self.R=self.beta2*self.R+(1-self.beta2)*grad.T@grad
+                L=self.state[p]['L']
+                R=self.state[p]['R']
+                L=self.beta2*L+(1-self.beta2)*grad@grad.T #update left/right preconditioners
+                R=self.beta2*R+(1-self.beta2)*grad.T@grad
+                self.state[p]['L']=L
+                self.state[p]['R']=R
                 if self.opt:
-                    update=grad@self.mat_pow(self.R, 2) #optimized approx. with 1 preconditioner
+                    update=grad@self.mat_pow(self.state[p]['R'], 2) #optimized approx. with 1 preconditioner
                 else:
                     if self.chol:
-                        Lp=torch.linalg.cholesky_ex(self.L) #Cholesky decomp of L
-                        Rp=torch.linalg.cholesky_ex(self.R) #Cholesky decomp of R
+                        Lp=torch.linalg.cholesky_ex(self.state[p]['L']) #Cholesky decomp of L
+                        Rp=torch.linalg.cholesky_ex(self.state[p]['R']) #Cholesky decomp of R
                         if Lp.info==0 and Rp.info==0: #successful Cholesky decomp
                             #print('CHOL', torch.linalg.norm(Lp.L))
                             Lp=self.mat_pow(Lp.L, 1/2*self.p)
                             Rp=self.mat_pow(Rp.L, 1/2*self.p) #.T better
                             Rp=Rp.T
                         else: #just standard Shampoo
-                            Lp=self.mat_pow(self.L, self.p)
-                            Rp=self.mat_pow(self.R, self.p)
+                            Lp=self.mat_pow(self.state[p]['L'], self.p)
+                            Rp=self.mat_pow(self.state[p]['R'], self.p)
                         update=Lp@grad@Rp
                     else: #just standard Shampoo
-                        Lp=self.mat_pow(self.L, self.p)
-                        Rp=self.mat_pow(self.R, self.p)
+                        Lp=self.mat_pow(self.state[p]['L'], self.p)
+                        Rp=self.mat_pow(self.state[p]['R'], self.p)
                         update=Lp@grad@Rp
                 #p.data-=g['lr']*update
                 graft.add_statistics(grad) #update grafting state
@@ -70,7 +75,6 @@ class CustomShampoo(Optimizer):
 
     ### wrapper to call Scalable Shampoo ComputerPower for matrix inverses
     def mat_pow(self, X, p):
-        #print("power: ", p)
         return ComputePower(X, p)
         # if p==4:
         #     return sqrtm_newton_schulz(inverse_sqrtm_newton_schulz(X))

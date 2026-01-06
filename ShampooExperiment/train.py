@@ -89,7 +89,7 @@ shampoo = DistributedShampoo(
     preconditioner_config=preconditioner_config,
 )
 
-shampoo=CustomShampoo(1e-3, params, p=4, chol=True, optimized=False, debug=True) #basic custom Shampoo implementation, no kronecker factor optimization
+shampoo=CustomShampoo(1e-3, params, p=4, chol=False, optimized=False, debug=False) #basic custom Shampoo implementation, no kronecker factor optimization
 
 max_iters=100
 iter_num=0

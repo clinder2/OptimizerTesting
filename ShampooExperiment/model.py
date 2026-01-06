@@ -23,9 +23,11 @@ class MLP(nn.Module):
         self.n=n
         self.Y=Y
         self.l1=nn.Linear(self.n, self.n, False)
+        self.relu=nn.ReLU()
         self.l2=nn.Linear(self.n, self.n, False)
 
     def forward(self, X):
         X=self.l1(X)
+        #X=self.relu(X)
         X=self.l2(X)
         return X, torch.linalg.norm(X-self.Y,ord='fro')
