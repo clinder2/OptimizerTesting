@@ -6,6 +6,7 @@ from shampoo.shampoo import Shampoo
 from distributed_shampoo import AdamPreconditionerConfig, DistributedShampoo, RootInvShampooPreconditionerConfig
 from CustomShampoo import CustomShampoo
 import math
+import time
 
 warmup_iters=20
 learning_rate=.9
@@ -89,11 +90,12 @@ shampoo = DistributedShampoo(
     preconditioner_config=preconditioner_config,
 )
 
-shampoo=CustomShampoo(1e-3, params, p=4, chol=False, optimized=False, debug=False) #basic custom Shampoo implementation, no kronecker factor optimization
+shampoo=CustomShampoo(1e-3, params, p=4, chol=True, optimized=False, debug=False) #basic custom Shampoo implementation, no kronecker factor optimization
 
 max_iters=100
 iter_num=0
 
+s=time.time()
 while True:
     lr = get_lr(iter_num)
     for param_group in shampoo.param_groups:
@@ -109,8 +111,10 @@ while True:
     iter_num+=1
     if iter_num>max_iters:
         break
+e=time.time()
 print(model.W)
 print(model.A)
 print(torch.linalg.norm(model.A-model.W, ord='fro').item())
+print(e-s)
 #print(model.W.T@model.W)
 #print(model.A, model.W)

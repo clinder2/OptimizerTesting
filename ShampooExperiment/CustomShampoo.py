@@ -41,7 +41,21 @@ class CustomShampoo(Optimizer):
                 self.state[p]['L']=L
                 self.state[p]['R']=R
                 if self.opt:
-                    update=grad@self.mat_pow(self.state[p]['R'], 2) #optimized approx. with 1 preconditioner
+                    if self.chol:
+                        #Lp=torch.linalg.cholesky_ex(self.state[p]['L']) #Cholesky decomp of L
+                        Rp=torch.linalg.cholesky_ex(.001*torch.eye(self.state[p]['R'].shape[0])+self.state[p]['R']) #Cholesky decomp of R
+                        if Rp.info==0:
+                            Rp=torch.linalg.inv_ex(.001*torch.eye(Rp.L.shape[0])+Rp.L)
+                            if Rp.info==0:
+                                update=grad@Rp.inverse
+                            else:
+                               print("failed inv")
+                               update=grad@self.mat_pow(self.state[p]['R'], 2)
+                        else:
+                            print("failed Cholesky")
+                            update=grad@self.mat_pow(self.state[p]['R'], 2)
+                    else:
+                        update=grad@self.mat_pow(self.state[p]['R'], 2) #optimized approx. with 1 preconditioner
                 else:
                     if self.chol:
                         Lp=torch.linalg.cholesky_ex(self.state[p]['L']) #Cholesky decomp of L
@@ -62,15 +76,18 @@ class CustomShampoo(Optimizer):
                 #p.data-=g['lr']*update
                 graft.add_statistics(grad) #update grafting state
                 graft_grad=graft.precondition_gradient(grad) #do grafting
-                graft_n=torch.linalg.norm(graft_grad)
-                shampoo_n=torch.linalg.norm(update)
+                graft_n=torch.linalg.norm(graft_grad, ord='fro')
+                shampoo_n=torch.linalg.norm(update, ord='fro')
                 p.data-=g['lr']*(graft_n/(shampoo_n+1e-6))*update #param update with grafting
                 if self.debug:
-                   print(f"PRECONDITIONERS at {self.iter}:")
-                   print("L: ", Lp.data)
-                   print("R: ", Lp.data)
-                   print(f"UPDATE at {self.iter}:")
-                   print(update)
+                    print(f"PRECONDITIONERS at {self.iter}:")
+                    if self.opt and Rp.inverse!=None:
+                        print("R: ", Rp.inverse)
+                    else:
+                        print("L: ", Lp.data)
+                        print("R: ", Lp.data)
+                    print(f"UPDATE at {self.iter}:")
+                    print(update)
         self.iter+=1
 
     ### wrapper to call Scalable Shampoo ComputerPower for matrix inverses

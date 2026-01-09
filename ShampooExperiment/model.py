@@ -18,16 +18,22 @@ class MatrixSimple(nn.Module):
     
 
 class MLP(nn.Module):
-    def __init__(self, n, Y):
+    def __init__(self, n, m, Y):
         super().__init__()
         self.n=n
+        self.m=m
         self.Y=Y
         self.l1=nn.Linear(self.n, self.n, False)
         self.relu=nn.ReLU()
-        self.l2=nn.Linear(self.n, self.n, False)
+        self.lrelu=nn.LeakyReLU()
+        self.tanh=nn.Tanh()
+        self.l2=nn.Linear(self.n, 2*self.n, False)
+        self.l3=nn.Linear(2*self.n, self.m, False)
 
     def forward(self, X):
         X=self.l1(X)
-        #X=self.relu(X)
+        #X=self.lrelu(X)
+        #X=self.tanh(X)
         X=self.l2(X)
-        return X, torch.linalg.norm(X-self.Y,ord='fro')
+        X=self.l3(X)
+        return X, torch.linalg.norm(X-self.Y)
