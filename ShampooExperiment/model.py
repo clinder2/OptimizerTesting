@@ -37,3 +37,33 @@ class MLP(nn.Module):
         X=self.l2(X)
         X=self.l3(X)
         return X, torch.linalg.norm(X-self.Y)
+    
+class ComplicatedMLP(nn.Module):
+    def __init__(self, n, m, Y):
+        super().__init__()
+        self.n=n
+        self.m=m
+        self.Y=Y
+        self.l1=nn.Linear(self.n, self.n, False)
+        self.relu=nn.ReLU()
+        self.lrelu=nn.LeakyReLU()
+        self.tanh=nn.Tanh()
+        self.l2=nn.Linear(self.n, 4*self.n, False)
+        self.l3=nn.Linear(4*self.n, 4*self.n, False)
+        self.l4=nn.Linear(4*self.n, 4*self.n, False)
+        self.l5=nn.Linear(4*self.n, self.m, False)
+
+    def forward(self, X):
+        X=self.l1(X)
+        #X=self.lrelu(X)
+        #X=self.tanh(X)
+        X=self.lrelu(X)
+        X=self.l2(X)
+        X=self.l3(X)
+        #X=self.tanh(X)
+        X=self.lrelu(X)
+        X=self.l4(X)
+        #X=self.tanh(X)
+        X=self.lrelu(X)
+        X=self.l5(X)
+        return X, torch.linalg.norm(X-self.Y)
