@@ -4,17 +4,17 @@ import numpy as np
 from torch.nn import functional as F
 
 class MatrixSimple(nn.Module):
-    def __init__(self, A):
+    def __init__(self, A, i):
         super().__init__()
-        torch.manual_seed(2)
+        torch.manual_seed(i)
         self.A=torch.Tensor(A)
         self.W=nn.Parameter(1*torch.randn(self.A.shape)+torch.eye(self.A.shape[0])) #torch.randn(self.A.shape)
 
     def forward(self):
         G=2*(self.W-self.A)
-        with torch.no_grad():
-            self.W.grad=G
-        return G, torch.linalg.norm(self.W-self.A,ord='fro')
+        # with torch.no_grad():
+        #     self.W.grad=G
+        return G, torch.linalg.norm((self.W-self.A)**1,ord='fro')
     
 
 class MLP(nn.Module):
@@ -23,19 +23,24 @@ class MLP(nn.Module):
         self.n=n
         self.m=m
         self.Y=Y
+        #self.r1=torch.nn.RMSNorm(self.n,elementwise_affine=False)
+        #self.r2=torch.nn.RMSNorm(2*self.n,elementwise_affine=False)
         self.l1=nn.Linear(self.n, self.n, False)
-        self.relu=nn.ReLU()
-        self.lrelu=nn.LeakyReLU()
-        self.tanh=nn.Tanh()
-        self.l2=nn.Linear(self.n, 2*self.n, False)
-        self.l3=nn.Linear(2*self.n, self.m, False)
+        # self.relu=nn.ReLU()
+        # self.lrelu=nn.LeakyReLU()
+        # self.tanh=nn.Tanh()
+        self.l2=nn.Linear(self.n, self.m, False)
+        self.l3=nn.Linear(self.m, self.m, False)
 
     def forward(self, X):
         X=self.l1(X)
-        #X=self.lrelu(X)
-        #X=self.tanh(X)
+        # X=self.r1(X)
+        # #X=self.lrelu(X)
+        # #X=self.tanh(X)
         X=self.l2(X)
+        # X=self.r2(X)
         X=self.l3(X)
+        # X=self.r1(X)
         return X, torch.linalg.norm(X-self.Y)
     
 class ComplicatedMLP(nn.Module):
@@ -48,21 +53,29 @@ class ComplicatedMLP(nn.Module):
         self.relu=nn.ReLU()
         self.lrelu=nn.LeakyReLU()
         self.tanh=nn.Tanh()
+        self.r1=torch.nn.RMSNorm(self.n,elementwise_affine=False)
         self.l2=nn.Linear(self.n, 4*self.n, False)
+        self.r2=torch.nn.RMSNorm(4*self.n,elementwise_affine=False)
         self.l3=nn.Linear(4*self.n, 4*self.n, False)
+        self.r3=torch.nn.RMSNorm(4*self.n,elementwise_affine=False)
         self.l4=nn.Linear(4*self.n, 4*self.n, False)
+        self.r4=torch.nn.RMSNorm(4*self.n,elementwise_affine=False)
         self.l5=nn.Linear(4*self.n, self.m, False)
 
     def forward(self, X):
         X=self.l1(X)
+        X=self.r1(X)
         #X=self.lrelu(X)
         #X=self.tanh(X)
         X=self.lrelu(X)
         X=self.l2(X)
+        X=self.r2(X)
         X=self.l3(X)
+        X=self.r3(X)
         #X=self.tanh(X)
         X=self.lrelu(X)
         X=self.l4(X)
+        X=self.r4(X)
         #X=self.tanh(X)
         X=self.lrelu(X)
         X=self.l5(X)

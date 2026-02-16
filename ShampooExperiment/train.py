@@ -56,9 +56,7 @@ m=50
 torch.manual_seed(1)
 A=1.5*torch.rand((m,n))
 A=torch.eye(n)
-model = MatrixSimple(A) #A=torch.eye(m,n)
-print(A)
-print(model.W)
+model = MatrixSimple(A,0) #A=torch.eye(m,n)
 params = [p for p in model.parameters()]
 
 optim_groups = [
@@ -90,31 +88,60 @@ shampoo = DistributedShampoo(
     preconditioner_config=preconditioner_config,
 )
 
-shampoo=CustomShampoo(1e-3, params, p=4, chol=True, optimized=False, debug=False) #basic custom Shampoo implementation, no kronecker factor optimization
+shampoo=CustomShampoo(1e-3, params, p=4, chol=False, optimized=False, debug=False) #basic custom Shampoo implementation, no kronecker factor optimization
 
-max_iters=100
-iter_num=0
+trials=10
+total_time=0.0
+total_loss=0.0
 
-s=time.time()
-while True:
-    lr = get_lr(iter_num)
-    for param_group in shampoo.param_groups:
-        param_group['lr'] = lr
-    G, L=model()
-    #L.backward()
-    shampoo.step()
-    shampoo.zero_grad(set_to_none=True)
-    print(L.item())
-    #print('R', torch.linalg.norm(shampoo.R))
-    #model.W.data=zeropower_via_newtonschulz5(model.W.data)
-    #temp=zeropower_via_newtonschulz5(model.A)
-    iter_num+=1
-    if iter_num>max_iters:
-        break
-e=time.time()
-print(model.W)
-print(model.A)
-print(torch.linalg.norm(model.A-model.W, ord='fro').item())
-print(e-s)
+for i in range(trials):
+    max_iters=1500
+    iter_num=0
+    n=100
+    m=100
+    torch.manual_seed(i+1)
+    A=1.5*torch.rand((m,n))
+    #A=torch.eye(n)
+    model = MatrixSimple(A,0) #A=torch.eye(m,n)
+    #print(A)
+    #print(model.W)
+    params = [p for p in model.parameters()]
+    shampoo=CustomShampoo(1e-3, params, p=4, chol=False, optimized=True, debug=False) #basic custom Shampoo implementation, no kronecker factor optimization
+    s=time.time()
+    while True:
+        lr = get_lr(iter_num)
+        for param_group in shampoo.param_groups:
+            param_group['lr'] = lr
+        G, L=model()
+        #L.backward()
+        shampoo.step()
+        shampoo.zero_grad(set_to_none=True)
+        #print(L.item())
+        #print('R', torch.linalg.norm(shampoo.R))
+        #model.W.data=zeropower_via_newtonschulz5(model.W.data)
+        #temp=zeropower_via_newtonschulz5(model.A)
+        iter_num+=1
+        if iter_num>max_iters:
+            break
+    e=time.time()
+    #print(model.W)
+    #print(model.A)
+    print("loss", torch.linalg.norm(model.A-model.W, ord='fro').item())
+    print(e-s)
+    total_loss+=torch.linalg.norm(model.A-model.W, ord='fro').item()
+    total_time+=e-s
+print(total_time/trials, total_loss/trials)
 #print(model.W.T@model.W)
 #print(model.A, model.W)
+
+#default, n=m=20, trials=10, random A: L=2.4955728576969705e-06, T=1.5385940313339233
+#chol, n=m=20, trials=10, random A: L=1.0191468902576161e-06, T=1.2499472856521607
+#opt, n=m=20, trials=10, random A: L=2.504628525912267e-06, T=0.9256163120269776
+
+#default: n=m=50, trials=10, random A: L=0.0031975640449672937, T=2.1838069200515746
+#chol: n=m=50, trials=10, random A: L=5.026856615586439e-06, T=1.4225712060928344
+#opt: n=m=50, trials=10, random A: L=0.0033664277754724024, T=1.270915699005127
+
+#default: n=m=100, trials=10, random A: L=0.7255538463592529, T=4.644129133224487
+#chol: n=m=100, trials=10, random A: L=1.0850950548046968e-05, T=3.5395977020263674
+#opt: n=m=100, trials=10, random A: L=0.7511579930782318, T=2.159401607513428

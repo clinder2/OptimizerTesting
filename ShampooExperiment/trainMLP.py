@@ -28,7 +28,7 @@ def get_lr(it):
     coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio)) # coeff ranges 0..1
     return min_lr + coeff * (learning_rate - min_lr)
 
-trials=20
+trials=2
 total_time=0.0
 total_loss=0.0
 X=[]
@@ -58,7 +58,7 @@ for i in range(trials//2):
     model = ComplicatedMLP(n, m, y)
     params = [p for p in model.parameters()]
 
-    shampoo=CustomShampoo(1e-3, params, p=4, chol=False, optimized=True, debug=False) #basic custom Shampoo implementation, no kronecker factor optimization
+    shampoo=CustomShampoo(1e-3, params, p=4, chol=False, optimized=False, debug=False) #basic custom Shampoo implementation, no kronecker factor optimization
 
     max_iters=1500
     iter_num=0
@@ -117,7 +117,11 @@ print(total_time/trials, total_loss/trials)
 #opt (R**-1/2): ave time=1.4481961965560912, ave loss=9.861242942861281e-05
 
 #10 trials: n=m=10, complex MLP 10 pairs, y=10*x
-#default: ave time=4.4688972473144535, ave loss=8.533688487659674e-05
-#Cholesky: ave time=2.2778189420700072, ave loss=5.5509957383037546e-05
-#opt (R**-1/2): ave time=2.322601652145386, ave loss=5.631251806335058e-05
+#default, beta2=.9: ave time=4.4688972473144535, ave loss=8.533688487659674e-05
+#default, beta2=.85: ave time=4.3952681183815, ave loss=7.331564665946644e-05
+#default, beta2=.75: ave time=4.435351979732514, ave loss=7.80759710323764e-05
+#Cholesky, beta2=.9: ave time=2.2778189420700072, ave loss=5.5509957383037546e-05
+#Cholesky, beta2=.85: ave time=2.1759714841842652, ave loss=6.491934691439382e-05
+#Cholesky, beta2=.75: ave time=2.2305465817451475, ave loss=4.644548389478587e-05
+#opt (R**-1/2), beta2=.9: ave time=2.322601652145386, ave loss=5.631251806335058e-05
 ###

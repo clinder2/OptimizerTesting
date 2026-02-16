@@ -3,6 +3,7 @@ import torch.nn as nn
 import numpy as np
 from torch.optim import Optimizer
 from typing import List
+#from ShampooExperiment.Grafting import AdagradGraft
 from Grafting import AdagradGraft
 
 """Simple Shampoo implementation for testing Cholesky factorization approximations
@@ -13,21 +14,22 @@ class CustomShampoo(Optimizer):
     def __init__(self, lr, W, p=4, chol=False, optimized=False, debug=False):
         data=dict(lr=lr)
         super().__init__(W, data)
-        self.L=torch.eye(W[0].shape[0]) #left preconditioner
-        self.R=torch.eye(W[0].shape[0]) #right preconditioner
+        self.device=W[0].device
+        #self.L=torch.eye(W[0].shape[0]) #left preconditioner
+        #self.R=torch.eye(W[0].shape[0]) #right preconditioner
         self.p=p #matrix power (4 for -1/4, 2 for -1/2, etc.)
         self.chol=chol #cholesky or not
         self.opt=optimized #Anil approximation or not
-        self.state={}
+        self.state={} #paramteter state dictionary
         for g in self.param_groups:
             for p in g['params']:
                 self.state[p]={} #init each parameter's state
                 self.state[p]['graft']=AdagradGraft(None, p) #init Adagrad grafting
-                self.state[p]['L']=torch.eye(p.shape[0])
-                self.state[p]['R']=torch.eye(p.shape[1])
+                self.state[p]['L']=torch.eye(p.shape[0],device=self.device) #p's left preconditioner
+                self.state[p]['R']=torch.eye(p.shape[1],device=self.device) #p's right preconditioner
         self.debug=debug
         self.iter=0
-        self.beta2=.9 #for L, R exp. decay
+        self.beta2=.85 #for L, R exp. decay
 
     def step(self):
         for g in self.param_groups:
@@ -36,18 +38,19 @@ class CustomShampoo(Optimizer):
                 grad=p.grad
                 L=self.state[p]['L']
                 R=self.state[p]['R']
+                #print("DEVICE", L.device, grad.device)
                 L=self.beta2*L+(1-self.beta2)*grad@grad.T #update left/right preconditioners
                 R=self.beta2*R+(1-self.beta2)*grad.T@grad
-                self.state[p]['L']=L
+                self.state[p]['L']=L #update state of preconditioners
                 self.state[p]['R']=R
-                if self.opt:
+                if self.opt: #Anil 1 sided preconditioner optimization
                     if self.chol:
                         #Lp=torch.linalg.cholesky_ex(self.state[p]['L']) #Cholesky decomp of L
-                        Rp=torch.linalg.cholesky_ex(.001*torch.eye(self.state[p]['R'].shape[0])+self.state[p]['R']) #Cholesky decomp of R
+                        Rp=torch.linalg.cholesky_ex(.001*torch.eye(self.state[p]['R'].shape[0],device=self.device)+self.state[p]['R']) #Cholesky decomp of R
                         if Rp.info==0:
-                            Rp=torch.linalg.inv_ex(.001*torch.eye(Rp.L.shape[0])+Rp.L)
+                            Rp=torch.linalg.inv_ex(.001*torch.eye(Rp.L.shape[0],device=self.device)+Rp.L)
                             if Rp.info==0:
-                                update=grad@Rp.inverse
+                                update=grad@Rp.inverse #Anil update
                             else:
                                print("failed inv")
                                update=grad@self.mat_pow(self.state[p]['R'], 2)
@@ -56,7 +59,7 @@ class CustomShampoo(Optimizer):
                             update=grad@self.mat_pow(self.state[p]['R'], 2)
                     else:
                         update=grad@self.mat_pow(self.state[p]['R'], 2) #optimized approx. with 1 preconditioner
-                else:
+                else: #no Anil 1 sided preconditioner optimization
                     if self.chol:
                         Lp=torch.linalg.cholesky_ex(self.state[p]['L']) #Cholesky decomp of L
                         Rp=torch.linalg.cholesky_ex(self.state[p]['R']) #Cholesky decomp of R
@@ -70,8 +73,8 @@ class CustomShampoo(Optimizer):
                             Rp=self.mat_pow(self.state[p]['R'], self.p)
                         update=Lp@grad@Rp
                     else: #just standard Shampoo
-                        Lp=self.mat_pow(self.state[p]['L'], self.p)
-                        Rp=self.mat_pow(self.state[p]['R'], self.p)
+                        Lp=self.mat_pow(self.state[p]['L'], self.p) #L^{-1/4}
+                        Rp=self.mat_pow(self.state[p]['R'], self.p) #R^{-1/4}
                         update=Lp@grad@Rp
                 #p.data-=g['lr']*update
                 graft.add_statistics(grad) #update grafting state
@@ -79,13 +82,17 @@ class CustomShampoo(Optimizer):
                 graft_n=torch.linalg.norm(graft_grad, ord='fro')
                 shampoo_n=torch.linalg.norm(update, ord='fro')
                 p.data-=g['lr']*(graft_n/(shampoo_n+1e-6))*update #param update with grafting
-                if self.debug:
+                if self.debug and self.iter%10==0:
                     print(f"PRECONDITIONERS at {self.iter}:")
+                    print("SHAPE: ", "Lp: ", Lp.shape, " Rp: ", Rp.shape)
+                    print("NORM (fro)", torch.linalg.norm(Lp,ord="fro"))
                     if self.opt and Rp.inverse!=None:
                         print("R: ", Rp.inverse)
                     else:
                         print("L: ", Lp.data)
                         print("R: ", Lp.data)
+                    print("GRAD:")
+                    print(grad)
                     print(f"UPDATE at {self.iter}:")
                     print(update)
         self.iter+=1
@@ -199,7 +206,7 @@ def PowerIter(mat_g, error_tolerance=1e-6, num_iters=100):
   Returns:
     eigen vector, eigen value, num_iters
   """
-  v = torch.rand(list(mat_g.shape)[0]) * 2 - 1
+  v = torch.rand(list(mat_g.shape)[0],device=mat_g.device) * 2 - 1
   error = 1
   iters = 0
   singular_val = 0
@@ -268,7 +275,7 @@ def ComputePower(mat_g, p,
   shape = list(mat_g.shape)
   if len(shape) == 1:
     return torch.pow(mat_g + ridge_epsilon, -1/p)
-  identity = torch.eye(shape[0])
+  identity = torch.eye(shape[0],device=mat_g.device)
   if shape[0] == 1:
     return identity
   alpha = -1.0/p
