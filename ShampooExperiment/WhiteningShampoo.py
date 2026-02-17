@@ -49,7 +49,7 @@ class WhiteningShampoo(Optimizer):
                     Lp=torch.linalg.cholesky_ex(.001*torch.eye(L.shape[0],device=self.device)+L)
                     Rp=torch.linalg.cholesky_ex(.001*torch.eye(R.shape[0],device=self.device)+R)
                     if Lp.info!=0 or Rp.info!=0:
-                        print("failed 1st Cholesky")
+                        #print("failed 1st Cholesky")
                         update=grad
                         break
 
@@ -71,7 +71,7 @@ class WhiteningShampoo(Optimizer):
                     Lp=torch.linalg.cholesky_ex(.001*torch.eye(Lp.shape[0],device=self.device)+Lp)
                     Rp=torch.linalg.cholesky_ex(.001*torch.eye(Rp.shape[0],device=self.device)+Rp)
                     if Lp.info!=0 or Rp.info!=0:
-                        print("failed 2nd Cholesky")
+                        #print("failed 2nd Cholesky")
                         update=grad
                     else:
                         #print(torch.trace(self.state[p]['L']).item())
@@ -151,10 +151,10 @@ from model import MatrixSimple, MLP, ComplicatedMLP
 import torch.optim as opt
 import math, time
 if __name__=='__main__':
-    max_iters=4000 #4000 for pure
-    warmup_iters=.1*max_iters #.2*max_iters
-    learning_rate=.1 #.99 MatrixSimple
-    lr_decay_iters=.4*max_iters #.8*max_iters
+    max_iters=8000 #4000 for pure
+    warmup_iters=.3*max_iters #.2*max_iters
+    learning_rate=.01 #.99 MatrixSimple
+    lr_decay_iters=.2*max_iters #.8*max_iters
     min_lr = 6e-5 #6e-5 default, 6e-2 for pure
 
     ###for MatrixSimple, WS does better with constant lr=.99
@@ -172,14 +172,14 @@ if __name__=='__main__':
         coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio)) # coeff ranges 0..1
         return min_lr + coeff * (learning_rate - min_lr)
 
-    n=50
-    m=50
+    n=2*50
+    m=2*50
     torch.manual_seed(1)
     x=torch.rand(n)
     torch.manual_seed(3)
     y=torch.zeros(m)
     y[30]=1
-    #y=10*x
+    y=10*x
     #model = ComplicatedMLP(n, m, y)
     model = MLP(n,m,y)
     #model=MatrixSimple(torch.eye(n),2)

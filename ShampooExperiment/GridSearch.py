@@ -13,6 +13,7 @@ grid = {
     'warmup_iters': [.1,.2,.3,.4],
     'lr_decay_iters': [.05,.1,.2,.3,.4],
     'min_lr': [6e-5,6e-2,1e-2,1e-1],
+    'max_iters': [2000]
 }
 
 fine_grid = {
@@ -20,6 +21,7 @@ fine_grid = {
     'warmup_iters': [.05,.1,.2,.3,.4],
     'lr_decay_iters': [.05,.1,.2,.3,.4,.7],
     'min_lr': [6e-5,6e-4,6e-2,1e-2,1e-1],
+    'max_iters': [8000]
 }
 
 def get_lr(it, learning_rate, warmup_iters, lr_decay_iters, min_lr):
@@ -36,12 +38,13 @@ def get_lr(it, learning_rate, warmup_iters, lr_decay_iters, min_lr):
     coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio)) # coeff ranges 0..1
     return min_lr + coeff * (learning_rate - min_lr)
 
-def train(optimizer, model, hyperparams, max_iters=4000):
+def train(optimizer, model, hyperparams):
     iter_num=0
     init_lr=hyperparams[0]
     warmup=hyperparams[1]
     decay=hyperparams[2]
     min_lr=hyperparams[3]
+    max_iters=hyperparams[4]
 
     n=50
     m=50
@@ -55,8 +58,10 @@ def train(optimizer, model, hyperparams, max_iters=4000):
             optimizer=CustomShampoo(W=params,lr=init_lr,chol=False)
         case 1:
             optimizer=CustomShampoo(W=params,lr=init_lr,chol=True)
-        case WS:
+        case 2:
             optimizer=WhiteningShampoo(groups=params,lr=init_lr,pure=True)
+        case S_P2:
+            optimizer=CustomShampoo(W=params,lr=init_lr,chol=True,p=2)
 
     s=time.time()
 
@@ -75,6 +80,7 @@ def train(optimizer, model, hyperparams, max_iters=4000):
     del optimizer
     del model
     hp={'lr':init_lr, 'warmup_iters': warmup, 'lr_decay_iters': decay, 'min_lr': min_lr}
+    hp['max_iters']=max_iters
     hp['loss']=L.item()
     hp['time']=e-s
     print(L.item())
@@ -125,17 +131,16 @@ def trainMS(optimizer, model, hyperparams, max_iters=4000):
 
 def grid_search(optimizer, model, grid=grid, num_workers=16):
     hyperparams={'lr': 0, 'warmup_iters': 0, 'lr_decay_iters': 0, 'min_lr': 0}
-    best_loss=100
 
     hp_list=itertools.product(grid['lr'], grid['warmup_iters'], 
-                              grid['lr_decay_iters'], grid['min_lr'])
+                              grid['lr_decay_iters'], grid['min_lr'], grid['max_iters'])
     hp_list=[h for h in hp_list if h[1]!=h[2]]
 
     ctx=mp.get_context("spawn")
 
     with ctx.Pool(num_workers) as pool:
         output=pool.starmap(
-            trainMS, 
+            train, 
             [
                 (
                     optimizer,
@@ -151,8 +156,8 @@ def grid_search(optimizer, model, grid=grid, num_workers=16):
 
 if __name__=='__main__':
     #for O in OPTS:
-        O=WS
-        output, hp=grid_search(O, MatrixSimple, fine_grid)
+        O=S_P2
+        output, hp=grid_search(O, MLP, grid)
         
         print(hp)
         ###NAME hyperparameter dictionary json as MODEL_OPTIMIZER_hp.json
@@ -162,19 +167,24 @@ if __name__=='__main__':
         ###with chol=False
         match O:
             case 0:
-                with open(f"data/MS(50to50)_S_hp.json", 'w') as f:
+                with open(f"data/MS(100to100)_S_hp.json", 'w') as f:
                     json.dump(hp, f)
-                with open("data/MS(50to50)_S_gridresults.json", 'w') as f:
+                with open("data/MS(100to100)_S_gridresults.json", 'w') as f:
                     json.dump(output, f)
             case 1:
-                with open(f"data/MS(50to50)_CS_hp.json", 'w') as f:
+                with open(f"data/MS(100to100)_CS_hp.json", 'w') as f:
                     json.dump(hp, f)
-                with open("data/MS(50to50)_CS_gridresults.json", 'w') as f:
+                with open("data/MS(100to100)_CS_gridresults.json", 'w') as f:
                     json.dump(output, f)
-            case WS:
-                with open(f"data/MS(50to50)_4000_WS_fine_hp.json", 'w') as f:
+            case 2:
+                with open(f"data/MS(100to100))_WS_hp.json", 'w') as f:
                     json.dump(hp, f)
-                with open("data/MS(50to50)_4000_WS_finegridresults.json", 'w') as f:
+                with open("data/MS(100to100)_WS_gridresults.json", 'w') as f:
+                    json.dump(output, f)
+            case S_P2:
+                with open(f"data/MS(50to50)_CS-P2_hp.json", 'w') as f:
+                    json.dump(hp, f)
+                with open("data/MS(50to50)_CS-P2_gridresults.json", 'w') as f:
                     json.dump(output, f)
     
     
