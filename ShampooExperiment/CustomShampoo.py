@@ -11,7 +11,7 @@ to speed up inverse matrix power computations. Runs default update L^{-1/4}@G_t@
 experimental Cholesky update L'^{-1/4}@G_t@R'^{-1/4}, L'@L'.T=L, R'@R'.T=R, or scaled
 up approximation from Anil et al. G_t@R^{-1/2}"""
 class CustomShampoo(Optimizer):
-    def __init__(self, lr, W, p=4, chol=False, optimized=False, debug=False):
+    def __init__(self, lr, W, p=4, chol=False, optimized=False, debug=False, beta2=.85):
         data=dict(lr=lr)
         super().__init__(W, data)
         self.device=W[0].device
@@ -29,7 +29,8 @@ class CustomShampoo(Optimizer):
                 self.state[p]['R']=torch.eye(p.shape[1],device=self.device) #p's right preconditioner
         self.debug=debug
         self.iter=0
-        self.beta2=.85 #for L, R exp. decay
+        self.beta2=beta2 #for L, R exp. decay
+        self.fails=0
 
     def step(self):
         for g in self.param_groups:
@@ -67,8 +68,11 @@ class CustomShampoo(Optimizer):
                             #print('CHOL', torch.linalg.norm(Lp.L))
                             Lp=self.mat_pow(Lp.L, 1/2*self.p)
                             Rp=self.mat_pow(Rp.L, 1/2*self.p) #.T better
+                            # Lp=torch.linalg.inv_ex(Lp.L).inverse
+                            # Rp=torch.linalg.inv_ex(Rp.L).inverse
                             Rp=Rp.T
                         else: #just standard Shampoo
+                            self.fails+=1
                             Lp=self.mat_pow(self.state[p]['L'], self.p)
                             Rp=self.mat_pow(self.state[p]['R'], self.p)
                         update=Lp@grad@Rp

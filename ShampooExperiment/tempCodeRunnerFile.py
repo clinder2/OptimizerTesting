@@ -1,0 +1,5 @@
+plt.plot(np.arange(len(losses[0])), losses[0],color='blue',label='Shampoo-p=4')
+    # plt.plot(np.arange(len(losses[CS])), losses[CS],color='green',label='CholeskyS-p=4')
+    # plt.plot(np.arange(len(losses[S_P2])), losses[S_P2],color='red',label='CholeskyS-p=2')
+    # plt.legend()
+    # plt.show()

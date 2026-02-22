@@ -14,7 +14,7 @@ class MatrixSimple(nn.Module):
         G=2*(self.W-self.A)
         # with torch.no_grad():
         #     self.W.grad=G
-        return G, torch.linalg.norm((self.W-self.A)**1,ord='fro')
+        return G, torch.linalg.norm((self.W-self.A)**2,ord='fro')
     
 
 class MLP(nn.Module):
@@ -80,3 +80,25 @@ class ComplicatedMLP(nn.Module):
         X=self.lrelu(X)
         X=self.l5(X)
         return X, torch.linalg.norm(X-self.Y)
+    
+class MLP2(nn.Module):
+    def __init__(self, n, m, h):
+        super().__init__()
+        self.n=n
+        self.m=m
+        self.h=h
+        self.l1=nn.Linear(self.n, self.h, False)
+        self.lrelu=nn.LeakyReLU()
+        #self.tanh=nn.Tanh()
+        #self.s=nn.Sigmoid()
+        self.l2=nn.Linear(self.h, self.h, False)
+        self.l3=nn.Linear(self.h, self.m, False)
+
+    def forward(self, X):
+        X=self.l1(X)
+        # X=self.r1(X)
+        X=self.lrelu(X)
+        X=self.l2(X)
+        X=self.l3(X)
+        # X=self.r1(X)
+        return X
