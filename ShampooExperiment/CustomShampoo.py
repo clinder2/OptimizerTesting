@@ -66,8 +66,21 @@ class CustomShampoo(Optimizer):
                         Rp=torch.linalg.cholesky_ex(self.state[p]['R']) #Cholesky decomp of R
                         if Lp.info==0 and Rp.info==0: #successful Cholesky decomp
                             #print('CHOL', torch.linalg.norm(Lp.L))
-                            Lp=self.mat_pow(Lp.L, 1/2*self.p)
-                            Rp=self.mat_pow(Rp.L, 1/2*self.p) #.T better
+                            
+                            #Lp=self.sqrtm_newton_schulz(Lp.L)
+                            #Rp=self.sqrtm_newton_schulz(Rp.L)
+                            
+                            #Lp=self.sqrtm_lower_tri(Lp.L)
+                            #Rp=self.sqrtm_lower_tri(Rp.L)
+                            
+                            Lp=Lp.L
+                            Rp=Rp.L
+                            Lp=torch.linalg.solve_triangular(Lp,torch.eye(Lp.shape[0],device=self.device),upper=False)
+                            Rp=torch.linalg.solve_triangular(Rp,torch.eye(Rp.shape[0],device=self.device),upper=False)
+            
+                            #Lp=self.mat_pow(Lp.L, 1/2*self.p)
+                            #Rp=self.mat_pow(Rp.L, 1/2*self.p) #.T better
+                            
                             # Lp=torch.linalg.inv_ex(Lp.L).inverse
                             # Rp=torch.linalg.inv_ex(Rp.L).inverse
                             Rp=Rp.T
@@ -75,6 +88,7 @@ class CustomShampoo(Optimizer):
                             self.fails+=1
                             Lp=self.mat_pow(self.state[p]['L'], self.p)
                             Rp=self.mat_pow(self.state[p]['R'], self.p)
+                            print("fail")
                         update=Lp@grad@Rp
                     else: #just standard Shampoo
                         Lp=self.mat_pow(self.state[p]['L'], self.p) #L^{-1/4}
@@ -114,6 +128,66 @@ class CustomShampoo(Optimizer):
     def zero_grad(self, set_to_none = True):
         super().zero_grad(set_to_none)
 
+    def sqrtm_newton_schulz(self, A, num_iters=10):
+        """
+        Computes the matrix square root of a positive semi-definite matrix using
+        the Newton-Schulz iterative method in PyTorch.
+
+        Args:
+            A (torch.Tensor): A batch of square positive semi-definite matrices
+                            of shape (*, n, n).
+            num_iters (int): The number of iterations to run the algorithm.
+
+        Returns:
+            torch.Tensor: The matrix square root of A.
+        """
+        
+        # Ensure input matrix has at least two dimensions
+        if A.dim() < 2:
+            raise ValueError(f"Input dimension equals {A.dim()}, expected at least 2")
+        
+        # Get the batch dimensions and matrix size
+        batch_dims = A.shape[:-2]
+        n = A.size(-1)
+        
+        # Check if the matrix is square
+        if A.size(-1) != A.size(-2):
+            raise ValueError("Input matrices must be square.")
+        
+        # Scale the matrices by their Frobenius norm for stable convergence
+        # Frobenius norm is computed over the last two dimensions
+        norm_A = torch.norm(A, p='fro', dim=(-2, -1), keepdim=True)
+        
+        # Handle the case where norm is close to zero to avoid division issues
+        norm_A = torch.where(norm_A < 1e-8, 1e-8 * torch.ones_like(norm_A), norm_A)
+        
+        # Normalize the matrix and prepare the inverse estimate
+        Y = A / norm_A
+        I = torch.eye(n, n, dtype=A.dtype).expand(*batch_dims, n, n)
+        Z = I.clone()
+        
+        # Perform Newton-Schulz iterations
+        for _ in range(num_iters):
+            T = 0.5 * (3.0 * I - Z@Y)
+            Y = Y@T
+            Z = T@Z
+        
+        # Apply the final scaling to get the actual square root
+        return Y * torch.sqrt(norm_A)
+
+    def sqrtm_lower_tri(self, A):
+        A=A.T
+        X=torch.zeros_like(A)
+        src=torch.sqrt(torch.diagonal(A))
+        X=torch.diagonal_scatter(X, src)
+        n=A.shape[0]
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                sum_val = torch.sum(X[i, i:j] * X[i:j, j])
+                X[i, j] = (A[i, j] - sum_val) / (X[i, i] + X[j, j])
+        return X.T
+
 def inverse_sqrtm_newton_schulz(matrix: torch.Tensor, num_iters: int = 100):
     """
     Approximate the inverse square root of a matrix using the Newton-Schulz method.
@@ -142,53 +216,6 @@ def inverse_sqrtm_newton_schulz(matrix: torch.Tensor, num_iters: int = 100):
     result = Z.div(torch.sqrt(norm_of_matrix))
 
     return result
-
-def sqrtm_newton_schulz(A, num_iters=10):
-    """
-    Computes the matrix square root of a positive semi-definite matrix using
-    the Newton-Schulz iterative method in PyTorch.
-
-    Args:
-        A (torch.Tensor): A batch of square positive semi-definite matrices
-                          of shape (*, n, n).
-        num_iters (int): The number of iterations to run the algorithm.
-
-    Returns:
-        torch.Tensor: The matrix square root of A.
-    """
-    
-    # Ensure input matrix has at least two dimensions
-    if A.dim() < 2:
-        raise ValueError(f"Input dimension equals {A.dim()}, expected at least 2")
-    
-    # Get the batch dimensions and matrix size
-    batch_dims = A.shape[:-2]
-    n = A.size(-1)
-    
-    # Check if the matrix is square
-    if A.size(-1) != A.size(-2):
-        raise ValueError("Input matrices must be square.")
-    
-    # Scale the matrices by their Frobenius norm for stable convergence
-    # Frobenius norm is computed over the last two dimensions
-    norm_A = torch.norm(A, p='fro', dim=(-2, -1), keepdim=True)
-    
-    # Handle the case where norm is close to zero to avoid division issues
-    norm_A = torch.where(norm_A < 1e-8, 1e-8 * torch.ones_like(norm_A), norm_A)
-    
-    # Normalize the matrix and prepare the inverse estimate
-    Y = A / norm_A
-    I = torch.eye(n, n, dtype=A.dtype).expand(*batch_dims, n, n)
-    Z = I.clone()
-    
-    # Perform Newton-Schulz iterations
-    for _ in range(num_iters):
-        T = 0.5 * (3.0 * I - Z@Y)
-        Y = Y@T
-        Z = T@Z
-    
-    # Apply the final scaling to get the actual square root
-    return Y * torch.sqrt(norm_A)
 
 ###
 # Scalable Shampoo matrix power functions: 

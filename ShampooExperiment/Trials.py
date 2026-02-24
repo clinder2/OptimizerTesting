@@ -100,30 +100,31 @@ def plot_TrainTestLoss():
     plt.show()
 
 def plot_losses():
-    a=np.load("data/losses/quad-n=100-S.npy")
-    b=np.load("data/losses/quad-n=100-CS.npy")
-    c=np.load("data/losses/quad-n=100-S_P2.npy")
-    d=np.load("data/losses/quad-n=100-SGD.npy")
+    a=np.load("data/losses/quad-n=1000-SGD.npy")
+    b=np.load("data/losses/quad-n=1000-CS_CI.npy")
+    c=np.load("data/losses/quad-n=1000-SCI.npy")
+    d=np.load("data/losses/quad-n=1000-S.npy")
 
-    a=np.load(f"data/losses/MLP2(n={n},h={h},mult={mult})-S.npy")
-    b=np.load(f"data/losses/MLP2(n={n},h={h},mult={mult})-CS.npy")
-    c=np.load(f"data/losses/MLP2(n={n},h={h},mult={mult})-S_P2.npy")
-    plt.plot(np.arange(d.shape[0]), d,color='blue',label='SGD(10000 steps, 0.86 sec)')
-    plt.plot(np.arange(a.shape[0]), a,color='orange',label='Shampoo(7228 steps, 19.90 sec)')
-    plt.plot(np.arange(b.shape[0]), b,color='green',label='CholeskyS(3928 steps, 12.44 sec)')
-    plt.plot(np.arange(c.shape[0]), c,color='red',label='CholeskyS(p=1/2)(5951 steps, 13.73 sec)')
+    # a=np.load(f"data/losses/MLP2(n={n},h={h},mult={mult})-S.npy")
+    # b=np.load(f"data/losses/MLP2(n={n},h={h},mult={mult})-CS.npy")
+    # c=np.load(f"data/losses/MLP2(n={n},h={h},mult={mult})-S_P2.npy")
+    plt.plot(np.arange(d.shape[0]), d,color='blue',label='S-410 iters-39.08 sec')
+    plt.plot(np.arange(a.shape[0]), a,color='orange',label='SGD-388 iters-8.68 sec')
+    plt.plot(np.arange(b.shape[0]), b,color='green',label='CS_CI-529 iters-8.69 sec')
+    plt.plot(np.arange(c.shape[0]), c,color='red',label='SCI-230 iters-22.35 sec')
     plt.legend()
     plt.show()
 
 if __name__=='__main__':
-    ev=False
+    ev=True
     if ev:
         O=SCI
         n=50
         h=2*n
         mult=10
         path=f"/Users/christopherlinder/Desktop/OptimizerTesting/data/models/MLP2(n={n},h={h},mult={mult})_{O}_hp"
-        eval_MLP2(path,n,h,mult,batch_size=10,samples=100,i=3)        
+        eval_MLP2(path,n,h,mult,batch_size=100,samples=1000,i=7)     
+        #plot_losses()   
     else:
         m="MLP2"
         n=50
@@ -131,7 +132,7 @@ if __name__=='__main__':
         h=2*n
         losses=[]
         hps=[]
-        for O in [SCI]:
+        for O in [CS]:
             if O==S:
                 with open(f"data/hyperparams/{m}(n={n},h={h},mult={mult})_S_hp.json", 'r') as f:
                     hp=json.load(f)
@@ -145,8 +146,11 @@ if __name__=='__main__':
                 with open(f"data/hyperparams/{m}(n={n},h={h},mult={mult})_CS-P2-torchinv_hp.json", 'r') as f:
                     hp=json.load(f)
             
-            hp={'lr': 0.6, 'warmup_iters': 0.2, 'lr_decay_iters': 0.3, 'min_lr': 6e-5, 'beta2': 0.999, 'max_iters': 1596, 'loss': 0.0017872139578685164, 'time': 5.994225025177002}
+            ###SCI
+            #hp={'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.005, 'min_lr': 6e-3, 'beta2': 0.999, 'max_iters': 1596, 'loss': 0.0017872139578685164, 'time': 5.994225025177002}
             
+            hp={'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.009, 'min_lr': 6e-3, 'beta2': 0.999, 'max_iters': 1596, 'loss': 0.0017872139578685164, 'time': 5.994225025177002}
+
             trials=1 #50
             tot_loss=0.0
             tot_time=0.0
@@ -157,7 +161,7 @@ if __name__=='__main__':
                             n,
                             h,
                             mult,
-                            1000,
+                            1200,
                             100,
                             3,
                         )

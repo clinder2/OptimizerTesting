@@ -3,8 +3,8 @@ from scipy.linalg import sqrtm
 
 """Squareroot-Cholesky-Inverse Shampoo"""
 class SCIShampoo(CustomShampoo):
-    def __init__(self, lr, W):
-        super().__init__(lr, W)
+    def __init__(self, lr, W, beta2):
+        super().__init__(lr, W, beta2)
 
     def step(self):
         for g in self.param_groups:
@@ -19,11 +19,13 @@ class SCIShampoo(CustomShampoo):
                 self.state[p]['L']=L #update state of preconditioners
                 self.state[p]['R']=R
 
-                L=self.sqrtm_newton_schulz(L)
-                R=self.sqrtm_newton_schulz(R)
+                L=self.sqrtm_newton_schulz(L,num_iters=10) #20
+                R=self.sqrtm_newton_schulz(R,num_iters=10)
+                A=.1*torch.eye(L.shape[0],device=self.device)+(L+L.T)/2
+                B=.1*torch.eye(R.shape[0],device=self.device)+(R+R.T)/2
 
-                Lp=torch.linalg.cholesky_ex(.001*torch.eye(L.shape[0],device=self.device)+L) #Cholesky decomp of L
-                Rp=torch.linalg.cholesky_ex(.001*torch.eye(R.shape[0],device=self.device)+R) #Cholesky decomp of R
+                Lp=torch.linalg.cholesky_ex(A) #Cholesky decomp of L
+                Rp=torch.linalg.cholesky_ex(B) #Cholesky decomp of R
                 if Lp.info==0 and Rp.info==0: #successful Cholesky decomp
                     # Lp=torch.linalg.inv_ex(Lp.L).inverse
                     # Rp=torch.linalg.inv_ex(Rp.L).inverse
@@ -32,11 +34,12 @@ class SCIShampoo(CustomShampoo):
                     Lp=torch.linalg.solve_triangular(Lp,torch.eye(Lp.shape[0],device=self.device),upper=False)
                     Rp=torch.linalg.solve_triangular(Rp,torch.eye(Rp.shape[0],device=self.device),upper=False)
                 else: #standard Shampoo update, Cholesky failed
-                    #Lp=self.mat_pow(L, 2)
-                    #Rp=self.mat_pow(R, 2) #.T better
-                    Lp=torch.eye(Lp.L.shape[0],device=self.device)
-                    Rp=torch.eye(Rp.L.shape[0],device=self.device)
-                    #print(f"failed on {self.iter}")
+                    Lp=self.mat_pow(L, 2)
+                    Rp=self.mat_pow(R, 2) #.T better
+                    # Lp=torch.linalg.inv_ex(A).inverse
+                    # Rp=torch.linalg.inv_ex(B).inverse
+                    print(f"failed on {self.iter}")
+                    print(torch.allclose(A,A.T), torch.allclose(B,B.T), torch.linalg.norm(A,ord='fro'),torch.linalg.norm(B,ord='fro'))
                     self.fails+=1
                 update=Lp@grad@Rp.T
                 

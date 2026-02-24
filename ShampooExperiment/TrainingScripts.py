@@ -31,38 +31,50 @@ def testQuad(opti, model):
     # learning_rate=.9 #.99 MatrixSimple
     # lr_decay_iters=.01*max_iters #.8*max_iters
     # min_lr = 6e-3 #6e-5 default, 6e-2 for pure
-    Shp={'learning_rate': .9, 'warmup_iters':.001, 'lr_decay_iters':.01,'min_lr':6e-3}
+    Shp={'learning_rate': .99, 'warmup_iters':.00001, 'lr_decay_iters':.01,'min_lr':6e-3}
     CShp={'learning_rate': .9, 'warmup_iters':.001, 'lr_decay_iters':.01,'min_lr':6e-3}
     CS_2hp={'learning_rate': .9, 'warmup_iters':.001, 'lr_decay_iters':.01,'min_lr':6e-3}
     losses={}
     times={}
 
-    for O in [1]:
-        n=100
+    for O in [0]:
+        n=1000
         model=MatrixSimple(torch.eye(n),2)
         params=[p for p in model.parameters()]
         match O:
             case 0:
                 hp=Shp
                 init_lr=hp['learning_rate']
-                optimizer=CustomShampoo(W=params,lr=init_lr,chol=False,beta2=.85)
+                warmup_iters=hp['warmup_iters']*max_iters
+                learning_rate=hp['learning_rate']
+                lr_decay_iters=hp['lr_decay_iters']*max_iters
+                min_lr = hp['min_lr']
+                optimizer=CustomShampoo(W=params,lr=init_lr,chol=False,beta2=.999)
             case 1:
                 hp=CShp
                 init_lr=hp['learning_rate']
-                optimizer=CustomShampoo(W=params,lr=init_lr,chol=True,beta2=.85)
+                optimizer=CustomShampoo(W=params,lr=init_lr,chol=True,beta2=.999)
             case S_P2:
                 hp=CS_2hp
                 init_lr=hp['learning_rate']
                 optimizer=CustomShampoo(W=params,lr=init_lr,chol=True,p=2,beta2=.85)
 
-        warmup_iters=.0001*max_iters #.2*max_iters
+        ###CS-CI
+        # warmup_iters=.0001*max_iters
+        # learning_rate=.9
+        # lr_decay_iters=.0009*max_iters
+        # min_lr = 6e-3
+
+        ###SCIShampoo
+        warmup_iters=.00001*max_iters #.2*max_iters
         learning_rate=.99 #.99 MatrixSimple
-        lr_decay_iters=.0005*max_iters #.8*max_iters
-        min_lr = .7 #6e-5 default, 6e-2 for pure
+        lr_decay_iters=.01*max_iters #.8*max_iters
+        min_lr = .8 #6e-5 default, 6e-2 for pure
+
         #S=CustomShampoo(learning_rate,params,p=4,chol=False)
-        #S=opt.AdamW(params)
-        optimizer=SCIShampoo(learning_rate, params) #142.371915102005, 1179
-        optimizer=CustomShampoo(learning_rate,params,p=4,chol=False)
+        optimizer=opt.SGD(params)
+        #optimizer=SCIShampoo(learning_rate, params, .85) #142.371915102005, 1179
+        #optimizer=CustomShampoo(learning_rate,params,p=4,chol=True,beta2=.999)
 
         iter_num=0
         print(f"OPTIMIZER {O}")
@@ -70,22 +82,24 @@ def testQuad(opti, model):
         loss=[]
         i=0
         while True:
-            lr = get_lr(iter_num, learning_rate, warmup_iters*max_iters, lr_decay_iters*max_iters, min_lr)
+            lr=.99
+            #lr = get_lr(iter_num, learning_rate, warmup_iters*max_iters, lr_decay_iters*max_iters, min_lr)
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr
             G, L=model()
             L.backward()
             loss.append(L.item())
             i+=1
-            print("Loss: ", L.item())
+            #print("Loss: ", L.item())
             optimizer.step()
             optimizer.zero_grad(set_to_none=True)
             iter_num+=1
-            if iter_num>=max_iters or L.item()<=1e-6:
+            if iter_num>=max_iters or L.item()<=1e-4:
                 break
         e=time.time()
         losses[O]=loss
         times[O]=e-s
+        np.save("data/losses/quad-n=1000-SGD.npy", np.array(losses[O]))
     # a=np.load("data/quad-n=100-S.npy")
     # b=np.load("data/quad-n=100-CS.npy")
     # c=np.load("data/quad-n=100-S_P2.npy")
@@ -93,7 +107,8 @@ def testQuad(opti, model):
     # print(a.shape, b.shape,c.shape)
     
     print(times)
-    print(optimizer.fails, iter_num-1, optimizer.fails/(iter_num-1))
+    print(iter_num-1)
+    print(optimizer.fails/(iter_num-1), optimizer.fails)
     # np.save("data/quad-n=100-SGD.npy", np.array(losses[0]))
     # np.save("data/quad-n=100-CS.npy", np.array(losses[CS]))
     # np.save("data/quad-n=100-S_P2.npy", np.array(losses[S_P2]))
@@ -153,7 +168,7 @@ def trainMLP2(optimizer, hyperparams, n, h, mult, samples=10, batch_size=10, i=2
         case 3:
             optimizer=CustomShampoo(W=params,lr=init_lr,chol=True,p=2,beta2=beta2)
         case SCI:
-            optimizer=SCIShampoo(W=params,lr=init_lr)
+            optimizer=SCIShampoo(W=params,lr=init_lr,beta2=beta2)
 
     s=time.time()
 
