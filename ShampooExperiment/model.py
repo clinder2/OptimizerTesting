@@ -2,6 +2,21 @@ import torch
 import torch.nn as nn
 import numpy as np
 from torch.nn import functional as F
+import math
+
+def get_lr(it, learning_rate, warmup_iters, lr_decay_iters, min_lr):
+    #return learning_rate
+    # 1) linear warmup for warmup_iters steps
+    if it < warmup_iters:
+        return learning_rate * (it + 1) / (warmup_iters + 1)
+    # 2) if it > lr_decay_iters, return min learning rate
+    if it > lr_decay_iters:
+        return min_lr
+    # 3) in between, use cosine decay down to min learning rate
+    decay_ratio = (it - warmup_iters) / (lr_decay_iters - warmup_iters)
+    assert 0 <= decay_ratio <= 1
+    coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio)) # coeff ranges 0..1
+    return min_lr + coeff * (learning_rate - min_lr)
 
 class MatrixSimple(nn.Module):
     def __init__(self, A, i):
@@ -18,30 +33,35 @@ class MatrixSimple(nn.Module):
     
 
 class MLP(nn.Module):
-    def __init__(self, n, m, Y):
+    def __init__(self, in_dimension, out_dimension):
         super().__init__()
-        self.n=n
-        self.m=m
-        self.Y=Y
-        #self.r1=torch.nn.RMSNorm(self.n,elementwise_affine=False)
-        #self.r2=torch.nn.RMSNorm(2*self.n,elementwise_affine=False)
-        self.l1=nn.Linear(self.n, self.n, False)
-        # self.relu=nn.ReLU()
+        self.in_dimension=in_dimension
+        self.out_dimension=out_dimension
+        intermediate = (in_dimension+out_dimension)//2
+        intermediate = 2*in_dimension
+        #self.r1=torch.nn.RMSNorm(self.in_dimension,elementwise_affine=False)
+        #self.r2=torch.nn.RMSNorm(2*self.in_dimension,elementwise_affine=False)
+        self.l1=nn.Linear(self.in_dimension, self.in_dimension, True)
+        self.relu=nn.ReLU()
         # self.lrelu=nn.LeakyReLU()
-        # self.tanh=nn.Tanh()
-        self.l2=nn.Linear(self.n, self.m, False)
-        self.l3=nn.Linear(self.m, self.m, False)
+        self.tanh=nn.Tanh()
+        self.l2=nn.Linear(self.in_dimension, intermediate, True)
+        #self.additional=nn.Linear(intermediate, intermediate, False)
+        self.l3=nn.Linear(intermediate, self.out_dimension, True)
+        #self.sigmoid = nn.Sigmoid()
 
     def forward(self, X):
         X=self.l1(X)
         # X=self.r1(X)
-        # #X=self.lrelu(X)
-        # #X=self.tanh(X)
+        X=self.relu(X)
+        #X=self.tanh(X)
         X=self.l2(X)
-        # X=self.r2(X)
+        #X=self.additional(X)
+        X=self.relu(X)
         X=self.l3(X)
         # X=self.r1(X)
-        return X, torch.linalg.norm(X-self.Y)
+        #X=self.sigmoid(X)
+        return X
     
 class ComplicatedMLP(nn.Module):
     def __init__(self, n, m, Y):

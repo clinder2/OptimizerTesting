@@ -12,7 +12,7 @@ from CustomShampoo import CustomShampoo
 ref: https://en.wikipedia.org/wiki/Whitening_transformation, https://arxiv.org/pdf/2509.22938, https://arxiv.org/pdf/1512.00809
 """
 class WhiteningShampoo(Optimizer):
-    def __init__(self, groups, lr, debug=False, pure=False, beta2=.85):
+    def __init__(self, groups, lr, debug=False, pure=False, beta2=.85, **kwargs):
         data=dict(lr=lr)
         super().__init__(groups, data)
         self.device=groups[0].device

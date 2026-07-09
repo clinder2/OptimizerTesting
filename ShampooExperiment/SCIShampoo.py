@@ -3,7 +3,7 @@ from scipy.linalg import sqrtm
 
 """Squareroot-Cholesky-Inverse Shampoo"""
 class SCIShampoo(CustomShampoo):
-    def __init__(self, lr, W, beta2):
+    def __init__(self, lr, W, beta2, **kwargs):
         super().__init__(lr, W, beta2)
 
     def step(self):
@@ -25,14 +25,17 @@ class SCIShampoo(CustomShampoo):
                 B=.1*torch.eye(R.shape[0],device=self.device)+(R+R.T)/2
 
                 Lp=torch.linalg.cholesky_ex(A) #Cholesky decomp of L
-                Rp=torch.linalg.cholesky_ex(B) #Cholesky decomp of R
-                if Lp.info==0 and Rp.info==0: #successful Cholesky decomp
+                # Rp=torch.linalg.cholesky_ex(B) #Cholesky decomp of R
+                RpU=torch.linalg.cholesky_ex(B,upper=True) #Upper Cholesky decomp of R
+                if Lp.info==0 and RpU.info==0: #successful Cholesky decomp
                     # Lp=torch.linalg.inv_ex(Lp.L).inverse
                     # Rp=torch.linalg.inv_ex(Rp.L).inverse
                     Lp=Lp.L
-                    Rp=Rp.L
+                    # Rp=Rp.L
+                    RpU=RpU.L
                     Lp=torch.linalg.solve_triangular(Lp,torch.eye(Lp.shape[0],device=self.device),upper=False)
-                    Rp=torch.linalg.solve_triangular(Rp,torch.eye(Rp.shape[0],device=self.device),upper=False)
+                    #Rp=torch.linalg.solve_triangular(Rp,torch.eye(Rp.shape[0],device=self.device),upper=False) #default R
+                    Rp=torch.linalg.solve_triangular(RpU,torch.eye(RpU.shape[0],device=self.device),upper=True).T #upper R
                 else: #standard Shampoo update, Cholesky failed
                     Lp=self.mat_pow(L, 2)
                     Rp=self.mat_pow(R, 2) #.T better
@@ -41,7 +44,9 @@ class SCIShampoo(CustomShampoo):
                     print(f"failed on {self.iter}")
                     print(torch.allclose(A,A.T), torch.allclose(B,B.T), torch.linalg.norm(A,ord='fro'),torch.linalg.norm(B,ord='fro'))
                     self.fails+=1
+                #grad2=torch.tril(grad)
                 update=Lp@grad@Rp.T
+                #print(torch.allclose(RpU, torch.triu(RpU)), torch.allclose(update, torch.tril(update)))
                 
                 graft.add_statistics(grad) #update grafting state
                 graft_grad=graft.precondition_gradient(grad) #do grafting

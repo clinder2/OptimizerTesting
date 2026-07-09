@@ -116,7 +116,16 @@ def plot_losses():
     plt.show()
 
 if __name__=='__main__':
-    ev=True
+    optimizer=OPTS.SCI
+    n=40
+    with open(f"data/optimalHyperParams/Quad(n={n})_{optimizer.name}_hp.json", 'r') as f:
+        hyper_params=json.load(f)
+    #hyper_params={'learning_rate': .99, 'warmup_iters':.00001, 'lr_decay_iters':.01,'min_lr':6e-3}
+
+    loss, t = testQuad(optimizer, hyper_params, n, 2, 4000)
+    print(loss, t)
+    """
+    ev=False
     if ev:
         O=SCI
         n=50
@@ -132,7 +141,7 @@ if __name__=='__main__':
         h=2*n
         losses=[]
         hps=[]
-        for O in [CS]:
+        for O in [SCI]:
             if O==S:
                 with open(f"data/hyperparams/{m}(n={n},h={h},mult={mult})_S_hp.json", 'r') as f:
                     hp=json.load(f)
@@ -170,7 +179,7 @@ if __name__=='__main__':
     # np.save(f"data/losses/MLP2(n={n},h={h},mult={mult})-S.npy", np.array(losses[0]))
     # np.save(f"data/losses/MLP2(n={n},h={h},mult={mult})-CS.npy", np.array(losses[1]))
     # np.save(f"data/losses/MLP2(n={n},h={h},mult={mult})-S_P2.npy", np.array(losses[2]))
-
+"""
 ###IF UNSPECIFIED max_iters=2000
 
 ###rand MLP###

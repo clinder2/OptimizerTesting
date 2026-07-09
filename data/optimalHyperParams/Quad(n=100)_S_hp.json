@@ -1,0 +1,1 @@
+{"lr": 0.001, "warmup_iters": 0.1, "lr_decay_iters": 0.05, "min_lr": 0.1, "beta2": 0.999, "max_iters": 3999, "loss": 0.0, "time": 26.644378662109375}

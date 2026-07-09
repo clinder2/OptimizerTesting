@@ -11,7 +11,7 @@ to speed up inverse matrix power computations. Runs default update L^{-1/4}@G_t@
 experimental Cholesky update L'^{-1/4}@G_t@R'^{-1/4}, L'@L'.T=L, R'@R'.T=R, or scaled
 up approximation from Anil et al. G_t@R^{-1/2}"""
 class CustomShampoo(Optimizer):
-    def __init__(self, lr, W, p=4, chol=False, optimized=False, debug=False, beta2=.85):
+    def __init__(self, lr, W, p=4, chol=False, optimized=False, debug=False, beta2=.85, **kwargs):
         data=dict(lr=lr)
         super().__init__(W, data)
         self.device=W[0].device
@@ -72,14 +72,20 @@ class CustomShampoo(Optimizer):
                             
                             #Lp=self.sqrtm_lower_tri(Lp.L)
                             #Rp=self.sqrtm_lower_tri(Rp.L)
-                            
-                            Lp=Lp.L
-                            Rp=Rp.L
-                            Lp=torch.linalg.solve_triangular(Lp,torch.eye(Lp.shape[0],device=self.device),upper=False)
-                            Rp=torch.linalg.solve_triangular(Rp,torch.eye(Rp.shape[0],device=self.device),upper=False)
+
+                            Lp=inverse_sqrtm_newton_schulz(Lp.L,num_iters=5)
+                            Rp=inverse_sqrtm_newton_schulz(Rp.L,num_iters=5)
+
+                            #Lp=Lp.L
+                            #Rp=Rp.L
+                            #Lp=torch.linalg.solve_triangular(Lp,torch.eye(Lp.shape[0],device=self.device),upper=False)
+                            #Rp=torch.linalg.solve_triangular(Rp,torch.eye(Rp.shape[0],device=self.device),upper=False)
             
-                            #Lp=self.mat_pow(Lp.L, 1/2*self.p)
-                            #Rp=self.mat_pow(Rp.L, 1/2*self.p) #.T better
+                            # Lp=self.mat_pow(Lp.L, 1/2*self.p)
+                            # Rp=self.mat_pow(Rp.L, 1/2*self.p) #.T better
+
+                            # Lp=self.sqrtm_lower_triangular(Lp.L)
+                            # Rp=self.sqrtm_lower_triangular(Rp.L)
                             
                             # Lp=torch.linalg.inv_ex(Lp.L).inverse
                             # Rp=torch.linalg.inv_ex(Rp.L).inverse
@@ -117,7 +123,7 @@ class CustomShampoo(Optimizer):
 
     ### wrapper to call Scalable Shampoo ComputerPower for matrix inverses
     def mat_pow(self, X, p):
-        return ComputePower(X, p)
+        return ComputePower(X, p, iter_count=50)
         # if p==4:
         #     return sqrtm_newton_schulz(inverse_sqrtm_newton_schulz(X))
         # elif p==2:
@@ -128,7 +134,7 @@ class CustomShampoo(Optimizer):
     def zero_grad(self, set_to_none = True):
         super().zero_grad(set_to_none)
 
-    def sqrtm_newton_schulz(self, A, num_iters=10):
+    def sqrtm_newton_schulz(self, A, num_iters=15):
         """
         Computes the matrix square root of a positive semi-definite matrix using
         the Newton-Schulz iterative method in PyTorch.
@@ -187,6 +193,71 @@ class CustomShampoo(Optimizer):
                 sum_val = torch.sum(X[i, i:j] * X[i:j, j])
                 X[i, j] = (A[i, j] - sum_val) / (X[i, i] + X[j, j])
         return X.T
+
+    def sqrtm_lower_triangular(self, A: torch.Tensor) -> torch.Tensor:
+        """Compute the exact square root of a lower triangular matrix.
+
+        This assumes A is lower triangular and that the square root is also
+        lower triangular. The diagonal entries are computed as the elementwise
+        square roots, and the strictly lower entries are solved from the
+        quadratic matrix equations exactly.
+        """
+        if A.dim() != 2 or A.size(0) != A.size(1):
+            raise ValueError("Input must be a square matrix.")
+        if not torch.allclose(A, torch.tril(A)):
+            raise ValueError("Input must be lower triangular.")
+
+        n = A.size(0)
+        X = torch.zeros_like(A)
+        idx = torch.arange(n, device=A.device)
+        X[idx, idx] = torch.sqrt(A[idx, idx])
+
+        # for i in range(1,n):
+        #     M=X[:i,:i]+X[i,i]*torch.eye(i, device=A.device)
+        #     #print(M.shape, A[i,:i].shape)
+        #     x=torch.linalg.solve_triangular(M.T, A[i,:i].unsqueeze(-1).T, upper=True, left=False)
+        #     X[i,:i]=x.squeeze(-1)
+
+        # for j in range(n):
+        #     for i in range(j + 1, n):
+        #         sum_val = np.dot(X[i,:],X[:,j])
+        #         # sum_val = torch.tensor(0.0, device=A.device, dtype=A.dtype)
+        #         # for k in range(j + 1, i):
+        #         #     sum_val += X[i, k] * X[k, j]
+        #         denom = X[i, i] + X[j, j]
+        #         if denom == 0:
+        #             raise ValueError("Zero diagonal sum encountered while computing lower-triangular square root.")
+        #         X[i, j] = (A[i, j] - sum_val) / denom
+
+        #print(torch.norm(X@X-A,'fro'))
+
+        n = A.shape[0]
+        X = torch.zeros_like(A)
+        X.diagonal().copy_(torch.sqrt(A.diagonal()))
+
+        # for k in range(1, n):
+        #     n_k = n - k
+        #     rows = torch.arange(k, n, device=A.device)
+        #     cols = torch.arange(n_k, device=A.device)
+
+        #     U = X[k:, :n_k]         # shape (n-k, n-k)
+        #     V = X[:n_k, :n_k]       # shape (n-k, n-k)
+
+        #     mask = torch.tril(torch.ones((n_k, n_k),
+        #                                 dtype=torch.bool,
+        #                                 device=A.device),
+        #                     diagonal=-1)
+
+        #     sums = (U * V * mask).sum(dim=1)
+
+        #     X[rows, cols] = (A[rows, cols] - sums) / X[cols, cols]
+
+        X.copy_(A)
+        for i in range(10):
+            X=.5*(X+torch.linalg.solve_triangular(X, torch.eye(n), upper=False)@A)
+
+        #print(torch.norm(X@X-A,'fro'))
+        return X
 
 def inverse_sqrtm_newton_schulz(matrix: torch.Tensor, num_iters: int = 100):
     """
@@ -310,7 +381,7 @@ def ComputePower(mat_g, p,
   if shape[0] == 1:
     return identity
   alpha = -1.0/p
-  max_ev, _, _ = PowerIter(mat_g)
+  max_ev, _, _ = PowerIter(mat_g, num_iters=50)
   ridge_epsilon *= max_ev
   mat_g += ridge_epsilon * identity
   z = (1 + p) / (2 * torch.norm(mat_g))
