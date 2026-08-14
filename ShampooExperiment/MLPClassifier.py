@@ -4,11 +4,11 @@ import torch.optim as opt
 import torch.multiprocessing as mp
 from torch.utils.data import DataLoader, TensorDataset
 import math, time, copy, json, itertools
-from CustomShampoo import CustomShampoo
-from WhiteningShampoo import WhiteningShampoo
-from SCIShampoo import SCIShampoo
+# from CustomShampoo import CustomShampoo
+# from WhiteningShampoo import WhiteningShampoo
+# from SCIShampoo import SCIShampoo
 from Base import *
-from GridSearch import *
+#from GridSearch import *
 
 def get_uniform_normal_vectors(total_samples, in_dimension):
     x_uniform=torch.rand(total_samples//2,in_dimension)
@@ -27,7 +27,8 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
     warmup=hyperparams['warmup_iters']
     decay=hyperparams['lr_decay_iters']
     min_lr=hyperparams['min_lr']
-    beta2=hyperparams['beta2']
+    beta=hyperparams.get('beta', hyperparams.get('beta2'))
+    hyperparams['beta'] = beta
 
     vector_params = [p for p in model.parameters() if len(p.shape)<=1]
     mat_params = [p for p in model.parameters() if len(p.shape)>1]
@@ -92,7 +93,7 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
         if iter_num>max_iters: #5, 10
             break
     e=time.time()
-    print(loss, e-s, err, init_lr, name, "fails: ", optimizer.fails)
+    print(loss, e-s, err, init_lr, name)
     if debug:
         print("TRAINLOSS: ", loss)
         print("TRAINERROR: ", err)

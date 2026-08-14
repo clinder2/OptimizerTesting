@@ -1,3 +1,10 @@
+import os
+import sys
+
+ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+if ROOT_DIR not in sys.path:
+    sys.path.insert(0, ROOT_DIR)
+
 from TrainingScripts import *
 from MLPClassifier import *
 
@@ -16,7 +23,83 @@ fine_grid = {
     'lr_decay_iters': [.05,.1,.2,.3,.4,.7],
     'min_lr': [6e-5,6e-4,6e-2,1e-2,1e-1],
     'max_iters': [4000],
-    'beta2': [.85,.999]
+    'betas': [.85, .999],
+}
+
+# Extended fine grid including Muon / Stiefel hyperparameters
+updated_fine_grid = {
+    'lr': [.0001, .001, .01, .1, .9, .99],
+    'warmup_iters': [.05, .1, .4],
+    'lr_decay_iters': [.05, .2, .7],
+    'min_lr': [6e-5, 1e-1],
+    'max_iters': [2000],
+    # Use betas pairs for optimizers that expose (beta, beta2)-style args
+    'betas': [(0.9, 0.999), (0.8, 0.95), (0.7, 0.999)],
+    'momentum': [0.8, 0.9, 0.95],
+    'weight_decay': [1e-6, 1e-5],
+}
+
+SCS_updated_fine_grid = {
+    'lr': [.0001, .001, .01, .1, .9, .99],
+    'warmup_iters': [.05, .1, .4],
+    'lr_decay_iters': [.05, .2, .7],
+    'min_lr': [6e-5, 1e-1],
+    'max_iters': [2000],
+    'beta2': [0.999, 0.95, .8],
+}
+
+stiefelSGD_updated_fine_grid = {
+    'lr': [.0001, .001, .01, .1, .9, .99],
+    'warmup_iters': [.05, .1, .4],
+    'lr_decay_iters': [.05, .2, .7],
+    'min_lr': [6e-5, 1e-1],
+    'max_iters': [2000],
+    # Use betas pairs for optimizers that expose (beta, beta2)-style args
+    'momentum': [0.8, 0.9, 0.95],
+    'weight_decay': [1e-6, 1e-5],
+}
+
+stiefelAdam_updated_fine_grid = {
+    'lr': [.0001, .001, .01, .1, .9, .99],
+    'warmup_iters': [.05, .1, .4],
+    'lr_decay_iters': [.05, .2, .7],
+    'min_lr': [6e-5, 1e-1],
+    'max_iters': [2000],
+    # Use betas pairs for optimizers that expose (beta, beta2)-style args
+    'betas': [(0.9, 0.999), (0.8, 0.95), (0.7, 0.999)],
+}
+
+AdamW_updated_fine_grid = {
+    'lr': [.0001, .001, .01, .1, .9, .99],
+    'warmup_iters': [.05, .1, .4],
+    'lr_decay_iters': [.05, .2, .7],
+    'min_lr': [6e-5, 1e-1],
+    'max_iters': [2000],
+    # Use betas pairs for optimizers that expose (beta, beta2)-style args
+    'betas': [(0.9, 0.999), (0.8, 0.95), (0.7, 0.999)],
+    'weight_decay': [1e-6, 1e-5],
+}
+
+SGD_updated_fine_grid = {
+    'lr': [.0001, .001, .01, .1, .9, .99],
+    'warmup_iters': [.05, .1, .4],
+    'lr_decay_iters': [.05, .2, .7],
+    'min_lr': [6e-5, 1e-1],
+    'max_iters': [2000],
+    'momentum': [0.8, 0.9, 0.95],
+    'weight_decay': [1e-6, 1e-5],
+}
+
+updated_coarse_grid = {
+    'lr': [.01],
+    'warmup_iters': [.05],
+    'lr_decay_iters': [.2],
+    'min_lr': [6e-5],
+    'max_iters': [4000],
+    # Use betas pairs for optimizers that expose (beta, beta2)-style args
+    'betas': [(0.9, 0.999)],
+    'momentum': [0.8],
+    'weight_decay': [0.0],
 }
 
 coarse_grid = {
@@ -25,16 +108,33 @@ coarse_grid = {
     'lr_decay_iters': [.2,.3,.4],
     'min_lr': [6e-5,6e-2,1e-2],
     'max_iters': [4000],
-    'beta2': [.85,.999]
+    'beta': [.85,.999]
 }
 
 def grid_search(optimizer, model, grid=grid, num_workers=16):
-    hyperparams={'lr': 0, 'warmup_iters': 0, 'lr_decay_iters': 0, 'min_lr': 0}
+    # support optional hyperparameters like 'momentum', 'weight_decay', 'betas'
+    # Prefer 'betas' (pairs) when available; fall back to single 'beta' or legacy 'beta2'
+    ordered_keys=['lr','warmup_iters','lr_decay_iters','min_lr','max_iters']
+    # prefer betas if provided
+    if 'betas' in grid:
+        ordered_keys.append('betas')
+    elif 'beta' in grid:
+        ordered_keys.append('beta')
+    elif 'beta2' in grid:
+        ordered_keys.append('beta2')
+    # then other optional keys
+    for k in ['momentum','weight_decay']:
+        if k in grid:
+            ordered_keys.append(k)
 
-    hp_list=itertools.product(grid['lr'], grid['warmup_iters'], 
-                              grid['lr_decay_iters'], grid['min_lr'],
-                              grid['max_iters'], grid['beta2'])
-    hp_list=[h for h in hp_list if h[1]!=h[2]]
+    hp_product=itertools.product(*(grid[k] for k in ordered_keys))
+    # filter where warmup == decay if both present
+    hp_list=[]
+    for h in hp_product:
+        d=dict(zip(ordered_keys,h))
+        if 'warmup_iters' in d and 'lr_decay_iters' in d and d['warmup_iters']==d['lr_decay_iters']:
+            continue
+        hp_list.append(d)
 
     ctx=mp.get_context("spawn")
 
@@ -55,7 +155,7 @@ def grid_search(optimizer, model, grid=grid, num_workers=16):
             )
         elif model['model'] == 'Quad':
             output=pool.starmap(
-                grid_Search_Quad, 
+                _safe_grid_Search_Quad,
                 [
                     (
                         optimizer,
@@ -82,24 +182,40 @@ def grid_search(optimizer, model, grid=grid, num_workers=16):
                 ]
             )
 
-    hyperparams=min(output, key=lambda x: x['loss'])
+    # Filter out any worker errors and raise if all workers failed.
+    successful = [x for x in output if isinstance(x, dict)]
+    if not successful:
+        raise RuntimeError(f"All worker tasks failed. Sample errors: {output[:5]}")
+    hyperparams = min(successful, key=lambda x: x['loss'])
     return output, hyperparams
 
 
+def _safe_grid_Search_Quad(OP, hyperparams, n, rand_seed=2):
+    try:
+        return grid_Search_Quad(OP, hyperparams, n, rand_seed=rand_seed)
+    except Exception as exc:
+        import traceback
+        return {
+            'error': repr(exc),
+            'traceback': traceback.format_exc(),
+            'hyperparams': hyperparams,
+        }
+
+
 def grid_Search_MLPClassifier(OP, hyperparams, in_dimension, out_dimension, total_samples=100, test_samples=100, batch_size=100, rand_seed=2):
-    init_lr=hyperparams[0]
-    warmup=hyperparams[1]
-    decay=hyperparams[2]
-    min_lr=hyperparams[3]
-    max_iters=hyperparams[4]
-    beta2=hyperparams[5]
+    init_lr=hyperparams['lr']
+    warmup=hyperparams['warmup_iters']
+    decay=hyperparams['lr_decay_iters']
+    min_lr=hyperparams['min_lr']
+    beta=hyperparams.get('beta', hyperparams.get('beta2'))
+    max_iters = hyperparams['max_iters']
 
     hp_dict={
         'lr': init_lr,
         'warmup_iters': warmup,
         'lr_decay_iters': decay,
         'min_lr': min_lr,
-        'beta2': beta2,
+        'beta': beta,
         'max_iters': max_iters,
     }
 
@@ -115,17 +231,17 @@ def grid_Search_MLPClassifier(OP, hyperparams, in_dimension, out_dimension, tota
     hp_dict['error']=err
     return hp_dict
 
-if __name__=='__main__':
-    model = "MLPClassifier"
-    total_samples=100
-    test_samples=10
-    model={"model": model, "n": total_samples, "in_dimension": 10, "out_dimension": 1, "total_samples": total_samples, "test_samples": test_samples, "batch_size": 100}
-    for op in [OPTS.S, OPTS.CS, OPTS.SGD]:
-        output, hp=grid_search(op, model, fine_grid)
-        print(output)
-        print(hp)
-        with open(f"data/optimalHyperParams/{model['model']}(total_samples={total_samples})_{op.name}_hp.json", 'w') as f:
-            json.dump(hp, f)
+# if __name__=='__main__':
+#     model = "MLPClassifier"
+#     total_samples=100
+#     test_samples=10
+#     model={"model": model, "n": total_samples, "in_dimension": 10, "out_dimension": 1, "total_samples": total_samples, "test_samples": test_samples, "batch_size": 100}
+#     for op in [OPTS.S, OPTS.CS, OPTS.SGD]:
+#         output, hp=grid_search(op, model, fine_grid)
+#         print(output)
+#         print(hp)
+#         with open(f"data/optimalHyperParams/{model['model']}(total_samples={total_samples})_{op.name}_hp.json", 'w') as f:
+#             json.dump(hp, f)
 
     # for O in [S_P2]:
         # m="MLP2"

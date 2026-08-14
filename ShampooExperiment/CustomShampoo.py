@@ -75,6 +75,8 @@ class CustomShampoo(Optimizer):
 
                             Lp=inverse_sqrtm_newton_schulz(Lp.L,num_iters=5)
                             Rp=inverse_sqrtm_newton_schulz(Rp.L,num_iters=5)
+                            self.state[p]['Lp']=Lp
+                            self.state[p]['Rp']=Rp.T
 
                             #Lp=Lp.L
                             #Rp=Rp.L
@@ -94,11 +96,15 @@ class CustomShampoo(Optimizer):
                             self.fails+=1
                             Lp=self.mat_pow(self.state[p]['L'], self.p)
                             Rp=self.mat_pow(self.state[p]['R'], self.p)
+                            self.state[p]['Lp']=Lp
+                            self.state[p]['Rp']=Rp
                             print("fail")
                         update=Lp@grad@Rp
                     else: #just standard Shampoo
                         Lp=self.mat_pow(self.state[p]['L'], self.p) #L^{-1/4}
                         Rp=self.mat_pow(self.state[p]['R'], self.p) #R^{-1/4}
+                        self.state[p]['Lp']=Lp
+                        self.state[p]['Rp']=Rp
                         update=Lp@grad@Rp
                 #p.data-=g['lr']*update
                 graft.add_statistics(grad) #update grafting state
@@ -133,6 +139,9 @@ class CustomShampoo(Optimizer):
 
     def zero_grad(self, set_to_none = True):
         super().zero_grad(set_to_none)
+
+    def get_state(self):
+        return self.state
 
     def sqrtm_newton_schulz(self, A, num_iters=15):
         """

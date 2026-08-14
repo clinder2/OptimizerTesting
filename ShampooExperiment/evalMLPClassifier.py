@@ -1,3 +1,5 @@
+from cProfile import label
+
 from TrainingScripts import *
 from MLPClassifier import *
 
@@ -13,19 +15,22 @@ if __name__=='__main__':
     total_val_err=0
     val_errors=[]
     mean_iters=0
-    experiments=10
+    experiments=1
     lrs=[.3, .5, .1]
 
-    for curr_optimizer in [OPTS.CS]:
+    for curr_optimizer in [OPTS.MUON, OPTS.STIEFEL_ADAM]:
         losses=[]
         for rand_seed in range(experiments):
-        #for curr_optimizer in [OPTS.SGD]:
             optimizer=curr_optimizer
-            with open(f"data/optimalHyperParams/{model['model']}(total_samples=100)_{optimizer.name}_hp.json", 'r') as f:
-                hyper_params=json.load(f)
+            if curr_optimizer==OPTS.MUON or curr_optimizer==OPTS.STIEFEL_ADAM:
+                with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/Quad(n=100)_{optimizer.name}_hp.json", 'r') as f:
+                    hyper_params=json.load(f)
+            else:
+                with open(f"data/optimalHyperParams/{model['model']}(total_samples=100)_{optimizer.name}_hp.json", 'r') as f:
+                    hyper_params=json.load(f)
             if curr_optimizer==OPTS.CS or curr_optimizer==OPTS.S:
                 hyper_params['lr']=lrs[i]
-            hyper_params['lr']=lrs[i]
+            hyper_params['lr']=.5 if curr_optimizer==OPTS.MUON else hyper_params['lr']
             hyper_params['max_iters']=4000
                 
             loss, t, err, iters = trainMLPClassifier(optimizer, hyper_params, 10, 1, max_iters=hyper_params['max_iters'], 
@@ -34,22 +39,29 @@ if __name__=='__main__':
             losses.append(torch.Tensor(loss))
             total_val_err += err
             mean_iters+=iters
+            plt.plot(loss, label=f"{curr_optimizer.name}")
             #plt.plot(np.arange(len(loss)), loss, color=cmap(rand_seed%20), label=f"{optimizer.name}_{t:.2f}_seconds_val-err={err:.2f}")
 
-        total_val_err/=10
-        val_errors.append(total_val_err)
-        mean_iters/=experiments
-        print("ERROR, ", total_val_err, "iters: ", mean_iters)
-        losses=torch.nn.utils.rnn.pad_sequence(losses, True)
-        mean=np.mean(np.array(losses), axis=0)
-        plt.plot(np.arange(len(mean)), mean, color=cmap(i%6), linewidth=2, label=f"{optimizer.name}_mean")
-        std = np.std(np.array(losses), axis=0)
-        plt.fill_between(np.arange(len(mean)), mean - std, mean + std, color=cmap((i+1)%6), alpha=0.5, label=f"{optimizer.name}_std")
-        plt.xlabel('Iterations')
-        plt.ylabel('Loss')
-        #plt.title(f'{optimizer.name}-{mean_iters:.2f} iters, Validation Error: {total_val_err:.2f}')
-        plt.legend()
-        i+=1
-        #np.save(f"data/optimalHyperParams/{model['model']}(total_samples=100)_{optimizer.name}_mean.npy", mean)
-    plt.title(f"Mean and Std for S-{lrs[0]}, S-{lrs[1]}, and CS-{lrs[2]}")
+        if experiments>1:
+            total_val_err/=10
+            val_errors.append(total_val_err)
+            mean_iters/=experiments
+            print("ERROR, ", total_val_err, "iters: ", mean_iters)
+            losses=torch.nn.utils.rnn.pad_sequence(losses, True)
+            mean=np.mean(np.array(losses), axis=0)
+            plt.plot(np.arange(len(mean)), mean, color=cmap(i%6), linewidth=2, label=f"{optimizer.name}_mean")
+            std = np.std(np.array(losses), axis=0)
+            plt.fill_between(np.arange(len(mean)), mean - std, mean + std, color=cmap((i+1)%6), alpha=0.5, label=f"{optimizer.name}_std")
+            plt.xlabel('Iterations')
+            plt.ylabel('Loss')
+            #plt.title(f'{optimizer.name}-{mean_iters:.2f} iters, Validation Error: {total_val_err:.2f}')
+            plt.legend()
+            i+=1
+            #np.save(f"data/optimalHyperParams/{model['model']}(total_samples=100)_{optimizer.name}_mean.npy", mean)
+            plt.title(f"Mean and Std for S-{lrs[0]}, S-{lrs[1]}, and CS-{lrs[2]}")
+            plt.show()
+    plt.title("MLP run-muon and stiefelAdam")
+    plt.xlabel('Iterations')
+    plt.ylabel('Loss')
+    plt.legend()
     plt.show()

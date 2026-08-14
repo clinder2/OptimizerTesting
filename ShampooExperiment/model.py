@@ -23,13 +23,27 @@ class MatrixSimple(nn.Module):
         super().__init__()
         torch.manual_seed(i)
         self.A=torch.Tensor(A)
-        self.W=nn.Parameter(1*torch.randn(self.A.shape)+torch.eye(self.A.shape[0])) #torch.randn(self.A.shape)
+        mult=1 #1
+
+        # random_mat1 = torch.randn(self.A.shape)
+        # random_mat2 = torch.randn(self.A.shape)
+        # U, _ = torch.linalg.qr(random_mat1)
+        # Vt, _ = torch.linalg.qr(random_mat2)
+        # s_values = torch.logspace(0, -7, steps=self.A.shape[0])  # ranges from 1.0 down to 1e-7
+        # S = torch.diag(s_values)
+        # self.W = nn.Parameter(U @ S @ Vt)
+
+        self.W=nn.Parameter(mult*torch.randn(self.A.shape)+torch.eye(self.A.shape[0])) #torch.randn(self.A.shape)
 
     def forward(self):
-        G=2*(self.W-self.A)
+        ### old
+        #G=2*(self.W-self.A)
+
+        P=self.A.T@self.A
+        G=2*(P@self.W-P)
         # with torch.no_grad():
         #     self.W.grad=G
-        return G, torch.linalg.norm((self.W-self.A)**2,ord='fro')
+        return G, torch.linalg.norm((self.A@self.W-self.A)**2,ord='fro')
     
 
 class MLP(nn.Module):
@@ -38,7 +52,7 @@ class MLP(nn.Module):
         self.in_dimension=in_dimension
         self.out_dimension=out_dimension
         intermediate = (in_dimension+out_dimension)//2
-        intermediate = 2*in_dimension
+        intermediate = 1*in_dimension #2
         #self.r1=torch.nn.RMSNorm(self.in_dimension,elementwise_affine=False)
         #self.r2=torch.nn.RMSNorm(2*self.in_dimension,elementwise_affine=False)
         self.l1=nn.Linear(self.in_dimension, self.in_dimension, True)
