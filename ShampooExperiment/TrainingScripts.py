@@ -162,7 +162,7 @@ def testQuad(curr_Optimizer, hyper_params, n, rand_seed, max_iters=10000):
     # plt.show()
     return loss, diff_time
 
-def grid_Search_Quad(OP, hyperparams, n, rand_seed=2):
+def grid_Search_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,1]):
     iter_num=0
 
     init_lr=hyperparams['lr']
@@ -171,19 +171,10 @@ def grid_Search_Quad(OP, hyperparams, n, rand_seed=2):
     min_lr=hyperparams['min_lr']
     max_iters=hyperparams['max_iters']
     beta2=_resolve_beta2(hyperparams)
-    momentum=hyperparams.get('momentum', 0.9)
-    weight_decay=hyperparams.get('weight_decay', 0.0)
-    betas=hyperparams.get('betas', (0.9,0.999))
 
     torch.manual_seed(rand_seed)
 
-    random_mat1 = torch.randn(n,n)
-    random_mat2 = torch.randn(n,n)
-    U, _ = torch.linalg.qr(random_mat1)
-    Vt, _ = torch.linalg.qr(random_mat2)
-    s_values = torch.logspace(0, -5, steps=n)  # ranges from 1.0 down to 1e-5
-    S = torch.diag(s_values)
-    target= nn.Parameter(U @ S @ Vt)
+    target= make_target_param(n, rand_seed, spectrum)
     #target=torch.eye(n)
     #print(torch.linalg.cond(target))
 
@@ -194,7 +185,6 @@ def grid_Search_Quad(OP, hyperparams, n, rand_seed=2):
 
     s=time.time()
     loss=[]
-    i=0
     while True:
         lr = get_lr(iter_num, init_lr, warmup*max_iters, decay*max_iters, min_lr)
         for param_group in optimizer.param_groups:
@@ -202,7 +192,6 @@ def grid_Search_Quad(OP, hyperparams, n, rand_seed=2):
         G, L=model()
         L.backward()
         loss.append(L.item())
-        i+=1
         #print("Loss: ", L.item(), "lr: ", lr)
         optimizer.step()
         optimizer.zero_grad(set_to_none=True)
@@ -219,7 +208,7 @@ def grid_Search_Quad(OP, hyperparams, n, rand_seed=2):
     hp['max_iters']=iter_num-1
     hp['loss']=loss[-1]
     hp['time']=e-s
-    print(OP.name, 'time', e-s, hp['loss'], init_lr)
+    print(f"{OP.name}-time: {e-s}-loss: {hp['loss']}-lr: {init_lr}")
     return hp
 
 def get_Stats(W):
@@ -227,6 +216,18 @@ def get_Stats(W):
     inf_norm = torch.linalg.vector_norm(W, ord=torch.inf)
     spec_norm = torch.linalg.vector_norm(W, ord=2)
     return fro_norm, inf_norm, spec_norm
+
+def make_target_param(n, rand_seed, spectrum):
+    g=torch.Generator().manual_seed(rand_seed)
+    
+    random_mat1 = torch.randn((n,n),generator=g)
+    random_mat2 = torch.randn((n,n),generator=g)
+    U, _ = torch.linalg.qr(random_mat1)
+    Vt, _ = torch.linalg.qr(random_mat2)
+    s_values = torch.logspace(spectrum[0], spectrum[1], steps=n)  # ranges from 10^spectrum[0] to 10^spectrum[1]
+
+    S = torch.diag(s_values)
+    return nn.Parameter(U @ S @ Vt)
 
 def analysis_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5]):
     iter_num=0
@@ -236,56 +237,16 @@ def analysis_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5]):
     decay=hyperparams['lr_decay_iters']
     min_lr=hyperparams['min_lr']
     max_iters=hyperparams['max_iters']
-    beta2=_resolve_beta2(hyperparams)
-    betas=hyperparams.get('betas', (0.9,0.999))
 
-    torch.manual_seed(rand_seed)
+    #torch.manual_seed(rand_seed)
 
-    random_mat1 = torch.randn(n,n)
-    random_mat2 = torch.randn(n,n)
-    U, _ = torch.linalg.qr(random_mat1)
-    Vt, _ = torch.linalg.qr(random_mat2)
-    s_values = torch.logspace(spectrum[0], spectrum[1], steps=n)  # ranges from 10^spectrum[0] to 10^spectrum[1]
-
-    S = torch.diag(s_values)
-    target= nn.Parameter(U @ S @ Vt)
+    target= make_target_param(n, rand_seed, spectrum)
     #target=torch.eye(n)
     kappa=torch.linalg.cond(target)
 
     model=MatrixSimple(target,rand_seed)
     params=[p for p in model.parameters()]
 
-    match OP:
-        case OPTS.S:
-            optimizer=CustomShampoo(W=params,lr=init_lr,chol=False,beta2=beta2)
-        case 1:
-            optimizer=CustomShampoo(W=params,lr=init_lr,chol=True,beta2=beta2)
-        case OPTS.MUON:
-            muon_groups = [{
-                'params': params,
-                'kind': 'muon',
-                'lr': init_lr,
-                'momentum': hyperparams.get('momentum',0.9),
-                'ns_steps': 5,
-                'beta2': beta2,
-                'weight_decay': hyperparams.get('weight_decay',0.0),
-            }]
-            optimizer=MuonAdamW(muon_groups)
-        case OPTS.STIEFEL_SGD:
-            optimizer=VariationalStiefelSGD(params, lr=init_lr, momentum=hyperparams.get('momentum',0.9))
-        case OPTS.STIEFEL_ADAM:
-            optimizer=VariationalStiefelAdam(params, lr=init_lr, betas=hyperparams.get('betas',(0.9,0.999)))
-        case 2:
-            optimizer=WhiteningShampoo(groups=params,lr=init_lr,pure=True,beta2=beta2)
-        case 3:
-            optimizer=CustomShampoo(W=params,lr=init_lr,chol=True,p=2,beta2=beta2)
-        case OPTS.SCI:
-            optimizer=SCIShampoo(W=params,lr=init_lr,beta2=beta2)
-        case OPTS.SGD:
-            optimizer=opt.SGD(params, lr=init_lr)
-        case 9:
-            print("ADAM")
-            optimizer=opt.AdamW(params, init_lr)
     optimizer=make_optimizer(OP, params, hyperparams)
 
 
@@ -311,7 +272,35 @@ def analysis_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5]):
     print('time', e-s, loss[-1])
     return loss, e-s, kappa
 
-def analysis_Quad_Stats(OP, hyperparams, n, rand_seed=2):
+import functools
+def save_optimizer_step(func):
+  @functools.wraps(func)
+  def wrapper(self, *args, **kwargs):
+    # Save parameters before the update step
+    before_params = [
+        p.clone() for group in self.param_groups for p in group['params']
+    ]
+
+    # Run the original step function
+    result = func()
+
+    # Calculate and store the update difference
+    self.last_updates = []
+    idx = 0
+    for group in self.param_groups:
+      for p in group['params']:
+        if p.grad is not None:
+          diff = p.data - before_params[idx]
+          self.last_updates.append(diff)
+        else:
+          self.last_updates.append(torch.zeros_like(p.data))
+        idx += 1
+
+    return result
+
+  return wrapper
+
+def analysis_Quad_Stats(OP, hyperparams, n, spectrum=[0,0], rand_seed=2):
     iter_num=0
 
     init_lr=hyperparams['lr']
@@ -319,44 +308,21 @@ def analysis_Quad_Stats(OP, hyperparams, n, rand_seed=2):
     decay=hyperparams['lr_decay_iters']
     min_lr=hyperparams['min_lr']
     max_iters=hyperparams['max_iters']
-    beta2=_resolve_beta2(hyperparams)
 
-    model=MatrixSimple(torch.eye(n),rand_seed)
+    target= make_target_param(n, rand_seed, spectrum)
+    model=MatrixSimple(target,rand_seed)
     params=[p for p in model.parameters()]
 
-    match OP:
-        case OPTS.S:
-            optimizer=CustomShampoo(W=params,lr=init_lr,chol=False,beta2=beta2)
-        case 1:
-            optimizer=CustomShampoo(W=params,lr=init_lr,chol=True,beta2=beta2)
-        case OPTS.MUON:
-            muon_groups = [{
-                'params': params,
-                'kind': 'muon',
-                'lr': init_lr,
-                'momentum': hyperparams.get('momentum',0.9),
-                'ns_steps': 5,
-                'beta2': beta2,
-                'weight_decay': hyperparams.get('weight_decay',0.0),
-            }]
-            optimizer=MuonAdamW(muon_groups)
-        case OPTS.STIEFEL_SGD:
-            optimizer=VariationalStiefelSGD(params, lr=init_lr, momentum=hyperparams.get('momentum',0.9))
-        case OPTS.STIEFEL_ADAM:
-            optimizer=VariationalStiefelAdam(params, lr=init_lr, betas=hyperparams.get('betas',(0.9,0.999)))
-        case 2:
-            optimizer=WhiteningShampoo(groups=params,lr=init_lr,pure=True,beta2=beta2)
-        case 3:
-            optimizer=CustomShampoo(W=params,lr=init_lr,chol=True,p=2,beta2=beta2)
-        case OPTS.SCI:
-            optimizer=SCIShampoo(W=params,lr=init_lr,beta2=beta2)
-        case OPTS.SGD:
-            optimizer=opt.SGD(params, lr=init_lr)
+    optimizer=make_optimizer(OP, params, hyperparams)
+    optimizer.step = save_optimizer_step(optimizer.step).__get__(
+        optimizer, optimizer.__class__
+    )
 
     s=time.time()
     loss=[]
     stats = {"L_fro_norm": [], "L_inf_norm": [], "L_spec_norm": [], "R_fro_norm": [], "R_inf_norm": [],
              "R_spec_norm": [], "G_fro_norm": [], "G_inf_norm": [], "G_spec_norm": [], "L":[], "R":[], "G":[]}
+    stats['P'] = []
     i=0
     while True:
         lr = get_lr(iter_num, init_lr, warmup*max_iters, decay*max_iters, min_lr)
@@ -371,27 +337,30 @@ def analysis_Quad_Stats(OP, hyperparams, n, rand_seed=2):
         #print("Loss: ", L.item())
         optimizer.step()
         optimizer.zero_grad(set_to_none=True)
+        stats['G']+=optimizer.last_updates
+        stats['P']+=[model.W.clone()]
 
-        p = params[0]
-        state = optimizer.get_state()
-        L = state[p]['Lp']
-        R = state[p]['Rp']
-        stats['L'].append(L)
-        stats['R'].append(R)
-        stats['G'].append(G)
-        print(L.sum()-L.trace(), R.sum()-R.trace())
-        a, b, c = get_Stats(L)
-        stats['L_fro_norm'].append(a)
-        stats['L_inf_norm'].append(b)
-        stats['L_spec_norm'].append(c)
-        a, b, c = get_Stats(R)
-        stats['R_fro_norm'].append(a)
-        stats['R_inf_norm'].append(b)
-        stats['R_spec_norm'].append(c)
-        a, b, c = get_Stats(G)
-        stats['G_fro_norm'].append(a)
-        stats['G_inf_norm'].append(b)
-        stats['G_spec_norm'].append(c)
+        if OP==OPTS.S:
+            p = params[0]
+            state = optimizer.get_state()
+            L = state[p]['Lp']
+            R = state[p]['Rp']
+            stats['L'].append(L)
+            stats['R'].append(R)
+            stats['G'].append(G)
+            print(L.sum()-L.trace(), R.sum()-R.trace())
+            a, b, c = get_Stats(L)
+            stats['L_fro_norm'].append(a)
+            stats['L_inf_norm'].append(b)
+            stats['L_spec_norm'].append(c)
+            a, b, c = get_Stats(R)
+            stats['R_fro_norm'].append(a)
+            stats['R_inf_norm'].append(b)
+            stats['R_spec_norm'].append(c)
+            a, b, c = get_Stats(G)
+            stats['G_fro_norm'].append(a)
+            stats['G_inf_norm'].append(b)
+            stats['G_spec_norm'].append(c)
 
         iter_num+=1
         if iter_num>=max_iters:

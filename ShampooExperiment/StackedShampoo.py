@@ -4,7 +4,7 @@ from torch.optim import Optimizer
 from Grafting import AdagradGraft
 
 class StackedShampoo(Optimizer):
-    def __init__(self, param_groups, grafting=False, p=4, chol=False, optimized=False, debug=False, **kwargs):
+    def __init__(self, param_groups, grafting=False, p=4, chol=False, optimized=False, debug=False, numIters=20, **kwargs):
         super().__init__(param_groups, defaults={})
         self.device=param_groups[0]['params'][0].device
         #self.L=torch.eye(W[0].shape[0]) #left preconditioner
@@ -32,6 +32,8 @@ class StackedShampoo(Optimizer):
         self.padR = torch.eye(shape[1],device=self.device).unsqueeze(0).repeat(num_params,1,1)
         self.eps=0.001
         self.grafting=grafting
+        self.numIters=numIters
+        print('iters: ', self.numIters)
 
     def step(self):
         self.fails=0
@@ -74,20 +76,20 @@ class StackedShampoo(Optimizer):
 
                 if len(failedCholL)>0:
                   print('failedL')
-                  Lp[failedCholL]=ComputePower(state['L'][failedCholL], self.p, iter_count=50)
+                  Lp[failedCholL]=ComputePower(state['L'][failedCholL], self.p, iter_count=self.numIters)
                 if len(failedCholR)>0:
                   print('failedR')
-                  Rp[failedCholR]=ComputePower(state['R'][failedCholR], self.p, iter_count=50)
+                  Rp[failedCholR]=ComputePower(state['R'][failedCholR], self.p, iter_count=self.numIters)
                 successL=list(set(range(Lp.shape[0]))-set(failedCholL))
                 successR=list(set(range(Rp.shape[0]))-set(failedCholR))
                 if len(successL):
-                  Lp[successL]=inverse_sqrtm_newton_schulz(Lp[successL],5)
-                  #Lp[successL]=ComputePower(Lp[successL], self.p//2, iter_count=50)
+                  #Lp[successL]=inverse_sqrtm_newton_schulz(Lp[successL],20)
+                  Lp[successL]=ComputePower(Lp[successL], self.p//2, iter_count=self.numIters)
                 if len(successR):
                   #Rp[successR]=torch.linalg.solve_triangular(Rp[successR],torch.eye(Rp[0].shape[0],device=self.device).unsqueeze(0).repeat(Rp.shape[0],1,1),upper=True)
 
-                  Rp[successR]=inverse_sqrtm_newton_schulz(Rp[successR],5)
-                  #Rp[successR]=ComputePower(Rp[successR], self.p//2, iter_count=50)
+                  #Rp[successR]=inverse_sqrtm_newton_schulz(Rp[successR],20)
+                  Rp[successR]=ComputePower(Rp[successR], self.p//2, iter_count=self.numIters)
                 self.fails+=len(failedCholL)+len(failedCholR)
 
                 # print("success: ", Lp.shape, len(failedCholL), len(failedCholR))
@@ -111,8 +113,8 @@ class StackedShampoo(Optimizer):
                 #update=stacked_grads@Rp
             else: #just standard Shampoo
 
-                Lp=ComputePower(state['L'], self.p, iter_count=50) #L^{-1/4}
-                Rp=ComputePower(state['R'], self.p, iter_count=50) #R^{-1/4}
+                Lp=ComputePower(state['L'], self.p, iter_count=self.numIters) #L^{-1/4}
+                Rp=ComputePower(state['R'], self.p, iter_count=self.numIters) #R^{-1/4}
 
                 # for m in range(Lp.shape[0]):
                 #       print(m)
@@ -344,24 +346,3 @@ def ComputePower(mat_g, p,
     error = new_error
     count += 1
   return mat_root
-
-# n=500
-# batch=12
-# A = torch.rand((n,n))+300*torch.eye(n)
-# s=time.time()
-# ComputePower(A, 4)
-# e=time.time()
-# print(e-s)
-
-# s=time.time()
-# L, i = torch.linalg.cholesky_ex(A)
-# if i==0:
-#     # e=time.time()
-#     # print(e-s)
-#     #inverse_sqrtm_newton_schulz(L)
-#     ComputePower(L, 2)
-#     """"""
-# else:
-#    print("fail")
-# e=time.time()
-# print(e-s)

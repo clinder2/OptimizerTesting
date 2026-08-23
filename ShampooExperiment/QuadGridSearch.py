@@ -23,12 +23,19 @@ if __name__=='__main__':
     # with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad(n={n})_{op.name}_hp.json", 'w') as f:
     #     json.dump(hp, f)
 
-    op=OPTS.SCS
-    output, hp=grid_search(op, model, SCS_updated_fine_grid)
+    op=OPTS.MUON
+    output, hp=grid_search(op, model, Muon_updated_fine_grid)
     print(output)
     print(hp)
-    with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad(n={n})_{op.name}_hp.json", 'w') as f:
+    with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad_kappa=1_(n={n})_{op.name}_hp.json", 'w') as f:
         json.dump(hp, f)
+
+    # op=OPTS.SCS
+    # output, hp=grid_search(op, model, SCS_updated_fine_grid)
+    # print(output)
+    # print(hp)
+    # with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad_kappa=1_(n={n})_{op.name}_hp.json", 'w') as f:
+    #     json.dump(hp, f)
 
     # op=OPTS.AdamW
     # output, hp=grid_search(op, model, AdamW_updated_fine_grid)

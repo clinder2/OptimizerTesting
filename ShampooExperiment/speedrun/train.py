@@ -1,5 +1,5 @@
+from cProfile import label
 import os
-import rlcompleter
 import sys
 import itertools
 
@@ -83,7 +83,7 @@ def train(config, device_type, device, total_iters=100):
     NUM_HEADS = 6
 
     # Optimization
-    TOTAL_BATCH_SIZE = 2**18 # ~65K tokens per optimizer step
+    TOTAL_BATCH_SIZE = 2**16 # ~65K tokens per optimizer step
     EMBEDDING_LR = 0.6      # learning rate for token embeddings (Adam)
     UNEMBEDDING_LR = 0.004  # learning rate for lm_head (Adam)
     MATRIX_LR = config['matrix_lr']        # learning rate for matrix parameters (Muon)
@@ -96,7 +96,7 @@ def train(config, device_type, device, total_iters=100):
     BETA2=config['beta2']
 
     # Model size
-    DEPTH = 8 # number of transformer layers
+    DEPTH = config['depth'] # number of transformer layers-12
     DEVICE_BATCH_SIZE = 16  # per-device batch size (reduce if OOM)
 
     # Stiefel optimizer hyperparameters
@@ -189,9 +189,19 @@ def train(config, device_type, device, total_iters=100):
     # )
     # print("stiefel optimizer is None", stiefel_optimizer==None)
     
-    optimizer, s_optimizer = model.setup_optimizer(UNEMBEDDING_LR, EMBEDDING_LR, MATRIX_LR, 
-                                                   WEIGHT_DECAY, ADAM_BETAS, SCALAR_LR, BETA2, CHOL)
-
+    s_optimizer=None
+    stiefel_optimizer=None
+    if config['shampoo']:
+        optimizer, s_optimizer = model.setup_optimizer(UNEMBEDDING_LR, EMBEDDING_LR, MATRIX_LR, 
+            WEIGHT_DECAY, ADAM_BETAS, SCALAR_LR, BETA2, CHOL)
+    elif config['stiefel']:
+        optimizer, stiefel_optimizer = model.setup_optimizer_stiefel()
+    elif config['adamw']:
+        optimizer = model.setup_optimizer_adam(UNEMBEDDING_LR, EMBEDDING_LR, MATRIX_LR, 
+            WEIGHT_DECAY, ADAM_BETAS, SCALAR_LR)
+    else:
+        optimizer = model.setup_optimizer_muon(UNEMBEDDING_LR, EMBEDDING_LR, MATRIX_LR, 
+            WEIGHT_DECAY, ADAM_BETAS, SCALAR_LR)
     # torch.compile is unstable on MPS, only use on CUDA
     if device_type == "cuda":
         model = torch.compile(model, dynamic=False)
@@ -265,10 +275,15 @@ def train(config, device_type, device, total_iters=100):
                 group["momentum"] = muon_momentum
                 group["weight_decay"] = muon_weight_decay
         #Stiefel optimizer step
-        for group in s_optimizer.param_groups:
-            group["lr"] = group["initial_lr"] * lrm
+        if s_optimizer!=None:
+            for group in s_optimizer.param_groups:
+                group["lr"] = group["initial_lr"] * lrm
+            s_optimizer.step()
+        if stiefel_optimizer!=None:
+            for group in stiefel_optimizer.param_groups:
+                group["lr"] = group["initial_lr"] * lrm
+            stiefel_optimizer.step()
         optimizer.step()
-        s_optimizer.step()
         model.zero_grad(set_to_none=True)
 
         train_loss_f = train_loss.item()
@@ -295,7 +310,7 @@ def train(config, device_type, device, total_iters=100):
         remaining = max(0, TIME_BUDGET - total_training_time)
         smoothed_loss_arr.append(debiased_smooth_loss)
 
-        print(f"\rstep {step:05d} ({pct_done:.1f}%) | loss: {debiased_smooth_loss:.6f} | lrm: {lrm:.2f} | dt: {dt*1000:.0f}ms | tok/sec: {tok_per_sec:,} | mfu: {mfu:.1f}% | epoch: {epoch} | remaining: {remaining:.0f}s | fails: {s_optimizer.fails}    ", end="", flush=True)
+        print(f"\rstep {step:05d} ({pct_done:.1f}%) | loss: {debiased_smooth_loss:.6f} | lrm: {lrm:.2f} | dt: {dt*1000:.0f}ms | tok/sec: {tok_per_sec:,} | mfu: {mfu:.1f}% | epoch: {epoch} | remaining: {remaining:.0f}s | fails: {s_optimizer.fails if s_optimizer!= None else 0}    ", end="", flush=True)
         
         # GC management (Python's GC causes ~500ms stalls)
         if step == 0:
@@ -332,15 +347,14 @@ def train(config, device_type, device, total_iters=100):
     else:
         peak_vram_mb = 0.0
 
-    # if SHAMPOO and CS==False:
-    #     np.save(f'lr={SHAMPOO_LR}_{DEPTH}_{step}_S_loss_arr.npy', loss_arr)
-    #     np.save(f'lr={SHAMPOO_LR}_{DEPTH}_{step}_S_smoothed_loss_arr.npy', smoothed_loss_arr)
-    # elif CS==True:
-    #     np.save(f'lr={SHAMPOO_LR}_{DEPTH}_{step}_nograft_CS_loss_arr.npy', loss_arr)
-    #     np.save(f'lr={SHAMPOO_LR}_{DEPTH}_{step}_nograft_CS_smoothed_loss_arr.npy', smoothed_loss_arr)
-    # else:
-    #     np.save('loss_arr.npy', loss_arr)
-    #     np.save('smoothed_loss_arr.npy', smoothed_loss_arr)
+    if config['shampoo']:
+        np.save(f'SHAMPOO_loss_arr.npy', loss_arr)
+    elif config['stiefel']:
+        np.save(f'sim_STIEFELADAM_loss_arr.npy', loss_arr)
+    elif config['adamw']:
+        np.save(f'sim_ADAM_loss_arr.npy', loss_arr)
+    else:
+        np.save(f'sim_MUON_loss_arr.npy', loss_arr)
 
     print("---")
     print(config)
@@ -388,35 +402,88 @@ if __name__=='__main__':
         'beta2': [0.999, 0.95, .8],
     }
 
-    matrix_lr_grid = [.001, .04, .1, .8, .9, .99]
-    beta2_grid = [0.999, 0.95, .8]
-    warmdown_ratio_grid = [.05, .2, .7]
-    model_scales = [1]
+    matrix_lr_grid = [.04]
+    beta2_grid = [0.999]
+    warmdown_ratio_grid = [.2]
+    model_scales = [20]
     batch_size=[2**16] #original grid: [2**15,2**16,2**18,2**20], [2**15,2**16,2**17]
-    chol_grid = [False, True]
+    chol_grid = [False]
     hp_list=itertools.product(model_scales, matrix_lr_grid, beta2_grid, warmdown_ratio_grid, batch_size, chol_grid)
     settings = [dict(zip(['model_scale', 'matrix_lr', 'beta2', 'warmdown_ratio', 'total_batch_size', 'CHOL'], vals)) for vals in hp_list]
        
     device_type = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device(device_type)
 
+    stiefel_beta1_grid = [0.8]
+    stiefel_beta2_grid = [0.95]
+    stiefel_lr_grid = [.001] #original Adam grid: [1e-4, 3e-4, 1e-3, 4e-2], original SGD grid: [3e-4, 1e-3, 4e-2]
+    stiefel_momentum_grid = [0.99] #original grid: [0.5,0.85,0.9,0.99]
+    model_scales = [20]
+    batch_size=[2**16] #original grid: [2**15,2**16,2**18,2**20], [2**15,2**16,2**17]
+    stiefel_type=['Adam']
+    layers=[6]
+    config=settings[0]
+
     import csv
-    # with open("S_360s_hp_sweeps.tsv", 'r') as f:
-    #     r=csv.reader(f,delimiter='\t')
-    #     i=0
-    #     for row in r:
-    #         if i==1:
-    #             print(row[-1].keys())
-    #         print(i, row[-1])
-    #         i+=1
-    for config in settings:
-        print(config)
-        result=train(config, device_type, device, total_iters=500)
-        with open(f"{"C" if config['CHOL']==True else ""}S_360s_hp_sweeps.tsv", 'a', newline='') as f:
-            writer = csv.writer(f, delimiter='\t')
-            if f.tell() == 0:
-                writer.writerow([k for k in result.keys()])
-            writer.writerow([result[k] for k in result.keys()])
+    with open("/Users/christopherlinder/Desktop/OptimizerTesting/ShampooExperiment/speedrun/CS_360s_hp_sweeps.tsv", 'r') as f:
+        r=csv.DictReader(f,delimiter='\t')
+        i=0
+        data=[]
+        for row in r:
+            row={k:float(v) for k, v in row.items()}
+            data.append(row)
+        data=sorted(data, key=lambda d: d['loss'])
+        print(data[0])
+
+    import matplotlib.pyplot as plt
+    a=np.load('/Users/christopherlinder/Desktop/OptimizerTesting/sim_ADAM_loss_arr.npy')
+    b=np.load('/Users/christopherlinder/Desktop/OptimizerTesting/sim_MUON_loss_arr.npy')
+    c=np.load('/Users/christopherlinder/Desktop/OptimizerTesting/sim_STIEFELADAM_loss_arr.npy')
+    print(c)
+    plt.plot(a, color='red', label='Adam')
+    plt.plot(b, color='green', label='Muon')
+    plt.plot(c, color='blue', label='StiefelAdam')
+    # t1=0
+    # t2=0
+    # for i in range(1,4):
+    #     a=np.load(f'/Users/christopherlinder/Desktop/OptimizerTesting/ShampooExperiment/speedrun/12_6961_CS{i}_loss_arr.npy')
+    #     plt.plot(a, color='red')
+    #     t1+=np.mean(np.abs(np.diff(a)))
+    #     a=np.load(f'/Users/christopherlinder/Desktop/OptimizerTesting/ShampooExperiment/speedrun/12_6961_S{i}_loss_arr.npy')
+    #     plt.plot(a, color='blue')
+    #     t2+=np.mean(np.abs(np.diff(a)))
+    # print(t1/3, t2/3)
+
+    plt.xlabel('Iterations')
+    plt.ylabel('Loss')
+    plt.title(rf'S v. CS')
+    plt.legend()
+    #plt.plot(c, color='green')
+    plt.show()
+
+    config['shampoo']=False
+    config['stiefel']=False
+    config['adamw']=True
+    config['depth']=6
+    #result=train(config,device_type,device,total_iters=150)
+
+    config['stiefel']=True
+    config['adamw']=False
+    #result=train(config,device_type,device,total_iters=150)
+
+    config['stiefel']=False
+    config['adamw']=False
+    print(config)
+    result=train(config,device_type,device,total_iters=150)
+
+    # config['stiefel']=False
+    # result=train(config,device_type,device,total_iters=500)
+
+       # with open(f"{"C" if config['CHOL']==True else ""}S_360s_hp_sweeps.tsv", 'a', newline='') as f:
+        #     writer = csv.writer(f, delimiter='\t')
+        #     if f.tell() == 0:
+        #         writer.writerow([k for k in result.keys()])
+        #     writer.writerow([result[k] for k in result.keys()])
                 
     # config['CS']=True
     # train(config, device_type, device)

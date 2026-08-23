@@ -48,6 +48,17 @@ SCS_updated_fine_grid = {
     'beta2': [0.999, 0.95, .8],
 }
 
+Muon_updated_fine_grid = {
+    'lr': [.0001, .001, .01, .99]+list(np.arange(.1,1,.05)),
+    'warmup_iters': list(np.arange(.05,1,.05)),
+    'lr_decay_iters': list(np.arange(.05,1,.05)),
+    'min_lr': [6e-5, 1e-1],
+    'max_iters': [2000],
+    'beta2': [0.999, 0.95, .8],
+    'momentum': [0.8, 0.9, 0.95],
+    'weight_decay': [1e-6, 1e-5],
+}
+
 stiefelSGD_updated_fine_grid = {
     'lr': [.0001, .001, .01, .1, .9, .99],
     'warmup_iters': [.05, .1, .4],

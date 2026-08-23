@@ -66,7 +66,29 @@ def triangular_sqrt_wavefront(A, radius=None):
 
     return S
 
-n=64
-A=torch.triu(10*torch.rand((n,n)))
-S=triangular_sqrt_wavefront(A)
-print(torch.linalg.norm(A-S@S,ord='fro'))
+def Heron_Sqrt(A: torch.Tensor):
+    # norm_A=torch.linalg.norm(A,ord='fro')
+    # norm_A/=norm_A
+    # A/=norm_A
+
+    X=torch.sqrt(A)
+    E=torch.zeros_like(A)
+    I=torch.eye(A.shape[0])
+    X=I
+    for i in range(100):
+        X=1/2*(X+torch.linalg.solve_triangular(X, I, upper=True)@A)
+        # E=(A-X@X-X@E)@torch.linalg.solve_triangular((X+E), I, upper=True)
+        # X+=E
+        #print('X: ', X)
+    return X
+
+
+n=100
+A=torch.triu(torch.rand((n,n)))+10*torch.eye(n)
+print(A)
+X=Heron_Sqrt(A)
+print(X[0])
+print(A[0])
+print(torch.linalg.norm(A-X@X,ord='fro'))
+# S=triangular_sqrt_wavefront(A)
+# print(torch.linalg.norm(A-S@S,ord='fro'))

@@ -1,14 +1,17 @@
 from TrainingScripts import *
 
 if __name__ == '__main__':
-    n=4
+    n=100
     rand_seed=3
-    O=OPTS.S
-    with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/Quad(n=2)_{O.name}_hp.json", 'r') as f:
+    O=OPTS.SS
+    with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad(n=100)_{O.name}_hp.json", 'r') as f:
         hyper_params=json.load(f)
-    hyper_params['max_iters']=7000
+    hyper_params['max_iters']=2000
+    hyper_params['grafting']=True
+    hyper_params['numIters']=20
     print(hyper_params)
-    loss, t, stats = analysis_Quad_Stats(O, hyper_params, n, rand_seed)
+    spectrum=[0,-.00005]
+    loss, t, stats = analysis_Quad_Stats(O, hyper_params, n, spectrum, rand_seed)
 
     # Keep all stats in-memory in a local dict `saved_stats`.
     import numpy as np

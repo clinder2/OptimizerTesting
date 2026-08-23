@@ -144,7 +144,7 @@ def make_optimizer(optimizer_type: OPTS, params, hyperparams: dict, **kwargs):
                     kind='SCS', params=group_params, lr=lr,
                     beta2=beta2,
                 ))
-            return StackedShampoo(param_groups, chol=True, grafting=hyperparams['grafting'])
+            return StackedShampoo(param_groups, chol=True, grafting=hyperparams['grafting'], numIters=hyperparams['numIters'])
         case OPTS.SS:
             param_groups=[]
             for shape in sorted({p.shape for p in params}):
@@ -153,7 +153,7 @@ def make_optimizer(optimizer_type: OPTS, params, hyperparams: dict, **kwargs):
                     kind='SS', params=group_params, lr=lr,
                     beta2=beta2,
                 ))
-            return StackedShampoo(param_groups, chol=False, grafting=hyperparams['grafting'])
+            return StackedShampoo(param_groups, chol=False, grafting=hyperparams['grafting'],  numIters=hyperparams['numIters'])
         case OPTS.EXS:
             param_groups=[]
             for shape in sorted({p.shape for p in params}):
