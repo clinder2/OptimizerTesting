@@ -1,0 +1,18 @@
+[project]
+name = "shampoo-experiment"
+version = "0.1.0"
+description = "Muon / StiefelAdam / Shampoo optimizer comparison experiments"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.2",
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+    "scipy>=1.10",
+    "sympy>=1.12",
+]
+
+[tool.uv]
+# This directory is a collection of standalone scripts run in place (e.g.
+# `python3 QuadGridSearch.py`), not an importable package, so there's nothing
+# to build/install for itself -- `uv sync` should only manage dependencies.
+package = false
