@@ -18,12 +18,10 @@ grid = {
 }
 
 fine_grid = {
-    'lr': [.0001, .001, .01, .1, .2, .8, .9, .99],
+    'lr': [.0001, .001, .01, .1, .5, .8, .9, .99],
     'warmup_iters': [.05,.1,.2,.3,.4],
-    'lr_decay_iters': [.05,.1,.2,.3,.4,.7],
-    'min_lr': [6e-5,6e-4,6e-2,1e-2,1e-1],
-    'max_iters': [4000],
-    'betas': [.85, .999],
+    'lr_decay_iters': [.05,.1,.2,.3,.4,.7,1],
+    'min_lr': [6e-5,6e-2,1e-1],
 }
 
 # Extended fine grid including Muon / Stiefel hyperparameters

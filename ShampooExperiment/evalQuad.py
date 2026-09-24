@@ -39,7 +39,7 @@ if __name__=='__main__':
         #     hyper_params['lr_decay_iters']=.45#.9 #kappa=1
         stats=False
 
-        spec=[0,-5]
+        spec=[0,0]
         for numIters in [20]:
             times[curr_optimizer]=0
             hyper_params['numIters']=numIters
@@ -47,7 +47,7 @@ if __name__=='__main__':
             runs=10
             cmap = plt.colormaps['tab20'] 
             colors = cmap(np.linspace(0, 1, runs))
-            for j in range(2,3):
+            for j in range(runs):
                 hyper_params['grafting']=True
                 #print("hp: ", hyper_params)
                 loss, t, kappa, target = analysis_Quad(optimizer, hyper_params, n, rand_seed=j, spectrum=spec, eye=False)
