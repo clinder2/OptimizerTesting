@@ -163,7 +163,15 @@ def save_grid_output_tsv(output, tsv_path):
     print(f"Saved {len(rows)} grid-search rows to {tsv_path}")
 
 
-def grid_search(optimizer, model, grid=grid, num_workers=16, tsv_path=None):
+# Default worker count: honor a SLURM allocation's --cpus-per-task if present,
+# otherwise fall back to the number of visible CPUs. Avoids silently
+# oversubscribing (or undersubscribing) a cluster node's cores.
+DEFAULT_NUM_WORKERS = int(
+    os.environ.get("SLURM_CPUS_PER_TASK", os.cpu_count() or 16)
+)
+
+
+def grid_search(optimizer, model, grid=grid, num_workers=DEFAULT_NUM_WORKERS, tsv_path=None):
     # support optional hyperparameters like 'momentum', 'weight_decay', 'betas'
     # Prefer 'betas' (pairs) when available; fall back to single 'beta' or legacy 'beta2'
     ordered_keys=['lr','warmup_iters','lr_decay_iters','min_lr','max_iters']
