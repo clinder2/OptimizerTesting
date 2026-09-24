@@ -1,5 +1,6 @@
 import os
 import sys
+import csv
 
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 if ROOT_DIR not in sys.path:
@@ -120,7 +121,49 @@ coarse_grid = {
     'beta': [.85,.999]
 }
 
-def grid_search(optimizer, model, grid=grid, num_workers=16):
+def save_grid_output_tsv(output, tsv_path):
+    """Write every hyperparameter config and its final loss from a grid_search
+    sweep to a tab-separated file, one row per config (including failed runs).
+
+    The column set is the union of all keys seen across rows, so it adapts
+    automatically to whatever hyperparameters a given optimizer's grid sweeps
+    (e.g. Muon's 'momentum'/'weight_decay' vs StiefelAdam's 'betas'), rather
+    than hardcoding a fixed schema.
+    """
+    rows = []
+    for row in output:
+        if not isinstance(row, dict):
+            continue
+        flat = dict(row)
+        # Failed runs carry a nested 'hyperparams' dict and a (potentially
+        # multi-line) traceback; flatten/trim these so they fit a tsv row.
+        if 'hyperparams' in flat and isinstance(flat['hyperparams'], dict):
+            flat['hyperparams'] = json.dumps(flat['hyperparams'])
+        if 'traceback' in flat:
+            flat['traceback'] = str(flat['traceback']).replace('\n', ' | ')
+        rows.append(flat)
+
+    if not rows:
+        return
+
+    fieldnames = []
+    seen = set()
+    for row in rows:
+        for k in row.keys():
+            if k not in seen:
+                seen.add(k)
+                fieldnames.append(k)
+
+    os.makedirs(os.path.dirname(os.path.abspath(tsv_path)), exist_ok=True)
+    with open(tsv_path, 'w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t', restval='')
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(row)
+    print(f"Saved {len(rows)} grid-search rows to {tsv_path}")
+
+
+def grid_search(optimizer, model, grid=grid, num_workers=16, tsv_path=None):
     # support optional hyperparameters like 'momentum', 'weight_decay', 'betas'
     # Prefer 'betas' (pairs) when available; fall back to single 'beta' or legacy 'beta2'
     ordered_keys=['lr','warmup_iters','lr_decay_iters','min_lr','max_iters']
@@ -191,8 +234,11 @@ def grid_search(optimizer, model, grid=grid, num_workers=16):
                 ]
             )
 
+    if tsv_path is not None:
+        save_grid_output_tsv(output, tsv_path)
+
     # Filter out any worker errors and raise if all workers failed.
-    successful = [x for x in output if isinstance(x, dict)]
+    successful = [x for x in output if isinstance(x, dict) and 'loss' in x]
     if not successful:
         raise RuntimeError(f"All worker tasks failed. Sample errors: {output[:5]}")
     hyperparams = min(successful, key=lambda x: x['loss'])
@@ -207,6 +253,7 @@ def _safe_grid_Search_Quad(OP, hyperparams, n, rand_seed=2):
         return {
             'error': repr(exc),
             'traceback': traceback.format_exc(),
+            'optimizer': OP.name,
             'hyperparams': hyperparams,
         }
 
