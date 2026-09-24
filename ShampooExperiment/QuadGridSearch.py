@@ -12,6 +12,15 @@ from GridSearch import *
 #from StiefelOptimizers import MuonAdamW
 #from GridSearch import updated_fine_grid, updated_coarse_grid, grid_search
 
+# Compute output paths relative to the repo root instead of a hardcoded,
+# machine-specific absolute path, so this script also works unmodified when
+# deployed on another machine/cluster (e.g. PACE).
+DATA_DIR = os.path.abspath(os.path.join(ROOT_DIR, os.pardir, "data"))
+HP_DIR = os.path.join(DATA_DIR, "optimalHyperParams")
+SWEEP_DIR = os.path.join(DATA_DIR, "hyperparams")
+os.makedirs(HP_DIR, exist_ok=True)
+os.makedirs(SWEEP_DIR, exist_ok=True)
+
 if __name__=='__main__':
     model = "Quad"
     n=100 #100
@@ -25,10 +34,13 @@ if __name__=='__main__':
 
     op=OPTS.MUON
     print(Muon_updated_fine_grid)
-    output, hp=grid_search(op, model, Muon_updated_fine_grid)
+    output, hp=grid_search(
+        op, model, Muon_updated_fine_grid,
+        tsv_path=os.path.join(SWEEP_DIR, f"Quad_n={n}_{op.name}_gridsweep.tsv"),
+    )
     print(output)
     print(hp)
-    with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad_kappa=1_(n={n})_{op.name}_hp.json", 'w') as f:
+    with open(os.path.join(HP_DIR, f"NewQuad_kappa=1_(n={n})_{op.name}_hp.json"), 'w') as f:
         json.dump(hp, f)
 
     # op=OPTS.SCS
@@ -53,10 +65,13 @@ if __name__=='__main__':
     #     json.dump(hp, f)
 
     op=OPTS.STIEFEL_ADAM
-    output, hp=grid_search(op, model, stiefelAdam_updated_fine_grid)
+    output, hp=grid_search(
+        op, model, stiefelAdam_updated_fine_grid,
+        tsv_path=os.path.join(SWEEP_DIR, f"Quad_n={n}_{op.name}_gridsweep.tsv"),
+    )
     print(output)
     print(hp)
-    with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad(n={n})_{op.name}_hp.json", 'w') as f:
+    with open(os.path.join(HP_DIR, f"NewQuad(n={n})_{op.name}_hp.json"), 'w') as f:
         json.dump(hp, f)
 
     # op=OPTS.STIEFEL_SGD

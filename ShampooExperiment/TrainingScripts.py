@@ -201,10 +201,13 @@ def grid_Search_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,1]):
     e=time.time()
     del optimizer
     del model
-    hp={'lr':init_lr, 'warmup_iters': warmup, 'lr_decay_iters': decay, 'min_lr': min_lr}
+    # Start from a copy of the swept hyperparameters so every key present in the
+    # grid (e.g. Muon's 'momentum'/'weight_decay', StiefelAdam's 'betas') is
+    # preserved in the saved record, instead of only whitelisting a few keys.
+    hp=dict(hyperparams)
     hp['beta']=beta2
-    if 'betas' in hyperparams:
-        hp['betas']=hyperparams['betas']
+    hp['optimizer']=OP.name
+    hp['rand_seed']=rand_seed
     hp['max_iters']=iter_num-1
     hp['loss']=loss[-1]
     hp['time']=e-s
