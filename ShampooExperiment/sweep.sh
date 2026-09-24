@@ -1,6 +1,14 @@
 #!/bin/bash
 set -euo pipefail
 
+# Pin each worker process to a single thread so grid_search()'s multiprocessing
+# Pool (one process per hyperparameter trial) doesn't oversubscribe the node's
+# cores with extra BLAS/OMP threads on top of the process-level parallelism.
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+
 # -----------------------------------------------------------------------------
 # Python venv setup with uv
 
