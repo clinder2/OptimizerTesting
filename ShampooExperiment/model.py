@@ -43,7 +43,7 @@ class MatrixSimple(nn.Module):
         G=2*(self.P@self.W-self.P)
         # with torch.no_grad():
         #     self.W.grad=G
-        return G, torch.linalg.norm((self.A@self.W-self.A)**2,ord='fro')
+        return G, ((self.A@self.W-self.A)**2).sum()
     
 
 class MLP(nn.Module):

@@ -18,12 +18,10 @@ grid = {
 }
 
 fine_grid = {
-    'lr': [.0001, .001, .01, .1, .2, .8, .9, .99],
+    'lr': [.001, .01, .1, .2, .8, .9, .99],
     'warmup_iters': [.05,.1,.2,.3,.4],
-    'lr_decay_iters': [.05,.1,.2,.3,.4,.7],
-    'min_lr': [6e-5,6e-4,6e-2,1e-2,1e-1],
-    'max_iters': [4000],
-    'betas': [.85, .999],
+    'lr_decay_iters': [.1,.2,.3,.4,.7,1],
+    'min_lr': [6e-5,6e-2,1e-1],
 }
 
 # Extended fine grid including Muon / Stiefel hyperparameters
@@ -49,33 +47,33 @@ SCS_updated_fine_grid = {
 }
 
 Muon_updated_fine_grid = {
-    'lr': [.0001, .001, .01, .99]+list((10*np.arange(.1,1,.05))/10),
-    'warmup_iters': list(np.arange(.05,1,.05)),
-    'lr_decay_iters': list(np.arange(.05,1,.05)),
-    'min_lr': [6e-5, 1e-1],
-    'max_iters': [2000],
+    'lr': [.001, .01, .1, .2, .8, .9, .99],
+    'warmup_iters': [.05,.1,.2,.3,.4],
+    'lr_decay_iters': [.1,.2,.3,.4,.7,1],
+    'min_lr': [6e-5,6e-2,1e-1],
+    'max_iters': [1000],
     'beta2': [0.999, 0.95, .8],
     'momentum': [0.8, 0.9, 0.95],
     'weight_decay': [1e-6, 1e-5],
 }
 
 stiefelSGD_updated_fine_grid = {
-    'lr': [.0001, .001, .01, .1, .9, .99],
-    'warmup_iters': [.05, .1, .4],
-    'lr_decay_iters': [.05, .2, .7],
-    'min_lr': [6e-5, 1e-1],
-    'max_iters': [2000],
+    'lr': [.001, .01, .1, .2, .8, .9, .99],
+    'warmup_iters': [.05,.1,.2,.3,.4],
+    'lr_decay_iters': [.1,.2,.3,.4,.7,1],
+    'min_lr': [6e-5,6e-2,1e-1],
+    'max_iters': [1000],
     # Use betas pairs for optimizers that expose (beta, beta2)-style args
     'momentum': [0.8, 0.9, 0.95],
     'weight_decay': [1e-6, 1e-5],
 }
 
 stiefelAdam_updated_fine_grid = {
-    'lr': [.0001, .001, .01, .1, .9, .99],
-    'warmup_iters': [.05, .1, .4],
-    'lr_decay_iters': [.05, .2, .7],
-    'min_lr': [6e-5, 1e-1],
-    'max_iters': [2000],
+    'lr': [.001, .01, .1, .2, .8, .9, .99],
+    'warmup_iters': [.05,.1,.2,.3,.4],
+    'lr_decay_iters': [.1,.2,.3,.4,.7,1],
+    'min_lr': [6e-5,6e-2,1e-1],
+    'max_iters': [1000],
     # Use betas pairs for optimizers that expose (beta, beta2)-style args
     'betas': [(0.9, 0.999), (0.8, 0.95), (0.7, 0.999)],
 }

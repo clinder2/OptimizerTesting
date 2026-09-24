@@ -52,12 +52,12 @@ if __name__=='__main__':
     # with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad(n={n})_{op.name}_hp.json", 'w') as f:
     #     json.dump(hp, f)
 
-    # op=OPTS.STIEFEL_ADAM
-    # output, hp=grid_search(op, model, stiefelAdam_updated_fine_grid)
-    # print(output)
-    # print(hp)
-    # with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad(n={n})_{op.name}_hp.json", 'w') as f:
-    #     json.dump(hp, f)
+    op=OPTS.STIEFEL_ADAM
+    output, hp=grid_search(op, model, stiefelAdam_updated_fine_grid)
+    print(output)
+    print(hp)
+    with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad(n={n})_{op.name}_hp.json", 'w') as f:
+        json.dump(hp, f)
 
     # op=OPTS.STIEFEL_SGD
     # output, hp=grid_search(op, model, stiefelSGD_updated_fine_grid)
