@@ -43,14 +43,22 @@ if __name__ == '__main__':
     hyper_params['max_iters']=2000
     hyper_params['grafting']=True
     hyper_params['numIters']=20
-    hyper_params['lr_decay_iters']=.15
-    #hyper_params['lr']=.5
+    hyper_params['lr_decay_iters']=.08
+    #hyper_params['betas']=(.99,.99)
+    # hyper_params['lr']=.5
+    # hyper_params['warmup_iters']=.4
     print("hp: ", hyper_params)
-    loss, t, stats = analysis_Quad_Stats(O, hyper_params, n, [0,0], rand_seed)
+    loss, t, stats, kappa = analysis_Quad_Stats(O, hyper_params, n, [0,0], rand_seed=rand_seed)
     plt.plot(np.log(loss))
-    #plt.plot(loss)
+    plt.xlabel('iter')
+    plt.ylabel('Log Loss (base 10)')
+    plt.title(rf'StiefelAdam-Quadratic Problem with $\kappa={kappa:.2f}$')
+    plt.legend()
     plt.show()
-    plotSpectra(stats['G'])
+    # for p in stats['P']:
+    #     print(torch.diag(p@p.T))
+    #     print(torch.linalg.norm(p@p.T-torch.eye(n), ord='fro'))
+    plotSpectra(stats['P'])
 
     # Keep all stats in-memory in a local dict `saved_stats`.
     a=True
@@ -131,8 +139,8 @@ if __name__ == '__main__':
             #ani.save("S_n=4_L_R_G.mp4", writer=writer)
             plt.show()
         elif 'G' in saved_stats and 'P' in saved_stats:
-            G_arr = saved_stats['G']
-            P_arr = saved_stats['P']
+            G_arr = saved_stats['G'][700:800]
+            P_arr = saved_stats['P'][700:800]
 
             assert G_arr.ndim == 3
 
@@ -158,6 +166,7 @@ if __name__ == '__main__':
             def update(frame):
                 imG.set_data(G_arr[frame])
                 imP.set_data(P_arr[frame])
+                print(f"{700+frame} diff: {torch.linalg.norm(torch.eye(n)-P_arr[frame], ord='fro')}")
                 axes[0].set_title(f'G (step {frame})')
                 axes[1].set_title(f'P (step {frame})')
                 fig.suptitle(f'G/P matrices — frame {frame+1}/{T}')
@@ -166,7 +175,7 @@ if __name__ == '__main__':
             windowms=10
             ani = animation.FuncAnimation(fig, update, frames=T, interval=windowms, blit=False)
             plt.tight_layout()
-            writer = FFMpegWriter(fps=20, metadata=dict(artist='Me'), bitrate=1000)
+            writer = FFMpegWriter(fps=20, metadata=dict(artist='Me'), bitrate=100)
 
             #writer = animation.PillowWriter(fps=20)
             #ani.save("StiefelAdam.mp4", writer=writer)

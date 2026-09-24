@@ -217,19 +217,22 @@ def get_Stats(W):
     spec_norm = torch.linalg.vector_norm(W, ord=2)
     return fro_norm, inf_norm, spec_norm
 
-def make_target_param(n, rand_seed, spectrum):
+def make_target_param(n, rand_seed, spectrum, eye=False):
     g=torch.Generator().manual_seed(rand_seed)
     
     random_mat1 = torch.randn((n,n),generator=g)
+    #U, S, Vt = torch.linalg.svd(random_mat1)
     random_mat2 = torch.randn((n,n),generator=g)
     U, _ = torch.linalg.qr(random_mat1)
     Vt, _ = torch.linalg.qr(random_mat2)
     s_values = torch.logspace(spectrum[0], spectrum[1], steps=n)  # ranges from 10^spectrum[0] to 10^spectrum[1]
 
     S = torch.diag(s_values)
+    if eye:
+        return nn.Parameter((U @ S @ Vt)+torch.eye(n))
     return nn.Parameter(U @ S @ Vt)
 
-def analysis_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5]):
+def analysis_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5], eye=False):
     iter_num=0
 
     init_lr=hyperparams['lr']
@@ -240,7 +243,7 @@ def analysis_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5]):
 
     #torch.manual_seed(rand_seed)
 
-    target= make_target_param(n, rand_seed, spectrum)
+    target= make_target_param(n, rand_seed, spectrum, eye)
     #target=torch.eye(n)
     kappa=torch.linalg.cond(target)
 
@@ -270,7 +273,7 @@ def analysis_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5]):
             break
     e=time.time()
     print('time', e-s, loss[-1])
-    return loss, e-s, kappa
+    return loss, e-s, kappa, target
 
 import functools
 def save_optimizer_step(func):
@@ -300,7 +303,7 @@ def save_optimizer_step(func):
 
   return wrapper
 
-def analysis_Quad_Stats(OP, hyperparams, n, spectrum=[0,0], rand_seed=2):
+def analysis_Quad_Stats(OP, hyperparams, n, spectrum=[0,0], rand_seed=2, eye=False):
     iter_num=0
 
     init_lr=hyperparams['lr']
@@ -309,7 +312,7 @@ def analysis_Quad_Stats(OP, hyperparams, n, spectrum=[0,0], rand_seed=2):
     min_lr=hyperparams['min_lr']
     max_iters=hyperparams['max_iters']
 
-    target= make_target_param(n, rand_seed, spectrum)
+    target= make_target_param(n, rand_seed, spectrum, eye)
     model=MatrixSimple(target,rand_seed)
     params=[p for p in model.parameters()]
 
@@ -367,7 +370,7 @@ def analysis_Quad_Stats(OP, hyperparams, n, spectrum=[0,0], rand_seed=2):
             break
     e=time.time()
     print('time', e-s, loss[-1])
-    return loss, e-s, stats
+    return loss, e-s, stats, torch.linalg.cond(target)
 
 def trainMLP2(optimizer, hyperparams, n, h, mult, samples=10, batch_size=10, i=2):
 

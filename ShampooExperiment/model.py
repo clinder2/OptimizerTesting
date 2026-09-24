@@ -24,6 +24,7 @@ class MatrixSimple(nn.Module):
         torch.manual_seed(i)
         self.A=torch.Tensor(A)
         mult=1 #1
+        self.P=self.A.T@self.A
 
         # random_mat1 = torch.randn(self.A.shape)
         # random_mat2 = torch.randn(self.A.shape)
@@ -39,8 +40,7 @@ class MatrixSimple(nn.Module):
         ### old
         #G=2*(self.W-self.A)
 
-        P=self.A.T@self.A
-        G=2*(P@self.W-P)
+        G=2*(self.P@self.W-self.P)
         # with torch.no_grad():
         #     self.W.grad=G
         return G, torch.linalg.norm((self.A@self.W-self.A)**2,ord='fro')

@@ -49,7 +49,7 @@ SCS_updated_fine_grid = {
 }
 
 Muon_updated_fine_grid = {
-    'lr': [.0001, .001, .01, .99]+list(np.arange(.1,1,.05)),
+    'lr': [.0001, .001, .01, .99]+list((10*np.arange(.1,1,.05))/10),
     'warmup_iters': list(np.arange(.05,1,.05)),
     'lr_decay_iters': list(np.arange(.05,1,.05)),
     'min_lr': [6e-5, 1e-1],

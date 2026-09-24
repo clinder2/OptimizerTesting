@@ -24,6 +24,7 @@ if __name__=='__main__':
     #     json.dump(hp, f)
 
     op=OPTS.MUON
+    print(Muon_updated_fine_grid)
     output, hp=grid_search(op, model, Muon_updated_fine_grid)
     print(output)
     print(hp)
