@@ -34,6 +34,20 @@ MuonAdamW = StiefelOptimizers.MuonAdamW
 VariationalStiefelSGD = StiefelOptimizers.VariationalStiefelSGD
 VariationalStiefelAdam = StiefelOptimizers.VariationalStiefelAdam
 
+# Fail loudly here at import time (instead of a confusing "NoneType is not
+# callable" deep inside make_optimizer) if StiefelOptimizers.py didn't
+# actually define these factories -- e.g. a stale/corrupt __pycache__ entry
+# for StiefelOptimizers.py silently shadowed the current source.
+for _name in ("MuonAdamW", "VariationalStiefelSGD", "VariationalStiefelAdam"):
+    if not callable(globals()[_name]):
+        raise ImportError(
+            f"StiefelOptimizers.{_name} is not callable after loading {wrapper_path} "
+            "(got: " + repr(globals()[_name]) + "). This usually means a stale "
+            "compiled __pycache__/*.pyc file is being used instead of the current "
+            "source -- delete __pycache__ directories and retry."
+        )
+del _name
+
 class OPTS(IntEnum):
     S=0  #Shampoo
     CS=1 #Shampoo+chol
