@@ -278,6 +278,102 @@ def analysis_Quad(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5], eye=False):
     print('time', e-s, loss[-1])
     return loss, e-s, kappa, target
 
+
+def analysis_Quad_LossDecrease(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5], eye=False):
+    """Per-step empirical loss-decrease decomposition (arXiv 2606.04662v1 eq. 4.1).
+
+    For L(W) = ||AW - A||_F^2 with P = A^T A, the gradient is G(W) = 2(PW - P)
+    and the Hessian operator is the *constant* linear map H[Z] = 2*P@Z (i.e.
+    curvature does not depend on W). This makes the paper's local
+    approximation
+
+        ΔD(W, Z) ≈ <G, Z> - 1/2 <Z, H[Z]>
+
+    an EXACT identity here rather than a first/second-order Taylor
+    approximation, where Z = W_before - W_after is the (negated) actual
+    parameter update taken by the optimizer at that step (so that <G, Z> > 0
+    corresponds to a descent direction). This gives a natural per-step
+    decomposition of how much of each optimizer's loss decrease comes from
+    first-order gradient alignment ("first_order") vs. how much curvature
+    penalizes that gain ("curvature"), directly comparable between Muon and
+    StiefelAdam on the same target matrix / hyperparameters.
+
+    Returns a dict of per-iteration lists:
+      - 'loss': L(W_before) at each step (same convention as analysis_Quad)
+      - 'first_order': <G, Z>
+      - 'curvature': 1/2 <Z, H[Z]>
+      - 'predicted_decrease': first_order - curvature (should equal actual_decrease
+        up to floating point, since the identity is exact for this quadratic model)
+      - 'actual_decrease': L(W_before) - L(W_after), computed exactly (sanity check)
+    plus scalar 'kappa' (condition number) and 'target' (the A matrix used) and
+    'time' (wall-clock seconds), matching analysis_Quad's other return values.
+    """
+    iter_num=0
+
+    init_lr=hyperparams['lr']
+    warmup=hyperparams['warmup_iters']
+    decay=hyperparams['lr_decay_iters']
+    min_lr=hyperparams['min_lr']
+    max_iters=hyperparams['max_iters']
+
+    target=make_target_param(n, rand_seed, spectrum, eye)
+    kappa=torch.linalg.cond(target)
+
+    model=MatrixSimple(target, rand_seed)
+    params=[p for p in model.parameters()]
+
+    optimizer=make_optimizer(OP, params, hyperparams)
+
+    # H[Z] = 2*P@Z is a constant linear operator for this quadratic loss.
+    P=model.P
+
+    stats={'loss': [], 'first_order': [], 'curvature': [], 'predicted_decrease': [], 'actual_decrease': []}
+
+    s=time.time()
+    while True:
+        lr=get_lr(iter_num, init_lr, warmup*max_iters, decay*max_iters, min_lr)
+        for param_group in optimizer.param_groups:
+            param_group['lr']=lr
+
+        G, L=model()
+        L.backward()
+        stats['loss'].append(L.item())
+
+        with torch.no_grad():
+            W_before=model.W.detach().clone()
+            G_detached=G.detach()
+
+        optimizer.step()
+        optimizer.zero_grad(set_to_none=True)
+
+        with torch.no_grad():
+            W_after=model.W.detach().clone()
+            # Z is the negated actual parameter update, so <G, Z> > 0 for a
+            # genuine descent step.
+            Z=W_before-W_after
+            H_Z=2*(P@Z)
+            first_order=torch.sum(G_detached*Z).item()
+            curvature=0.5*torch.sum(Z*H_Z).item()
+            predicted_decrease=first_order-curvature
+
+            R_after=model.A@W_after-model.A
+            L_after=(R_after**2).sum().item()
+            actual_decrease=L.item()-L_after
+
+        stats['first_order'].append(first_order)
+        stats['curvature'].append(curvature)
+        stats['predicted_decrease'].append(predicted_decrease)
+        stats['actual_decrease'].append(actual_decrease)
+
+        iter_num+=1
+        if iter_num>=max_iters:
+            break
+    e=time.time()
+    stats['time']=e-s
+    stats['kappa']=kappa
+    stats['target']=target
+    return stats
+
 import functools
 def save_optimizer_step(func):
   @functools.wraps(func)

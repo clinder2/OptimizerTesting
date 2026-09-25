@@ -1,78 +1,88 @@
-from token import OP
-
-import scipy as sp
+import copy
+import os
 
 from TrainingScripts import *
 
+ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+DATA_DIR = os.path.abspath(os.path.join(ROOT_DIR, os.pardir, "data"))
+HP_DIR = os.path.join(DATA_DIR, "optimalHyperParams")
+
 if __name__=='__main__':
     n=100
-    i=0
-    a=""
-    times={}
-    for curr_optimizer in [OPTS.MUON, OPTS.STIEFEL_ADAM]:
-    #for curr_optimizer in [OPTS.SS, OPTS.SCS]:
-        optimizer=curr_optimizer
-        if curr_optimizer!=OPTS.S and curr_optimizer!=OPTS.CS:
-            a="New"
-        else:
-            a=""
-        if curr_optimizer!=OPTS.EXS:
-            with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/{a}Quad(n=100)_{curr_optimizer.name}_hp.json", 'r') as f:
-                hyper_params=json.load(f)
-                print(hyper_params)
-        else:
-            hyper_params={"lr": 0.5, "warmup_iters": 0.05, "lr_decay_iters": 0.7, "min_lr": 0.1, "beta2": 0.999}
-        hyper_params['max_iters']=2000
-        if curr_optimizer==OPTS.MUON:
-            hyper_params['lr']=.5
-            hyper_params['lr_decay_iters']=1
-            #hyper_params['min_lr']=6e-5
-            hyper_params['warmup_iters']=.00
-            print("a")
-        if curr_optimizer==OPTS.STIEFEL_ADAM:
-            hyper_params['lr_decay_iters']=.08#.9 #kappa=1
-            #hyper_params['lr_decay_iters']=.04#.9 #kappa=100k
-            #hyper_params['min_lr']=.3
-        # if curr_optimizer==OPTS.STIEFEL_ADAM and i==0:
-        #     hyper_params['lr']=.4
-        #     hyper_params['warmup_iters']=.5
-        #     hyper_params['lr_decay_iters']=.45#.9 #kappa=1
-        stats=False
+    rand_seed=2
+    spectrum=[0,0]  # kappa ~= 1 (well-conditioned target)
+    max_iters=2000
 
-        spec=[0,-5]
-        for numIters in [20]:
-            times[curr_optimizer]=0
-            hyper_params['numIters']=numIters
-            losses=[]
-            runs=10
-            cmap = plt.colormaps['tab20'] 
-            colors = cmap(np.linspace(0, 1, runs))
-            for j in range(2,3):
-                hyper_params['grafting']=True
-                #print("hp: ", hyper_params)
-                loss, t, kappa, target = analysis_Quad(optimizer, hyper_params, n, rand_seed=j, spectrum=spec, eye=False)
-                losses.append(np.log(loss))
-                times[curr_optimizer]+=t
-                if not stats:
-                    plt.plot(np.arange(len(loss)), np.log(loss), color=colors[i], label=f"{optimizer.name}, {t:.2f}_sec, det={torch.det(target)}")
-            i+=1
+    # StiefelAdam's own fine-grid hyperparameter sweep is still running on
+    # PACE. Until that completes, use Muon's swept hyperparameters for BOTH
+    # optimizers so the loss-decrease comparison below is apples-to-apples
+    # (same lr schedule / iteration budget). Once StiefelAdam's sweep lands,
+    # go back to loading each optimizer's own hp json separately.
+    with open(os.path.join(HP_DIR, "NewQuad(n=100)_MUON_hp.json"), 'r') as f:
+        shared_hp=json.load(f)
+    shared_hp['max_iters']=max_iters
 
-            if stats:
-                mean=np.mean(losses,axis=0)
-                std=np.std(losses,axis=0)
-                times[curr_optimizer]/=runs
-                temp=0
-                for v in std:
-                    temp+=np.mean(v)
-                print("std: ", temp/runs)
-                plt.plot(np.arange(len(mean)), mean, label=f"{curr_optimizer.name}")
-                plt.fill_between(np.arange(len(mean)), mean - std, mean + std, alpha=0.5)
-                print(f"mean time {optimizer.name}: {times[curr_optimizer]}")
+    optimizers=[OPTS.MUON, OPTS.STIEFEL_ADAM]
+    cmap=plt.colormaps['tab20']
+    colors=cmap(np.linspace(0, 1, len(optimizers)))
+
+    results={}
+    for color, curr_optimizer in zip(colors, optimizers):
+        hyper_params=copy.deepcopy(shared_hp)
+        stats=analysis_Quad_LossDecrease(curr_optimizer, hyper_params, n, rand_seed=rand_seed, spectrum=spectrum, eye=False)
+        results[curr_optimizer.name]=(stats, color)
+        print(f"{curr_optimizer.name}: time={stats['time']:.2f}s, final_loss={stats['loss'][-1]:.6g}")
+
+    kappa=results[optimizers[0].name][0]['kappa']
+
+    # --- Loss curve (as before) ---
+    plt.figure()
+    for name, (stats, color) in results.items():
+        plt.plot(np.arange(len(stats['loss'])), np.log(stats['loss']), color=color,
+                  label=f"{name}, {stats['time']:.2f}_sec")
     plt.xlabel('iter')
     plt.ylabel('Log Loss (base 10)')
-    plt.title(rf'Muon vs StiefelAdam-Quadratic Problem with $\kappa={kappa:.2f}$')
+    plt.title(rf'Muon vs StiefelAdam-Quadratic Problem with $\kappa={float(kappa):.2f}$')
     plt.legend()
-    #ax=plt.subplot(111)
-    #ax.legend(bbox_to_anchor=(.5, -.15), loc='lower center', ncol=3)
-    #plt.tight_layout()
+
+    # --- Empirical loss-decrease decomposition (arXiv 2606.04662v1 eq. 4.1) ---
+    # ΔD(W, Z) = <G, Z> - 1/2 <Z, H[Z]>, where Z is the (negated) actual
+    # parameter update taken by the optimizer at that step. For this
+    # quadratic model, H is the constant operator H[Z] = 2*P@Z, so this
+    # decomposition is EXACT (not a local approximation): it splits each
+    # step's true loss decrease into a first-order gradient-alignment term
+    # and a curvature penalty term, letting us compare how much curvature
+    # "costs" each optimizer on the same target matrix / hyperparameters.
+    fig, axes=plt.subplots(2, 1, sharex=True, figsize=(8, 8))
+    for name, (stats, color) in results.items():
+        axes[0].plot(stats['first_order'], color=color, label=f"{name} first-order <G,Z>")
+        axes[0].plot(stats['curvature'], color=color, linestyle='--', label=f"{name} curvature 1/2<Z,H[Z]>")
+
+        cum_first=np.cumsum(stats['first_order'])
+        cum_curv=np.cumsum(stats['curvature'])
+        axes[1].plot(cum_first, color=color, label=f"{name} cumulative first-order")
+        axes[1].plot(cum_curv, color=color, linestyle='--', label=f"{name} cumulative curvature")
+
+        total_first=float(np.sum(stats['first_order']))
+        total_curv=float(np.sum(stats['curvature']))
+        total_decrease=stats['loss'][0]-stats['loss'][-1]
+        ratio=total_curv/total_first if total_first != 0 else float('nan')
+        print(f"{name}: total loss decrease={total_decrease:.6g}, "
+              f"sum(first_order)={total_first:.6g}, sum(curvature)={total_curv:.6g}, "
+              f"curvature/first_order ratio={ratio:.4f}")
+
+    # symlog since per-step first_order/curvature can span several orders of
+    # magnitude (large early in training, small once converged) while
+    # curvature stays >= 0 (H = 2*P is PSD) and first_order can occasionally
+    # dip slightly negative for a non-descent step.
+    axes[0].set_yscale('symlog')
+    axes[0].set_ylabel('per-step term (symlog)')
+    axes[0].set_title(r'Per-step decomposition: $\langle G,Z\rangle$ vs $\frac{1}{2}\langle Z,H[Z]\rangle$')
+    axes[0].legend(fontsize=8)
+    axes[1].set_ylabel('cumulative term')
+    axes[1].set_xlabel('iter')
+    axes[1].set_title('Cumulative first-order gain vs curvature penalty')
+    axes[1].legend(fontsize=8)
+    plt.tight_layout()
+
     plt.show()
