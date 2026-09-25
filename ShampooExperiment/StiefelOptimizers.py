@@ -1,10 +1,22 @@
 """Adapter module that imports Muon and Variational Stiefel optimizers
 from local repositories and exposes lightweight factory wrappers.
 
-This module does not reimplement algorithms; it looks for
-`~/Desktop/nanochat` and `~/Desktop/VariationalStiefelOptimizer` and imports
-the implementations found there. If those paths are not present on `sys.path`,
-they are temporarily added.
+This module does not reimplement algorithms; it looks for the
+VariationalStiefelOptimizer repo (default `~/Desktop/VariationalStiefelOptimizer`,
+overridable via the `VAR_STIEFEL_PATH` environment variable -- e.g. on a
+cluster where that repo lives at a different path) and imports the
+implementations found there.
+
+Note: the external repo's optimizer file is also named `StiefelOptimizers.py`
+(same as this file) intentionally -- do NOT try to load it with a plain
+`import StiefelOptimizers` from anywhere in this repo. Whenever a script is
+run from inside this directory, Python always puts that script's own
+directory at the front of `sys.path`, so a bare `import StiefelOptimizers`
+will *always* resolve to this local wrapper file first, no matter what other
+paths are also on `sys.path`. Instead, load the external file by explicit
+file path via `importlib.util.spec_from_file_location(...)` +
+`exec_module(...)`, exactly as done below -- this bypasses `sys.path`
+search entirely and is immune to the name collision.
 """
 import sys
 import os
@@ -15,7 +27,12 @@ from typing import Iterable
 import torch
 
 # Attempt to import Stiefel optimizer implementations from your local repos.
-VAR_STIEFEL_PATH = os.path.expanduser("~/Desktop/VariationalStiefelOptimizer")
+# Overridable via env var so each machine/cluster can point at its own
+# checkout without editing this file (e.g. on PACE:
+# `export VAR_STIEFEL_PATH=/storage/home/.../VariationalStiefelOptimizer`).
+VAR_STIEFEL_PATH = os.environ.get(
+    "VAR_STIEFEL_PATH", os.path.expanduser("~/Desktop/VariationalStiefelOptimizer")
+)
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
@@ -28,19 +45,37 @@ StiefelAdam = None
 try:
     external_path = os.path.join(VAR_STIEFEL_PATH, "StiefelOptimizers.py")
     if not os.path.exists(external_path):
-        raise FileNotFoundError(f"Cannot find StiefelOptimizers.py in {VAR_STIEFEL_PATH}")
+        raise FileNotFoundError(
+            f"Cannot find StiefelOptimizers.py in {VAR_STIEFEL_PATH}. "
+            "Set the VAR_STIEFEL_PATH environment variable to the directory "
+            "containing your VariationalStiefelOptimizer checkout."
+        )
 
-    spec = importlib.util.spec_from_file_location("external_StiefelOptimizers", external_path)
+    # Load by explicit file path under a unique module name so this never
+    # collides with sys.modules['StiefelOptimizers'] (which Base.py binds to
+    # *this* wrapper module) -- even though both files share the same
+    # filename. Temporarily save/restore sys.modules around the exec so any
+    # sibling imports inside the external file (e.g. `utils_StiefelOptimizers`)
+    # resolve fresh from VAR_STIEFEL_PATH rather than any stale cached entry.
+    external_mod_name = "external_StiefelOptimizers"
+    spec = importlib.util.spec_from_file_location(external_mod_name, external_path)
     external_mod = importlib.util.module_from_spec(spec)
     saved_sys_path = list(sys.path)
+    saved_module = sys.modules.pop(external_mod_name, None)
     if VAR_STIEFEL_PATH not in sys.path:
         sys.path.insert(0, VAR_STIEFEL_PATH)
+    sys.modules[external_mod_name] = external_mod
     try:
         spec.loader.exec_module(external_mod)
     finally:
         sys.path[:] = saved_sys_path
+        if saved_module is not None:
+            sys.modules[external_mod_name] = saved_module
+        else:
+            sys.modules.pop(external_mod_name, None)
     StiefelSGD = getattr(external_mod, "StiefelSGD", None)
     StiefelAdam = getattr(external_mod, "StiefelAdam", None)
+    print(f"Loaded StiefelSGD/StiefelAdam from {external_path}")
 except Exception as e:
     STIEFEL_IMPORT_ERROR = e
 
