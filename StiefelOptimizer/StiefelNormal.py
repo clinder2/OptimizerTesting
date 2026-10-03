@@ -12,6 +12,8 @@ import torch
 from torch.optim import Optimizer
 from ShampooExperiment.model import MatrixSimple
 from ShampooExperiment.TrainingScripts import make_target_param
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def skew(A: torch.Tensor):
@@ -29,7 +31,7 @@ class StiefelGeod(Optimizer):
     def __init__(self, params, defaults={}):
         super().__init__(params, defaults)
         for g in self.param_groups:
-            g['lr'] = .1
+            g['lr'] = defaults['lr']
 
     def step(self):
         for g in self.param_groups:
@@ -58,6 +60,49 @@ class StiefelGeod(Optimizer):
             # for p, delta in zip(g['params'], Ht.unbind(0)):
             #     p.data -= delta
 
+"""
+modification of stiefgeod from https://arxiv.org/pdf/physics/9806030 to incorporate EMA of current gradient
+with transported direction
+"""
+class StiefelGeodMomentum(Optimizer):
+    def __init__(self, params, defaults={}):
+        super().__init__(params, defaults)
+        self.beta=.2
+        for g in self.param_groups:
+            g['lr'] = defaults['lr']
+            g['Ht'] = None
+
+    def step(self):
+        for g in self.param_groups:
+            n, p = g['params'][0].shape
+            stacked_params = torch.stack([p.data for p in g['params']])
+            stacked_grads = torch.stack([p.grad for p in g['params']])
+            b = stacked_params.shape[0]
+            H = -stiefel_grad(stacked_grads, stacked_params) #search direction
+            if g['Ht']==None:
+                g['Ht'] = H.clone()
+
+            #EMA between current stiefel gradient H and current parallel transported direction Ht, 
+            #computed and cached from previous iteration
+            H = torch.lerp(H, g['Ht'], self.beta)
+            
+            A = stacked_params.mT@H
+            A=skew(A)
+            Q, R = torch.linalg.qr(H - stacked_params@A)
+            r1 = torch.concat([A, -R.mT], dim=2)
+            r2 = torch.concat([R, torch.zeros([b,p,p])], dim=2)
+            blocks = g['lr']*torch.concat([r1, r2], dim=1)
+            MN = torch.linalg.matrix_exp(blocks)
+            MN = MN[:,:,:p]
+            
+            Yt = stacked_params@MN[:,:p,:] + Q@MN[:,p:,:]
+            Ht = H@MN[:,:p,:] - stacked_params@R.mT@MN[:,p:,:] #parallel transport to get new search direction
+            
+            #Ht = -H + g['lr']*Ht
+            g['Ht'] = Ht
+
+            for p, pt in zip(g['params'], Yt.unbind(0)):
+                p.data = pt
 
 class StiefelNormal(Optimizer):
     def __init__(self, param_groups):
@@ -82,28 +127,38 @@ class StiefelNormal(Optimizer):
             for p, delta in zip(g['params'], update.unbind(0)):
                 p.data -= delta
 
-rand_seed=0
-n=200
-target=make_target_param(n, rand_seed, [0,0])
-kappa=torch.linalg.cond(target)
+def train(name):
+    rand_seed=3
+    n=200
+    target=make_target_param(n, rand_seed, [0,0])
+    kappa=torch.linalg.cond(target)
 
-model=MatrixSimple(target, rand_seed)
-model.W.data = torch.linalg.qr(model.W.data)[0]
-if torch.linalg.det(model.W.data)<0:
-    model.W.data[:,0]*=-1
-print(torch.linalg.det(model.W.data))
-params=[p for p in model.parameters()]
+    model=MatrixSimple(target, rand_seed)
+    model.W.data = torch.linalg.qr(model.W.data)[0]
+    if torch.linalg.det(model.W.data)<0:
+        model.W.data[:,0]*=-1
+    print(torch.linalg.det(model.W.data))
+    params=[p for p in model.parameters()]
 
-optimizer = StiefelNormal(params)
-optimizer = StiefelGeod(params)
+    if name=="SG":
+        optimizer=StiefelGeod(params, {'lr': .2})
+    elif name=="SGM":
+        optimizer=StiefelGeodMomentum(params, {'lr': .2})
 
-iters=100
-for i in range(iters):
-    G, L = model()
-    L.backward()
-    print(L.item())
+    iters=100
+    losses = []
+    for i in range(iters):
+        G, L = model()
+        L.backward()
+        losses.append(L.item())
+        print(L.item())
 
-    optimizer.step()
-    optimizer.zero_grad(set_to_none=True)
+        optimizer.step()
+        optimizer.zero_grad(set_to_none=True)
+    plt.plot(np.arange(0,iters), np.array(losses), label=name)
 
+train("SG")
+train("SGM")
+plt.legend()
+plt.show()
 # python3 -m StiefelOptimizer.StiefelNormal
