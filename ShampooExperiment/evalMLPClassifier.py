@@ -2,6 +2,7 @@ from cProfile import label
 
 from TrainingScripts import *
 from MLPClassifier import *
+from evalQuad import muon_hp, stiefel_hp
 
 if __name__=='__main__':
     n=100
@@ -18,28 +19,32 @@ if __name__=='__main__':
     experiments=1
     lrs=[.3, .5, .1]
 
-    for curr_optimizer in [OPTS.MUON, OPTS.STIEFEL_ADAM]:
+    for curr_optimizer in [OPTS.STIEFEL_ADAM]:
         losses=[]
         for rand_seed in range(experiments):
             optimizer=curr_optimizer
-            if curr_optimizer==OPTS.MUON or curr_optimizer==OPTS.STIEFEL_ADAM:
-                with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/Quad(n=100)_{optimizer.name}_hp.json", 'r') as f:
-                    hyper_params=json.load(f)
+            if curr_optimizer==OPTS.MUON:
+                hyper_params=muon_hp
+            elif curr_optimizer==OPTS.STIEFEL_ADAM:
+                hyper_params=stiefel_hp
+                # with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/Quad(n=100)_{optimizer.name}_hp.json", 'r') as f:
+                #     hyper_params=json.load(f)
             else:
                 with open(f"data/optimalHyperParams/{model['model']}(total_samples=100)_{optimizer.name}_hp.json", 'r') as f:
                     hyper_params=json.load(f)
-            if curr_optimizer==OPTS.CS or curr_optimizer==OPTS.S:
-                hyper_params['lr']=lrs[i]
-            hyper_params['lr']=.5 if curr_optimizer==OPTS.MUON else hyper_params['lr']
-            hyper_params['max_iters']=4000
+            if curr_optimizer==OPTS.STIEFEL_ADAM:
+                hyper_params['lr']=.5
+            #hyper_params['lr']=.5 if curr_optimizer==OPTS.MUON else hyper_params['lr']
+            hyper_params['max_iters']=2000
                 
             loss, t, err, iters = trainMLPClassifier(optimizer, hyper_params, 10, 1, max_iters=hyper_params['max_iters'], 
                 rand_seed=rand_seed, total_train_samples=total_samples, total_test_samples=total_samples//5, 
-                batch_size=model['batch_size'], debug=False, validate=True)
-            losses.append(torch.Tensor(loss))
+                batch_size=model['batch_size'], debug=True, validate=True)
+            losses.append(loss)
             total_val_err += err
             mean_iters+=iters
-            plt.plot(loss, label=f"{curr_optimizer.name}")
+            if experiments==1:
+                plt.plot(loss, label=f"{curr_optimizer.name}")
             #plt.plot(np.arange(len(loss)), loss, color=cmap(rand_seed%20), label=f"{optimizer.name}_{t:.2f}_seconds_val-err={err:.2f}")
 
         if experiments>1:
@@ -47,19 +52,14 @@ if __name__=='__main__':
             val_errors.append(total_val_err)
             mean_iters/=experiments
             print("ERROR, ", total_val_err, "iters: ", mean_iters)
-            losses=torch.nn.utils.rnn.pad_sequence(losses, True)
-            mean=np.mean(np.array(losses), axis=0)
+            #losses=torch.nn.utils.rnn.pad_sequence(losses, True)
+            mean=np.mean(losses, axis=0)
             plt.plot(np.arange(len(mean)), mean, color=cmap(i%6), linewidth=2, label=f"{optimizer.name}_mean")
-            std = np.std(np.array(losses), axis=0)
+            std = np.std(losses, axis=0)
             plt.fill_between(np.arange(len(mean)), mean - std, mean + std, color=cmap((i+1)%6), alpha=0.5, label=f"{optimizer.name}_std")
-            plt.xlabel('Iterations')
-            plt.ylabel('Loss')
             #plt.title(f'{optimizer.name}-{mean_iters:.2f} iters, Validation Error: {total_val_err:.2f}')
-            plt.legend()
             i+=1
             #np.save(f"data/optimalHyperParams/{model['model']}(total_samples=100)_{optimizer.name}_mean.npy", mean)
-            plt.title(f"Mean and Std for S-{lrs[0]}, S-{lrs[1]}, and CS-{lrs[2]}")
-            plt.show()
     plt.title("MLP run-muon and stiefelAdam")
     plt.xlabel('Iterations')
     plt.ylabel('Loss')

@@ -1,5 +1,3 @@
-from email.policy import default
-from os import times
 import os
 import sys
 
@@ -354,6 +352,7 @@ def analysis_Quad_LossDecrease(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5],
             H_Z=2*(P@Z)
             first_order=torch.sum(G_detached*Z).item()
             curvature=0.5*torch.sum(Z*H_Z).item()
+
             predicted_decrease=first_order-curvature
 
             R_after=model.A@W_after-model.A
@@ -364,6 +363,58 @@ def analysis_Quad_LossDecrease(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5],
         stats['curvature'].append(curvature)
         stats['predicted_decrease'].append(predicted_decrease)
         stats['actual_decrease'].append(actual_decrease)
+
+        iter_num+=1
+        if iter_num>=max_iters:
+            break
+    e=time.time()
+    stats['time']=e-s
+    stats['kappa']=kappa
+    stats['target']=target
+    return stats
+
+def analysis_split(unconstrained_hyperparams, stiefel_hyperparams, n, rand_seed=2, spectrum=[0,-5], eye=False):
+    iter_num=0
+
+    init_lr=stiefel_hyperparams['lr']
+    warmup=stiefel_hyperparams['warmup_iters']
+    decay=stiefel_hyperparams['lr_decay_iters']
+    min_lr=stiefel_hyperparams['min_lr']
+    max_iters=stiefel_hyperparams['max_iters']
+
+    target=make_target_param(n, rand_seed, spectrum, eye)
+    kappa=torch.linalg.cond(target)
+
+    model=MLSimple(target, rand_seed)
+    unconstrained_params=[]
+    stiefel_params=[]
+    for n, p in model.named_parameters():
+        if "Wu" in n:
+            unconstrained_params.append(p)
+        else:
+            stiefel_params.append(p)
+
+    optimizer = make_optimizer(OPTS.SGD, unconstrained_params, unconstrained_hyperparams)
+    stiefel = make_optimizer(OPTS.STIEFEL_ADAM, stiefel_params, stiefel_hyperparams)
+
+    stats={'loss': [], 'first_order': [], 'curvature': [], 'predicted_decrease': [], 'actual_decrease': []}
+
+    s=time.time()
+    while True:
+        lr=get_lr(iter_num, init_lr, warmup*max_iters, decay*max_iters, min_lr)
+        for param_group in optimizer.param_groups:
+            param_group['lr']=lr
+        for param_group in stiefel.param_groups:
+            param_group['lr']=lr
+
+        _, L=model()
+        L.backward()
+        stats['loss'].append(L.item())
+
+        optimizer.step()
+        optimizer.zero_grad(set_to_none=True)
+        stiefel.step()
+        stiefel.zero_grad(set_to_none=True)
 
         iter_num+=1
         if iter_num>=max_iters:

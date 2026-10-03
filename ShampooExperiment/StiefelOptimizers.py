@@ -184,7 +184,15 @@ def muon_step_fused(stacked_grads, stacked_params, momentum_buffer, second_momen
     lr = lr_t.to(g.dtype)
     wd = wd_t.to(g.dtype)
     mask = (g * stacked_params) >= 0
-    stacked_params.sub_(lr * g + lr * wd * stacked_params * mask)
+
+    norm=False
+    if not norm:
+        stacked_params.sub_(lr * g + lr * wd * stacked_params * mask)
+    else:
+        g/=torch.norm(g.flatten(start_dim=1), dim=1, keepdim=True, p='fro').unsqueeze(-1)
+        stacked_params.sub_(lr * g + lr * wd * stacked_params * mask)
+        stacked_params.div_(torch.norm(stacked_params.flatten(start_dim=1), dim=1, keepdim=True, p='fro').unsqueeze(-1))
+        #print(torch.norm(g.flatten(start_dim=1), dim=1, keepdim=True, p='fro'), torch.norm(stacked_params.flatten(start_dim=1), dim=1, keepdim=True, p='fro'))
 
 
 class MuonAdamW(torch.optim.Optimizer):

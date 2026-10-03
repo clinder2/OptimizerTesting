@@ -1,1 +1,1 @@
-{"lr": 0.1, "warmup_iters": 0.05, "lr_decay_iters": 0.7, "min_lr": 6e-05, "beta": 0.95, "betas": [0.8, 0.95], "max_iters": 1999, "loss": 8.044083187996875e-06, "time": 14.236633777618408}
+{"lr": 0.9, "warmup_iters": 0.1, "lr_decay_iters": 0.4, "min_lr": 6e-05, "max_iters": 999, "beta2": 0.8, "momentum": 0.8, "weight_decay": 1e-05, "beta": 0.8, "optimizer": "MUON", "rand_seed": 2, "loss": 2.6805594188772375e-06, "time": 3.332085132598877}

@@ -21,6 +21,7 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
                        rand_seed=2, debug=False, validate=False):
     name = optimizer.name
     model = MLP(in_dimension, out_dimension)
+    model.train()
     criterion = nn.BCEWithLogitsLoss()
 
     init_lr=hyperparams['lr']
@@ -62,6 +63,7 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
     loss_arr=[]
     while True:
         lr = get_lr(iter_num, init_lr, warmup*max_iters, decay*max_iters, min_lr)
+        #lr=.1
         for param_group in optimizer.param_groups:
             param_group['lr'] = lr
         loss=0.0
@@ -75,15 +77,14 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
             probabilities = torch.sigmoid(temp)
             #print((probabilities > 0.5).float()-labels)
             diff=(probabilities > 0.5).float()-labels
-            #print(torch.nonzero(diff))
             err+=torch.count_nonzero(diff).item()
         loss/=num_batches
         if debug:
-            print(f"LOSS at iter {iter_num}: {loss}, ERROR: {err}/{.8*total_train_samples}")
+            print(f"LOSS at iter {iter_num}: {loss}, ERROR: {err}/{.8*total_train_samples}, lr: {lr}")
         loss_arr.append(loss)
         optimizer.step()
-        sgd.step()
         optimizer.zero_grad(set_to_none=True)
+        sgd.step()
         sgd.zero_grad()
         iter_num+=1
         if loss<=.1 or (len(loss_arr) >= 2 and abs(loss-loss_arr[-2])<1e-4):
@@ -93,19 +94,19 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
         if iter_num>max_iters: #5, 10
             break
     e=time.time()
-    print(loss, e-s, err, init_lr, name)
+    print(loss, name)
     if debug:
         print("TRAINLOSS: ", loss)
         print("TRAINERROR: ", err)
 
     val_err=0
     if validate:
+        model.eval()
         loss=0
         err=0
         for batch, labels in test_dl:
             temp=model(batch)
             L=criterion(temp, labels)
-            L.backward()
             loss+=L.item()
             probabilities = torch.sigmoid(temp)
             diff=(probabilities > 0.5).float()-labels

@@ -1,3 +1,4 @@
+from sympy import Parabola
 import torch
 import torch.nn as nn
 import numpy as np
@@ -27,14 +28,12 @@ class MatrixSimple(nn.Module):
         self.P=self.A.T@self.A
 
         # random_mat1 = torch.randn(self.A.shape)
-        # random_mat2 = torch.randn(self.A.shape)
-        # U, _ = torch.linalg.qr(random_mat1)
-        # Vt, _ = torch.linalg.qr(random_mat2)
-        # s_values = torch.logspace(0, -7, steps=self.A.shape[0])  # ranges from 1.0 down to 1e-7
-        # S = torch.diag(s_values)
-        # self.W = nn.Parameter(U @ S @ Vt)
+        # U, R = torch.linalg.qr(1*torch.eye(self.A.shape[0])+random_mat1)
+        # U[:,0]*=-1
+        # self.W = nn.Parameter(torch.diag(R).sign()*U)
 
-        self.W=nn.Parameter(mult*torch.randn(self.A.shape)+torch.eye(self.A.shape[0])) #torch.randn(self.A.shape)
+        self.W=nn.Parameter(mult*torch.randn(self.A.shape)+1*torch.eye(self.A.shape[0])) #torch.randn(self.A.shape)
+        print("det: ", torch.linalg.det(self.W))
 
     def forward(self):
         ### old
@@ -44,6 +43,20 @@ class MatrixSimple(nn.Module):
         # with torch.no_grad():
         #     self.W.grad=G
         return G, ((self.A@self.W-self.A)**2).sum()
+
+class MLSimple(nn.Module):
+    def __init__(self, A, i):
+        super().__init__()
+        torch.manual_seed(i)
+        self.A=torch.Tensor(A)
+        mult=1 #1
+        self.P=self.A.T@self.A
+
+        self.Wu=nn.Parameter(mult*torch.randn(self.A.shape)+torch.eye(self.A.shape[0]))
+        self.Ws=nn.Parameter(torch.randn(self.A.shape)+torch.eye(self.A.shape[0]))
+
+    def forward(self):
+        return None, ((self.A@self.Wu@self.Ws-self.A)**2).sum()
     
 
 class MLP(nn.Module):
