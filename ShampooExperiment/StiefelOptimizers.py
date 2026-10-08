@@ -199,7 +199,7 @@ class MuonAdamW(torch.optim.Optimizer):
     """Combined optimizer: Muon for 2D matrix params, AdamW for others."""
 
     def __init__(self, param_groups):
-        super().__init__(param_groups, defaults={})
+        super().__init__(param_groups, defaults={'lr': param_groups[0]['lr']})
         print("***INIT MUONADAMW***")
         # 0-D CPU tensors to avoid torch.compile recompilation when values change
         self._adamw_step_t = torch.tensor(0.0, dtype=torch.float32, device="cpu")
