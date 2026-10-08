@@ -58,16 +58,7 @@ Muon_updated_fine_grid = {
     'weight_decay': [1e-6, 1e-5],
 }
 
-stiefelSGD_updated_fine_grid = {
-    'lr': [.001, .01, .1, .2, .8, .9, .99],
-    'warmup_iters': [.05,.1,.2,.3,.4],
-    'lr_decay_iters': [.1,.2,.3,.4,.7,1],
-    'min_lr': [6e-5,6e-2,1e-1],
-    'max_iters': [1000],
-    # Use betas pairs for optimizers that expose (beta, beta2)-style args
-    'momentum': [0.8, 0.9, 0.95],
-    'weight_decay': [1e-6, 1e-5],
-}
+stiefelSGD_updated_fine_grid = {}
 
 stiefelAdam_updated_fine_grid = {
     'lr': [.001, .01, .1, .2, .8, .9, .99],

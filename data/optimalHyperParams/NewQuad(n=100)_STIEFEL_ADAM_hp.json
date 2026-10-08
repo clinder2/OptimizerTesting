@@ -1,1 +1,1 @@
-{"lr": 0.9, "warmup_iters": 0.1, "lr_decay_iters": 0.05, "min_lr": 0.1, "beta": 0.999, "betas": [0.9, 0.999], "max_iters": 1999, "loss": 1.0749778994068038e-05, "time": 5.06990909576416}
+{"lr": 0.99, "warmup_iters": 0.05, "lr_decay_iters": 0.3, "min_lr": 0.06, "max_iters": 999, "betas": [0.7, 0.999], "beta": 0.999, "optimizer": "STIEFEL_ADAM", "rand_seed": 2, "loss": 1.8896110804550448e-12, "time": 10.698214530944824}

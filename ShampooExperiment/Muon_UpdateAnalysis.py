@@ -1,5 +1,4 @@
 from TrainingScripts import *
-#import numpy as np
 import matplotlib.animation as animation
 from matplotlib.animation import FFMpegWriter
 
@@ -36,29 +35,31 @@ def plotSpectra(arr: list[torch.Tensor]):
 
 if __name__ == '__main__':
     n=100
-    rand_seed=2
-    O=OPTS.STIEFEL_ADAM
-    with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad(n=100)_{O.name}_hp.json", 'r') as f:
+    rand_seed=3
+    O=OPTS.MUON
+    with open(f"/Users/christopherlinder/Desktop/OptimizerTesting.worktrees/experimental-branch-analysis-muon-stiefel/data/optimalHyperParams/NewQuad(n=100)_{O.name}_hp.json", 'r') as f:
         hyper_params=json.load(f)
+        print(hyper_params['lr'])
     hyper_params['max_iters']=2000
     hyper_params['grafting']=True
     hyper_params['numIters']=20
-    hyper_params['lr_decay_iters']=.08
+    #hyper_params['lr_decay_iters']=.9
     #hyper_params['betas']=(.99,.99)
     # hyper_params['lr']=.5
     # hyper_params['warmup_iters']=.4
     print("hp: ", hyper_params)
     loss, t, stats, kappa = analysis_Quad_Stats(O, hyper_params, n, [0,0], rand_seed=rand_seed)
+    # for i, p in enumerate(stats['P']):
+    #     if torch.linalg.norm(p-p.T, ord='fro')<=1e-5:
+    #         print(i)
+    #         break
     plt.plot(np.log(loss))
     plt.xlabel('iter')
     plt.ylabel('Log Loss (base 10)')
     plt.title(rf'StiefelAdam-Quadratic Problem with $\kappa={kappa:.2f}$')
     plt.legend()
     plt.show()
-    # for p in stats['P']:
-    #     print(torch.diag(p@p.T))
-    #     print(torch.linalg.norm(p@p.T-torch.eye(n), ord='fro'))
-    plotSpectra(stats['P'])
+    #plotSpectra(stats['G'])
 
     # Keep all stats in-memory in a local dict `saved_stats`.
     a=True
@@ -139,8 +140,8 @@ if __name__ == '__main__':
             #ani.save("S_n=4_L_R_G.mp4", writer=writer)
             plt.show()
         elif 'G' in saved_stats and 'P' in saved_stats:
-            G_arr = saved_stats['G'][700:800]
-            P_arr = saved_stats['P'][700:800]
+            G_arr = saved_stats['G']#[700:800]
+            P_arr = saved_stats['P']#[700:800]
 
             assert G_arr.ndim == 3
 
@@ -166,7 +167,8 @@ if __name__ == '__main__':
             def update(frame):
                 imG.set_data(G_arr[frame])
                 imP.set_data(P_arr[frame])
-                print(f"{700+frame} diff: {torch.linalg.norm(torch.eye(n)-P_arr[frame], ord='fro')}")
+                print(torch.linalg.norm(torch.tensor(G_arr[frame]), ord='fro'))
+                #print(f"{700+frame} diff: {torch.linalg.norm(torch.eye(n)-P_arr[frame], ord='fro')}")
                 axes[0].set_title(f'G (step {frame})')
                 axes[1].set_title(f'P (step {frame})')
                 fig.suptitle(f'G/P matrices — frame {frame+1}/{T}')
