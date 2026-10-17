@@ -5,7 +5,7 @@ from torch.optim import Optimizer
 from typing import List
 #from ShampooExperiment.Grafting import AdagradGraft
 from common.Grafting import AdagradGraft
-from CustomShampoo import CustomShampoo
+from shampoo_variants.CustomShampoo import CustomShampoo
 #from ShampooExperiment.CustomShampoo import CustomShampoo
 
 """Whitening Shampoo

@@ -20,7 +20,7 @@ from dataclasses import dataclass, asdict
 
 import sys
 sys.path.append("/Users/christopherlinder/Desktop/OptimizerTesting/ShampooExperiment")
-from stiefel_lingkai.StiefelOptimizers import StiefelSGD, StiefelAdam
+from common.StiefelOptimizers import StiefelSGD, StiefelAdam
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

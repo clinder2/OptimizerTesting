@@ -1,5 +1,4 @@
-from CustomShampoo import *
-from scipy.linalg import sqrtm
+from shampoo_variants.CustomShampoo import CustomShampoo, torch
 
 """Squareroot-Cholesky-Inverse Shampoo"""
 class SCIShampoo(CustomShampoo):

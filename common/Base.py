@@ -2,21 +2,19 @@ from enum import IntEnum
 import sys
 import os
 import importlib.util
-import torch
 import torch.optim as opt
 
-from StackedShampoo import StackedShampoo
-from ExperimentalShampoo import ExperimentalShampoo
+from shampoo_variants.StackedShampoo import StackedShampoo
+from shampoo_variants.ExperimentalShampoo import ExperimentalShampoo
+from shampoo_variants.CustomShampoo import CustomShampoo
+from shampoo_variants.WhiteningShampoo import WhiteningShampoo
+from shampoo_variants.SCIShampoo import SCIShampoo
 
 # Ensure local ShampooExperiment modules can be imported when this package
 # is imported from a child process or from the workspace root.
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
-
-from CustomShampoo import CustomShampoo
-from WhiteningShampoo import WhiteningShampoo
-from SCIShampoo import SCIShampoo
 
 # Explicitly load the local ShampooExperiment StiefelOptimizers wrapper by path.
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -134,15 +132,6 @@ def make_optimizer(optimizer_type: OPTS, params, hyperparams: dict, **kwargs):
                     kind='muon', params=group_params, lr=lr,
                     momentum=momentum, ns_steps=5, beta2=beta2, weight_decay=weight_decay,
                 ))
-            # muon_groups = [{
-            #     'params': params,
-            #     'kind': 'muon',
-            #     'lr': lr,
-            #     'momentum': momentum,
-            #     'ns_steps': 5,
-            #     'beta2': beta2,
-            #     'weight_decay': weight_decay,
-            # }]
             return MuonAdamW(param_groups)
         case OPTS.STIEFEL_SGD:
             return VariationalStiefelSGD(params, lr=lr, momentum=momentum, **kwargs)

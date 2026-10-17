@@ -1,8 +1,5 @@
 import torch
-import torch.nn as nn
-import numpy as np
 from torch.optim import Optimizer
-from typing import List
 #from ShampooExperiment.Grafting import AdagradGraft
 from common.Grafting import AdagradGraft
 

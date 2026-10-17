@@ -22,6 +22,9 @@ import time
 def skew(A: torch.Tensor):
     return (A-A.mT)/2
 
+def sym(A: torch.Tensor):
+    return (A+A.mT)/2
+
 def proj_T(Z: torch.Tensor, Y: torch.Tensor):
     I = torch.eye(Y.shape[1]).unsqueeze(0).repeat(Y.shape[0], 1, 1)
     return Y@skew(Y.mT@Z) + (I-Y@Y.mT)@Z
@@ -70,7 +73,7 @@ with transported direction
 class StiefelGeodMomentum(Optimizer):
     def __init__(self, params, defaults={}):
         super().__init__(params, defaults)
-        self.beta=.2
+        self.beta=.7 #.2
         for g in self.param_groups:
             g['lr'] = defaults['lr']
             g['Ht'] = None
@@ -141,15 +144,25 @@ class StiefelGeodUnconstrained(Optimizer):
         for g in self.param_groups:
             g['lr'] = defaults['lr']
             g['Ht'] = None
+            g['Pt'] = None
 
     def step(self):
         for g in self.param_groups:
             n, p = g['params'][0].shape
             stacked_params = torch.stack([p.data for p in g['params']])
-            #stacked_params = NS(stacked_params)
             stacked_grads = torch.stack([p.grad for p in g['params']])
             b = stacked_params.shape[0]
             H = -stiefel_grad(stacked_grads, stacked_params) #search direction
+
+            if g['Ht']==None:
+                g['Ht'] = H.clone()
+            #EMA between current stiefel gradient H and current parallel transported direction Ht, 
+            #computed and cached from previous iteration
+            H = torch.lerp(H, g['Ht'], self.beta)
+
+            if g['Pt']==None:
+                g['Pt'] = torch.zeros(b,p,p)
+            P = g['lr']*g['Pt'] - .1*sym(stacked_params.mT@stacked_grads)
  
             A = stacked_params.mT@H
             A=skew(A)
@@ -181,13 +194,16 @@ class StiefelGeodUnconstrained(Optimizer):
             Yt = NS(Yt)
             Ht = H@M - stacked_params@R.mT@N #parallel transport to get new search direction
 
+            g['Ht'] = Ht
+            g['Pt'] = P
+
             for p, pt in zip(g['params'], Yt.unbind(0)):
                 p.data = pt
 
 def train(name):
     rand_seed=0
     n=100
-    spectrum = [0,-5]
+    spectrum = [0,0]
     target=make_target_param(n, rand_seed, spectrum)
 
     model=MatrixSimple(target, rand_seed)
@@ -198,13 +214,15 @@ def train(name):
     params=[p for p in model.parameters()]
 
     if name=="SG":
-        optimizer=StiefelGeod(params, {'lr': .3})
+        optimizer=StiefelGeod(params, {'lr': .5})
     elif name=="SGM":
-        optimizer=StiefelGeodMomentum(params, {'lr': .2})
+        optimizer=StiefelGeodMomentum(params, {'lr': .5})
     elif name=="SGU":
-        optimizer=StiefelGeodUnconstrained(params, {'lr': .05})
+        optimizer=StiefelGeodUnconstrained(params, {'lr': .5})
     elif name=="MUON":
         optimizer=make_optimizer(OPTS.MUON, params, {'lr': .05})
+    elif name=="SA":
+        optimizer=make_optimizer(OPTS.STIEFEL_ADAM, params, {'lr': .05})
 
     iters=200
     losses = []
@@ -230,8 +248,8 @@ def train(name):
     plt.plot(np.arange(0,iters), np.log(losses), label=name)
 
 #train("SG")
-train("MUON")
-train("SGM")
+train("SA")
+train("SGU")
 plt.legend()
 plt.show()
-# python3 -m StiefelOptimizer.StiefelNormal
+# python3 -m stiefel_geodesic.StiefelNormal
