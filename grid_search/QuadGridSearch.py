@@ -34,15 +34,15 @@ if __name__=='__main__':
     # with open(f"/Users/christopherlinder/Desktop/OptimizerTesting/data/optimalHyperParams/NewQuad(n={n})_{op.name}_hp.json", 'w') as f:
     #     json.dump(hp, f)
 
-    op=OPTS.MUON
-    output, hp=grid_search(
-        op, model, Muon_coarse_grid,
-        tsv_path=os.path.join(SWEEP_DIR, f"MuonvSteifelAdamV1_Quad_{n}_{op.name}_gridsweep.tsv"),
-    )
-    print(output)
-    print(hp)
-    with open(os.path.join(HP_DIR, f"MuonvSteifelAdamV1_Quad_(n={n})_{op.name}_hp.json"), 'w') as f:
-        json.dump(hp, f)
+    # op=OPTS.MUON
+    # output, hp=grid_search(
+    #     op, model, Muon_coarse_grid,
+    #     tsv_path=os.path.join(SWEEP_DIR, f"MuonvSteifelAdamV1_Quad_{n}_{op.name}_gridsweep.tsv"),
+    # )
+    # print(output)
+    # print(hp)
+    # with open(os.path.join(HP_DIR, f"MuonvSteifelAdamV1_Quad_(n={n})_{op.name}_hp.json"), 'w') as f:
+    #     json.dump(hp, f)
 
     # op=OPTS.SCS
     # output, hp=grid_search(op, model, SCS_updated_fine_grid)

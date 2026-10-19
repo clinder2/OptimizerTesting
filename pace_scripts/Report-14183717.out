@@ -1,0 +1,24 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-19-2026 13:39:31
+Job ID:    14183717
+User ID:   clinder9
+Account:   gts-mtao8
+Job name:  hp
+Partition: cpu-small
+QOS:       inferno
+---------------------------------------
+Resolved 54 packages in 17ms
+Audited 41 packages in 57ms
+[2026-10-19T13:39:34.259] error: *** JOB 14183717 ON atl1-1-02-002-8-2 CANCELLED AT 2026-10-19T13:39:34 DUE to SIGNAL Terminated ***
+---------------------------------------
+Begin Slurm Epilog: Oct-19-2026 13:39:36
+Job ID:        14183717
+User ID:       clinder9
+Account:       gts-mtao8
+Job name:      hp
+Resources:     cpu=24,mem=128G,node=1
+Rsrc Used:     cput=00:02:48,vmem=0,walltime=00:00:07,mem=99676K,energy_used=0
+Partition:     cpu-small
+QOS:           inferno
+Nodes:         atl1-1-02-002-8-2
+---------------------------------------

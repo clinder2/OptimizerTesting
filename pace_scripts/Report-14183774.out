@@ -1,0 +1,394 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-19-2026 13:40:04
+Job ID:    14183774
+User ID:   clinder9
+Account:   gts-mtao8
+Job name:  hp
+Partition: cpu-small
+QOS:       inferno
+---------------------------------------
+Resolved 54 packages in 16ms
+Audited 41 packages in 57ms
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.7278201580047607-loss: 116547.0546875-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.463726282119751-loss: 1576.7713623046875-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5363855361938477-loss: 6.58687058603391e-05-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5234756469726562-loss: 179269.609375-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.487384557723999-loss: 136163.84375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4932427406311035-loss: 1316.396484375-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4090731143951416-loss: 0.00105059624183923-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.684527635574341-loss: 168864.5625-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4821858406066895-loss: 27687.35546875-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.6110386848449707-loss: 4.068906036991393e-06-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.507890462875366-loss: 179113.34375-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4705779552459717-loss: 118644.140625-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4756569862365723-loss: 4985.95166015625-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4343388080596924-loss: 0.0009230287978425622-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5826644897460938-loss: 195351.40625-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.521831750869751-loss: 1262.8416748046875-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.7957520484924316-loss: 0.0010530404979363084-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.540597915649414-loss: 195409.375-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.6674411296844482-loss: 34659.66796875-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.6490345001220703-loss: 0.0011006697313860059-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4991869926452637-loss: 160564.828125-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.484442949295044-loss: 67016.59375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.521883726119995-loss: 0.00905030220746994-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.3848812580108643-loss: 0.0009380599367432296-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.957864761352539-loss: 168810.953125-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4723963737487793-loss: 1285.3785400390625-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5457000732421875-loss: 4.320596872275928e-06-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4823458194732666-loss: 135988.875-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5197997093200684-loss: 95921.0234375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4830238819122314-loss: 3.553049282345455e-06-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4211699962615967-loss: 3.817472133960109e-06-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.516101837158203-loss: 170713.6875-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 4.150334119796753-loss: 95999.109375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.884876251220703-loss: 0.0010033448925241828-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.484870195388794-loss: 65532.52734375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4391660690307617-loss: 136066.890625-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4557878971099854-loss: 34704.265625-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.387270927429199-loss: 0.001020765514113009-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5130345821380615-loss: 74139.921875-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.485386371612549-loss: 74185.078125-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.491001844406128-loss: 1580.9122314453125-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4346237182617188-loss: 4.9877166929945815e-06-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4864895343780518-loss: 95889.2109375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4421193599700928-loss: 117269.296875-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4452834129333496-loss: 28184.4296875-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4134597778320312-loss: 3.960715275752591e-06-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.516209363937378-loss: 154843.765625-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4815986156463623-loss: 74267.734375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4775655269622803-loss: 0.0009234744356945157-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4303629398345947-loss: 3.3133464967249893e-06-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.472809076309204-loss: 161397.3125-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.456441879272461-loss: 84136.5234375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.458319902420044-loss: 6075.4794921875-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4173295497894287-loss: 4.221277322358219e-06-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5244879722595215-loss: 168954.3125-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4932777881622314-loss: 85259.0859375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.490227699279785-loss: 0.0011172217782586813-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.435467481613159-loss: 0.0010367538779973984-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.523568630218506-loss: 83608.2734375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.488290309906006-loss: 34535.54296875-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.489065647125244-loss: 3.757650802072021e-06-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4345359802246094-loss: 0.0010517825139686465-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.512883424758911-loss: 163046.265625-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.490110397338867-loss: 6075.0771484375-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.494250774383545-loss: 0.002266176976263523-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.408047914505005-loss: 3.400450623303186e-06-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.509892463684082-loss: 173318.796875-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.486894130706787-loss: 27419.75390625-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.492910861968994-loss: 0.0010796408168971539-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.439500570297241-loss: 5.21320089319488e-06-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5276005268096924-loss: 154033.78125-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.533475399017334-loss: 4764.74169921875-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5649492740631104-loss: 3.999013642896898e-06-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.3952720165252686-loss: 0.00117829954251647-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5448436737060547-loss: 156447.4375-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.612933874130249-loss: 1569.288330078125-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5396201610565186-loss: 0.001016623224131763-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.418126106262207-loss: 3.5914920317736687e-06-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.7172317504882812-loss: 171582.609375-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4972801208496094-loss: 4871.1630859375-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4992520809173584-loss: 4.31907437814516e-06-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.3786966800689697-loss: 0.0009981076000258327-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.6942951679229736-loss: 195519.1875-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.490936279296875-loss: 6109.5908203125-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.5407185554504395-loss: 0.000928605324588716-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.3894848823547363-loss: 5.66299559068284e-06-lr: 0.3
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.501777172088623-loss: 179166.953125-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.7554121017456055-loss: 66030.109375-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4786603450775146-loss: 0.0008676457218825817-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+***INIT MUONADAMW***
+MUON-time: 3.4035749435424805-loss: 0.0011399638606235385-lr: 0.3
+Saved 90 grid-search rows to /storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/results/data/hyperparams/MuonvSteifelAdamV1_Quad_100_MUON_gridsweep.tsv
+[{'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 195351.40625, 'time': 3.5826644897460938}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 170713.6875, 'time': 3.516101837158203}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 179113.34375, 'time': 3.507890462875366}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 160564.828125, 'time': 3.4991869926452637}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 168810.953125, 'time': 3.957864761352539}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 154033.78125, 'time': 3.5276005268096924}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 195409.375, 'time': 3.540597915649414}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 171582.609375, 'time': 3.7172317504882812}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 179166.953125, 'time': 3.501777172088623}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 161397.3125, 'time': 3.472809076309204}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 168864.5625, 'time': 3.684527635574341}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 154843.765625, 'time': 3.516209363937378}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 195519.1875, 'time': 3.6942951679229736}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 173318.796875, 'time': 3.509892463684082}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 179269.609375, 'time': 3.5234756469726562}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 163046.265625, 'time': 3.512883424758911}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 168954.3125, 'time': 3.5244879722595215}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 156447.4375, 'time': 3.5448436737060547}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 135988.875, 'time': 3.4823458194732666}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 116547.0546875, 'time': 3.7278201580047607}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 95889.2109375, 'time': 3.4864895343780518}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 83608.2734375, 'time': 3.523568630218506}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 74139.921875, 'time': 3.5130345821380615}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 65532.52734375, 'time': 3.484870195388794}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 136066.890625, 'time': 3.4391660690307617}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 117269.296875, 'time': 3.4421193599700928}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 95921.0234375, 'time': 3.5197997093200684}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 84136.5234375, 'time': 3.456441879272461}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 74185.078125, 'time': 3.485386371612549}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 66030.109375, 'time': 3.7554121017456055}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 136163.84375, 'time': 3.487384557723999}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 118644.140625, 'time': 3.4705779552459717}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 95999.109375, 'time': 4.150334119796753}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 85259.0859375, 'time': 3.4932777881622314}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 74267.734375, 'time': 3.4815986156463623}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 67016.59375, 'time': 3.484442949295044}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 34535.54296875, 'time': 3.488290309906006}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 27419.75390625, 'time': 3.486894130706787}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 6075.0771484375, 'time': 3.490110397338867}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 4764.74169921875, 'time': 3.533475399017334}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 1569.288330078125, 'time': 3.612933874130249}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 1262.8416748046875, 'time': 3.521831750869751}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 34659.66796875, 'time': 3.6674411296844482}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 27687.35546875, 'time': 3.4821858406066895}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 6109.5908203125, 'time': 3.490936279296875}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 4871.1630859375, 'time': 3.4972801208496094}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 1576.7713623046875, 'time': 3.463726282119751}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 1285.3785400390625, 'time': 3.4723963737487793}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 34704.265625, 'time': 3.4557878971099854}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 28184.4296875, 'time': 3.4452834129333496}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 6075.4794921875, 'time': 3.458319902420044}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 4985.95166015625, 'time': 3.4756569862365723}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 1580.9122314453125, 'time': 3.491001844406128}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 1316.396484375, 'time': 3.4932427406311035}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.00905030220746994, 'time': 3.521883726119995}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0011172217782586813, 'time': 3.490227699279785}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 3.757650802072021e-06, 'time': 3.489065647125244}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0009234744356945157, 'time': 3.4775655269622803}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 3.553049282345455e-06, 'time': 3.4830238819122314}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0010796408168971539, 'time': 3.492910861968994}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.002266176976263523, 'time': 3.494250774383545}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0010530404979363084, 'time': 3.7957520484924316}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 3.999013642896898e-06, 'time': 3.5649492740631104}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.001016623224131763, 'time': 3.5396201610565186}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 4.068906036991393e-06, 'time': 3.6110386848449707}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.000928605324588716, 'time': 3.5407185554504395}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 6.58687058603391e-05, 'time': 3.5363855361938477}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0011006697313860059, 'time': 3.6490345001220703}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 4.31907437814516e-06, 'time': 3.4992520809173584}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0008676457218825817, 'time': 3.4786603450775146}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 4.320596872275928e-06, 'time': 3.5457000732421875}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0010033448925241828, 'time': 3.884876251220703}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 3.960715275752591e-06, 'time': 3.4134597778320312}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.001020765514113009, 'time': 3.387270927429199}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 4.221277322358219e-06, 'time': 3.4173295497894287}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0009230287978425622, 'time': 3.4343388080596924}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 4.9877166929945815e-06, 'time': 3.4346237182617188}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.00105059624183923, 'time': 3.4090731143951416}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 3.3133464967249893e-06, 'time': 3.4303629398345947}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0010517825139686465, 'time': 3.4345359802246094}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 3.817472133960109e-06, 'time': 3.4211699962615967}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0010367538779973984, 'time': 3.435467481613159}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 5.21320089319488e-06, 'time': 3.439500570297241}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0009380599367432296, 'time': 3.3848812580108643}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 3.400450623303186e-06, 'time': 3.408047914505005}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.00117829954251647, 'time': 3.3952720165252686}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 3.5914920317736687e-06, 'time': 3.418126106262207}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0011399638606235385, 'time': 3.4035749435424805}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 5.66299559068284e-06, 'time': 3.3894848823547363}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 0.0009981076000258327, 'time': 3.3786966800689697}]
+{'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'optimizer': 'MUON', 'rand_seed': 2, 'loss': 3.3133464967249893e-06, 'time': 3.4303629398345947}
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+Saved 90 grid-search rows to /storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/results/data/hyperparams/MuonvSteifelAdamV1_Quad_100_STIEFEL_ADAM_gridsweep.tsv
+Traceback (most recent call last):
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/QuadGridSearch.py", line 69, in <module>
+    output, hp=grid_search(
+               ^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 254, in grid_search
+    raise RuntimeError(f"All worker tasks failed. Sample errors: {output[:5]}")
+RuntimeError: All worker tasks failed. Sample errors: [{'error': 'ImportError("StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').")', 'traceback': 'Traceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 48, in <module>\n    raise FileNotFoundError(\nFileNotFoundError: Cannot find StiefelOptimizers.py in /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer. Set the VAR_STIEFEL_PATH environment variable to the directory containing your VariationalStiefelOptimizer checkout.\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 261, in _safe_grid_Search_Quad\n    return grid_Search_Quad(OP, hyperparams, n, rand_seed=rand_seed)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/TrainingScripts.py", line 182, in grid_Search_Quad\n    optimizer = make_optimizer(OP, params, hyperparams)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/Base.py", line 139, in make_optimizer\n    return VariationalStiefelAdam(params, lr=lr, betas=betas, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 294, in VariationalStiefelAdam\n    raise ImportError(msg) from STIEFEL_IMPORT_ERROR\nImportError: StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').\n', 'optimizer': 'STIEFEL_ADAM', 'hyperparams': {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'betas': (0.9, 0.95)}}, {'error': 'ImportError("StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').")', 'traceback': 'Traceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 48, in <module>\n    raise FileNotFoundError(\nFileNotFoundError: Cannot find StiefelOptimizers.py in /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer. Set the VAR_STIEFEL_PATH environment variable to the directory containing your VariationalStiefelOptimizer checkout.\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 261, in _safe_grid_Search_Quad\n    return grid_Search_Quad(OP, hyperparams, n, rand_seed=rand_seed)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/TrainingScripts.py", line 182, in grid_Search_Quad\n    optimizer = make_optimizer(OP, params, hyperparams)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/Base.py", line 139, in make_optimizer\n    return VariationalStiefelAdam(params, lr=lr, betas=betas, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 294, in VariationalStiefelAdam\n    raise ImportError(msg) from STIEFEL_IMPORT_ERROR\nImportError: StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').\n', 'optimizer': 'STIEFEL_ADAM', 'hyperparams': {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'betas': (0.9, 0.95)}}, {'error': 'ImportError("StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').")', 'traceback': 'Traceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 48, in <module>\n    raise FileNotFoundError(\nFileNotFoundError: Cannot find StiefelOptimizers.py in /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer. Set the VAR_STIEFEL_PATH environment variable to the directory containing your VariationalStiefelOptimizer checkout.\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 261, in _safe_grid_Search_Quad\n    return grid_Search_Quad(OP, hyperparams, n, rand_seed=rand_seed)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/TrainingScripts.py", line 182, in grid_Search_Quad\n    optimizer = make_optimizer(OP, params, hyperparams)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/Base.py", line 139, in make_optimizer\n    return VariationalStiefelAdam(params, lr=lr, betas=betas, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 294, in VariationalStiefelAdam\n    raise ImportError(msg) from STIEFEL_IMPORT_ERROR\nImportError: StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').\n', 'optimizer': 'STIEFEL_ADAM', 'hyperparams': {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'betas': (0.9, 0.95)}}, {'error': 'ImportError("StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').")', 'traceback': 'Traceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 48, in <module>\n    raise FileNotFoundError(\nFileNotFoundError: Cannot find StiefelOptimizers.py in /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer. Set the VAR_STIEFEL_PATH environment variable to the directory containing your VariationalStiefelOptimizer checkout.\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 261, in _safe_grid_Search_Quad\n    return grid_Search_Quad(OP, hyperparams, n, rand_seed=rand_seed)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/TrainingScripts.py", line 182, in grid_Search_Quad\n    optimizer = make_optimizer(OP, params, hyperparams)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/Base.py", line 139, in make_optimizer\n    return VariationalStiefelAdam(params, lr=lr, betas=betas, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 294, in VariationalStiefelAdam\n    raise ImportError(msg) from STIEFEL_IMPORT_ERROR\nImportError: StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').\n', 'optimizer': 'STIEFEL_ADAM', 'hyperparams': {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'betas': (0.9, 0.95)}}, {'error': 'ImportError("StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').")', 'traceback': 'Traceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 48, in <module>\n    raise FileNotFoundError(\nFileNotFoundError: Cannot find StiefelOptimizers.py in /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer. Set the VAR_STIEFEL_PATH environment variable to the directory containing your VariationalStiefelOptimizer checkout.\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 261, in _safe_grid_Search_Quad\n    return grid_Search_Quad(OP, hyperparams, n, rand_seed=rand_seed)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/TrainingScripts.py", line 182, in grid_Search_Quad\n    optimizer = make_optimizer(OP, params, hyperparams)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/Base.py", line 139, in make_optimizer\n    return VariationalStiefelAdam(params, lr=lr, betas=betas, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/StiefelOptimizers.py", line 294, in VariationalStiefelAdam\n    raise ImportError(msg) from STIEFEL_IMPORT_ERROR\nImportError: StiefelAdam implementation not found. Tried path: /storage/home/hcoda1/7/clinder9/Desktop/VariationalStiefelOptimizer (modules \'StiefelOptimizers\'/\'stiefel_optimizers\').\n', 'optimizer': 'STIEFEL_ADAM', 'hyperparams': {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'betas': (0.9, 0.95)}}]
+---------------------------------------
+Begin Slurm Epilog: Oct-19-2026 13:41:18
+Job ID:        14183774
+User ID:       clinder9
+Account:       gts-mtao8
+Job name:      hp
+Resources:     cpu=24,mem=128G,node=1
+Rsrc Used:     cput=00:29:36,vmem=0,walltime=00:01:14,mem=11333700K,energy_used=0
+Partition:     cpu-small
+QOS:           inferno
+Nodes:         atl1-1-03-002-10-2
+---------------------------------------

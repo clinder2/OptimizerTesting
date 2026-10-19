@@ -1,0 +1,24 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-19-2026 13:35:17
+Job ID:    14183623
+User ID:   clinder9
+Account:   gts-mtao8
+Job name:  hp
+Partition: cpu-small
+QOS:       inferno
+---------------------------------------
+Resolved 54 packages in 84ms
+Audited 41 packages in 60ms
+python3: can't open file '/storage/project/r-mtao8-0/clinder9/OptimizerTesting/pace_scripts/../storage/project/r-mtao8-0/clinder9/OptimizerTesting/pace_scripts/grid_search/QuadGridSearch.py': [Errno 2] No such file or directory
+---------------------------------------
+Begin Slurm Epilog: Oct-19-2026 13:35:18
+Job ID:        14183623
+User ID:       clinder9
+Account:       gts-mtao8
+Job name:      hp
+Resources:     cpu=24,mem=128G,node=1
+Rsrc Used:     cput=00:00:48,vmem=0,walltime=00:00:02,mem=60796K,energy_used=0
+Partition:     cpu-small
+QOS:           inferno
+Nodes:         atl1-1-02-018-19-1
+---------------------------------------

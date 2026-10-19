@@ -1,6 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
+# Run from the repo root regardless of where the job was submitted.
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
 # Pin each worker process to a single thread so grid_search()'s multiprocessing
 # Pool (one process per hyperparameter trial) doesn't oversubscribe the node's
 # cores with extra BLAS/OMP threads on top of the process-level parallelism.
@@ -8,6 +11,8 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
+
+export VAR_STIEFEL_PATH=/storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer
 
 # -----------------------------------------------------------------------------
 # Python venv setup with uv

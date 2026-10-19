@@ -1,0 +1,22 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-19-2026 12:51:45
+Job ID:    14182912
+User ID:   clinder9
+Account:   gts-mtao8
+Job name:  hp
+Partition: cpu-small
+QOS:       inferno
+---------------------------------------
+bash: pace_scripts/sweep.sh: No such file or directory
+---------------------------------------
+Begin Slurm Epilog: Oct-19-2026 12:51:45
+Job ID:        14182912
+User ID:       clinder9
+Account:       gts-mtao8
+Job name:      hp
+Resources:     cpu=24,mem=128G,node=1
+Rsrc Used:     cput=00:00:24,vmem=0,walltime=00:00:01,mem=3884K,energy_used=0
+Partition:     cpu-small
+QOS:           inferno
+Nodes:         atl1-1-02-011-8-2
+---------------------------------------

@@ -1,0 +1,231 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-19-2026 13:45:45
+Job ID:    14183883
+User ID:   clinder9
+Account:   gts-mtao8
+Job name:  hp
+Partition: cpu-small
+QOS:       inferno
+---------------------------------------
+Resolved 54 packages in 31ms
+Audited 41 packages in 40ms
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8253331184387207-loss: 0.0008408388821408153-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7804830074310303-loss: 0.0005343701923266053-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.095580339431763-loss: 3.6409494441613788e-06-lr: 0.1
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8156678676605225-loss: 3.776588300752337e-06-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.755979537963867-loss: 1.4185045529302442e-06-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.785207509994507-loss: 3.1278354981623124e-06-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.671203136444092-loss: 0.0007813564734533429-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8318660259246826-loss: 1.9424508082011016e-06-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.780763864517212-loss: 2.3024206257105106e-06-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.752488851547241-loss: 0.000623075058683753-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.683043956756592-loss: 6.452967937775611e-08-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.9565348625183105-loss: 0.0007270263158716261-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.9014899730682373-loss: 6.505237681864173e-09-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.900076389312744-loss: 2.2352589112983878e-08-lr: 0.1
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.9439685344696045-loss: 1.1782626643253025e-06-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8748459815979004-loss: 1.923131776493392e-06-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.989438772201538-loss: 1.8972855286847334e-06-lr: 0.1
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8323557376861572-loss: 0.0008261170005425811-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7661378383636475-loss: 0.000725370307918638-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.764361619949341-loss: 0.0009536203579045832-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.688995361328125-loss: 3.887763796228683e-06-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8887691497802734-loss: 3.1616968954040203e-06-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8128042221069336-loss: 0.000911009032279253-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.1051225662231445-loss: 2.0940356080245692e-06-lr: 0.1
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.859896659851074-loss: 0.0006345470901578665-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8111283779144287-loss: 1.6192022940231254e-06-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.775723695755005-loss: 0.00046712520997971296-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.6571550369262695-loss: 0.0005959594273008406-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.935793399810791-loss: 0.0005654309643432498-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8655834197998047-loss: 0.0009421798749826849-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.240285873413086-loss: 1.8156838450522628e-06-lr: 0.1
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.848420858383179-loss: 0.0008499715477228165-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.796647548675537-loss: 0.000646230997517705-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.704451560974121-loss: 0.0006177156465128064-lr: 0.1
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8694510459899902-loss: 0.0007776041748002172-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8548078536987305-loss: 0.0006719752564094961-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.791498899459839-loss: 0.0008294480503536761-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.6617379188537598-loss: 0.0005983906448818743-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7910656929016113-loss: 1.7152320879176841e-06-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.763554096221924-loss: 0.0007802631007507443-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7731573581695557-loss: 0.0007519178907386959-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8226401805877686-loss: 0.0008869079174473882-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.834683418273926-loss: 0.02006632834672928-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8179287910461426-loss: 2.822582473527291e-06-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8641366958618164-loss: 3.1700424187874887e-06-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.6590325832366943-loss: 7.341344598899013e-08-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.87892746925354-loss: 0.0005457239458337426-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.884751558303833-loss: 2.2946144326851936e-06-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.802586555480957-loss: 0.0007228959584608674-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.6967480182647705-loss: 1.6615776985418051e-06-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.811784267425537-loss: 1.7702523109619506e-06-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7771029472351074-loss: 0.000717099872417748-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7629950046539307-loss: 5.66823432635033e-09-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.960573434829712-loss: 1.360943315376062e-06-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.9249041080474854-loss: 1.5140941513891448e-06-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8909027576446533-loss: 0.0007855838630348444-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7965195178985596-loss: 0.0009089036611840129-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.685582160949707-loss: 0.0011420571245253086-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.9086387157440186-loss: 2.6669533781387145e-06-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.883382558822632-loss: 0.0006672177696600556-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.863507032394409-loss: 2.5432131067759656e-08-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.698364019393921-loss: 0.0005497339298017323-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.893092393875122-loss: 0.0007906239479780197-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8567240238189697-loss: 2.090470616167295e-06-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.9353766441345215-loss: 2.1682910755771445e-06-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7146570682525635-loss: 1.722567049000645e-06-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8422629833221436-loss: 2.4220571503974497e-06-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.815434455871582-loss: 0.0008550200727768242-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.837475299835205-loss: 0.0004936420009471476-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.035964250564575-loss: 1.647981889618677e-06-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.9529776573181152-loss: 0.0006675891927443445-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8662502765655518-loss: 0.0006512681720778346-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8651340007781982-loss: 0.000603427761234343-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.745356559753418-loss: 1.5042554935007502e-07-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7939858436584473-loss: 0.0009365003788843751-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7669591903686523-loss: 2.6945583613269264e-06-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7413711547851562-loss: 0.0010442148195579648-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.227579832077026-loss: 2.537026603022241e-06-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.9220502376556396-loss: 2.7946134650846943e-06-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7514748573303223-loss: 4.033827938343393e-09-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7471399307250977-loss: 2.049602088050051e-08-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.283255100250244-loss: 3.0764440452912822e-06-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7864625453948975-loss: 3.1450622373085935e-06-lr: 0.003
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.7645249366760254-loss: 2.1540693069255212e-06-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.083928823471069-loss: 2.757943775577587e-06-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.203435897827148-loss: 3.253512204537401e-06-lr: 0.3
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.928968906402588-loss: 0.0008703963248990476-lr: 0.01
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.85567307472229-loss: 2.6398936370242154e-06-lr: 0.03
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 3.8196094036102295-loss: 0.0006013254751451313-lr: 0.1
+det:  tensor(inf, grad_fn=<LinalgDetBackward0>)
+STIEFEL_ADAM-time: 4.425822734832764-loss: 2.2705125957145356e-06-lr: 0.3
+Saved 90 grid-search rows to /storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/results/data/hyperparams/MuonvSteifelAdamV1_Quad_100_STIEFEL_ADAM_gridsweep.tsv
+[{'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.7702523109619506e-06, 'time': 3.811784267425537}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0006345470901578665, 'time': 3.859896659851074}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.6669533781387145e-06, 'time': 3.9086387157440186}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0005457239458337426, 'time': 3.87892746925354}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.5140941513891448e-06, 'time': 3.9249041080474854}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0008499715477228165, 'time': 4.848420858383179}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 3.1450622373085935e-06, 'time': 3.7864625453948975}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0007270263158716261, 'time': 3.9565348625183105}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.4220571503974497e-06, 'time': 3.8422629833221436}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0007906239479780197, 'time': 3.893092393875122}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 3.1616968954040203e-06, 'time': 3.8887691497802734}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0006675891927443445, 'time': 3.9529776573181152}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.02006632834672928, 'time': 3.834683418273926}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0007776041748002172, 'time': 3.8694510459899902}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.7946134650846943e-06, 'time': 3.9220502376556396}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0008261170005425811, 'time': 3.8323557376861572}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.1782626643253025e-06, 'time': 3.9439685344696045}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0005654309643432498, 'time': 3.935793399810791}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 3.776588300752337e-06, 'time': 3.8156678676605225}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0008703963248990476, 'time': 3.928968906402588}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.9424508082011016e-06, 'time': 3.8318660259246826}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0009365003788843751, 'time': 3.7939858436584473}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.7152320879176841e-06, 'time': 3.7910656929016113}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0008408388821408153, 'time': 3.8253331184387207}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.1540693069255212e-06, 'time': 3.7645249366760254}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0007802631007507443, 'time': 3.763554096221924}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.6945583613269264e-06, 'time': 3.7669591903686523}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.000717099872417748, 'time': 3.7771029472351074}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.4185045529302442e-06, 'time': 3.755979537963867}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0005343701923266053, 'time': 3.7804830074310303}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.3024206257105106e-06, 'time': 3.780763864517212}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.000725370307918638, 'time': 3.7661378383636475}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.822582473527291e-06, 'time': 3.8179287910461426}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0008550200727768242, 'time': 3.815434455871582}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.6192022940231254e-06, 'time': 3.8111283779144287}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0006719752564094961, 'time': 3.8548078536987305}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.2946144326851936e-06, 'time': 3.884751558303833}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.000911009032279253, 'time': 3.8128042221069336}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.090470616167295e-06, 'time': 3.8567240238189697}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0006672177696600556, 'time': 3.883382558822632}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 4.033827938343393e-09, 'time': 3.7514748573303223}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0007855838630348444, 'time': 3.8909027576446533}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.6398936370242154e-06, 'time': 3.85567307472229}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0009421798749826849, 'time': 3.8655834197998047}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.923131776493392e-06, 'time': 3.8748459815979004}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0006512681720778346, 'time': 3.8662502765655518}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 6.505237681864173e-09, 'time': 3.9014899730682373}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.000646230997517705, 'time': 4.796647548675537}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.757943775577587e-06, 'time': 4.083928823471069}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0007519178907386959, 'time': 3.7731573581695557}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 3.1278354981623124e-06, 'time': 3.785207509994507}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0010442148195579648, 'time': 3.7413711547851562}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 5.66823432635033e-09, 'time': 3.7629950046539307}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0009536203579045832, 'time': 3.764361619949341}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 3.6409494441613788e-06, 'time': 4.095580339431763}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.000623075058683753, 'time': 3.752488851547241}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 3.1700424187874887e-06, 'time': 3.8641366958618164}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0004936420009471476, 'time': 3.837475299835205}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.049602088050051e-08, 'time': 3.7471399307250977}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.00046712520997971296, 'time': 3.775723695755005}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.0940356080245692e-06, 'time': 4.1051225662231445}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0008294480503536761, 'time': 3.791498899459839}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.1682910755771445e-06, 'time': 3.9353766441345215}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0006013254751451313, 'time': 3.8196094036102295}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.5432131067759656e-08, 'time': 3.863507032394409}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0007228959584608674, 'time': 3.802586555480957}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.8156838450522628e-06, 'time': 4.240285873413086}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.000603427761234343, 'time': 3.8651340007781982}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.8972855286847334e-06, 'time': 3.989438772201538}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0009089036611840129, 'time': 3.7965195178985596}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.2352589112983878e-08, 'time': 3.900076389312744}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0006177156465128064, 'time': 4.704451560974121}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.537026603022241e-06, 'time': 4.227579832077026}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0008869079174473882, 'time': 3.8226401805877686}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.360943315376062e-06, 'time': 3.960573434829712}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0007813564734533429, 'time': 3.671203136444092}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 6.452967937775611e-08, 'time': 3.683043956756592}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 3.887763796228683e-06, 'time': 3.688995361328125}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 3.0764440452912822e-06, 'time': 4.283255100250244}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0005959594273008406, 'time': 3.6571550369262695}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.647981889618677e-06, 'time': 4.035964250564575}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0005983906448818743, 'time': 3.6617379188537598}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 7.341344598899013e-08, 'time': 3.6590325832366943}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.6615776985418051e-06, 'time': 3.6967480182647705}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 2.2705125957145356e-06, 'time': 4.425822734832764}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0011420571245253086, 'time': 3.685582160949707}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 3.253512204537401e-06, 'time': 4.203435897827148}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 0.0005497339298017323, 'time': 3.698364019393921}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.5042554935007502e-07, 'time': 3.745356559753418}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 1.722567049000645e-06, 'time': 3.7146570682525635}]
+{'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 999, 'betas': (0.9, 0.95), 'beta': 0.95, 'optimizer': 'STIEFEL_ADAM', 'rand_seed': 2, 'loss': 4.033827938343393e-09, 'time': 3.7514748573303223}
+---------------------------------------
+Begin Slurm Epilog: Oct-19-2026 13:46:32
+Job ID:        14183883
+User ID:       clinder9
+Account:       gts-mtao8
+Job name:      hp
+Resources:     cpu=24,mem=128G,node=1
+Rsrc Used:     cput=00:19:36,vmem=0,walltime=00:00:49,mem=10848308K,energy_used=0
+Partition:     cpu-small
+QOS:           inferno
+Nodes:         atl1-1-02-011-8-2
+---------------------------------------

@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=hp
 #SBATCH --account=gts-mtao8
-#SBATCH --nodes=1 --ntasks-per-node=24
-#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1 --ntasks-per-node=1
+#SBATCH --cpus-per-task=24
 #SBATCH --time=01:00:00
 #SBATCH --mem=128G
 #SBATCH --partition=cpu
@@ -13,4 +13,4 @@
 cd $SLURM_SUBMIT_DIR
 
 # Run your bash script
-bash pace_scripts/sweep.sh
+bash "$SLURM_SUBMIT_DIR/sweep.sh"
