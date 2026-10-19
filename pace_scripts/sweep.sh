@@ -32,4 +32,4 @@ uv sync
 # activate venv so that `python` uses the project's venv instead of system python
 source .venv/bin/activate
 
-python3 QuadGridSearch.py
+python3 grid_search/QuadGridSearch.py
