@@ -1,4 +1,17 @@
-from TrainingScripts import *
+import sys
+import os
+
+ShampooExperiment_PATH = os.environ.get(
+    "SHAMPOO_PATH", os.path.expanduser("~/Desktop/OptimizerTesting/ShampooExperiment")
+)
+ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+# `common` lives at the project root, alongside `analysis`, rather than inside
+# this script's directory.
+PROJECT_ROOT = os.path.dirname(ROOT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+from common.TrainingScripts import *
 import matplotlib.animation as animation
 from matplotlib.animation import FFMpegWriter
 
@@ -24,6 +37,7 @@ def plotSpectra(arr: list[torch.Tensor]):
     # Update function for each frame/iteration
     def update(frame):
         s_vals = spectra[frame]
+        print(torch.linalg.matrix_rank(arr[frame]).item())
         line.set_ydata(s_vals)
         ax.set_title(f"Singular Value Spectrum (Iter {frame+1}/{n_iters})")
         return (line,)
@@ -36,7 +50,7 @@ def plotSpectra(arr: list[torch.Tensor]):
 if __name__ == '__main__':
     n=100
     rand_seed=3
-    O=OPTS.MUON
+    O=OPTS.STIEFEL_ADAM
     with open(f"/Users/christopherlinder/Desktop/OptimizerTesting.worktrees/experimental-branch-analysis-muon-stiefel/data/optimalHyperParams/NewQuad(n=100)_{O.name}_hp.json", 'r') as f:
         hyper_params=json.load(f)
         print(hyper_params['lr'])
@@ -59,7 +73,7 @@ if __name__ == '__main__':
     plt.title(rf'StiefelAdam-Quadratic Problem with $\kappa={kappa:.2f}$')
     plt.legend()
     plt.show()
-    #plotSpectra(stats['G'])
+    plotSpectra(stats['P'])
 
     # Keep all stats in-memory in a local dict `saved_stats`.
     a=True

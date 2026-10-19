@@ -144,7 +144,9 @@ class StiefelGeodUnconstrained(Optimizer):
         for g in self.param_groups:
             g['lr'] = defaults['lr']
             g['Ht'] = None
-            g['Pt'] = None
+            g['St'] = None
+            g['I'] = None
+            g['X'] = None
 
     def step(self):
         for g in self.param_groups:
@@ -152,50 +154,39 @@ class StiefelGeodUnconstrained(Optimizer):
             stacked_params = torch.stack([p.data for p in g['params']])
             stacked_grads = torch.stack([p.grad for p in g['params']])
             b = stacked_params.shape[0]
-            H = -stiefel_grad(stacked_grads, stacked_params) #search direction
 
+            #X = NS(stacked_params)
+            if g['X']==None:
+                g['X'] = NS(stacked_params)
+            X = g['X']
+            #H = stiefel_grad(stacked_grads, X) #search direction
+            H = stacked_grads
+            if g['I']==None:
+                g['I'] = torch.eye(p).unsqueeze(0).repeat(b, 1, 1)
             if g['Ht']==None:
                 g['Ht'] = H.clone()
-            #EMA between current stiefel gradient H and current parallel transported direction Ht, 
-            #computed and cached from previous iteration
-            H = torch.lerp(H, g['Ht'], self.beta)
+            if g['St']==None:
+                g['St'] = g['I']
 
-            if g['Pt']==None:
-                g['Pt'] = torch.zeros(b,p,p)
-            P = g['lr']*g['Pt'] - .1*sym(stacked_params.mT@stacked_grads)
- 
-            A = stacked_params.mT@H
-            A=skew(A)
+            # G_N = X@sym(X.mT@H)
+            # #G_T = proj_T(H, X)
+            # G_T = H - G_N
 
-            #NS approximation to Q
-            # Q = NS(H - stacked_params@A)
-            # R = Q.mT@(H - stacked_params@A)
+            G_N = sym(X.mT@H)
+            #H_x = stiefel_grad(stacked_grads, X)
+            H_x=H
+            G_T = H_x@g['St'] - X@sym(X.mT@H_x@g['St'])
 
-            I = torch.eye(p).unsqueeze(0).repeat(stacked_params.shape[0], 1, 1)
+            S_t = g['St'] - g['lr']*G_N
+            X_t = X - g['lr']*G_T
+            X_t = NS(X_t)
+    
+            Yt = X_t@S_t
             
-            # Q = torch.eye(stacked_params.shape[1]).unsqueeze(0).repeat(stacked_params.shape[0], 1, 1)-stacked_params@stacked_params.mT
-            # R = H
-
-            #default
-            Q, R = torch.linalg.qr(H - stacked_params@A)
-
-            # r1 = torch.concat([A, -R.mT], dim=2)
-            # r2 = torch.concat([R, torch.zeros([b,p,p])], dim=2)
-            # blocks = g['lr']*torch.concat([r1, r2], dim=1)
-            # MN = torch.linalg.matrix_exp(blocks)
-            # MN = MN[:,:,:p]
-            # M, N = MN[:,:p,:], MN[:,p:,:]
-
-            M = I + g['lr']*A + (g['lr']**2 / 2)*(A@A - R.mT@R)
-            N = g['lr']*R + (g['lr']**2 / 2)*R@A
-            #M, N = NS(M), NS(N)
-            
-            Yt = stacked_params@M + Q@N
-            Yt = NS(Yt)
-            Ht = H@M - stacked_params@R.mT@N #parallel transport to get new search direction
-
-            g['Ht'] = Ht
-            g['Pt'] = P
+            g['Ht'] = H
+            g['St'] = S_t
+            #g['St'] = g['I']
+            g['X'] = X_t
 
             for p, pt in zip(g['params'], Yt.unbind(0)):
                 p.data = pt
@@ -218,13 +209,13 @@ def train(name):
     elif name=="SGM":
         optimizer=StiefelGeodMomentum(params, {'lr': .5})
     elif name=="SGU":
-        optimizer=StiefelGeodUnconstrained(params, {'lr': .5})
+        optimizer=StiefelGeodUnconstrained(params, {'lr': .1})
     elif name=="MUON":
         optimizer=make_optimizer(OPTS.MUON, params, {'lr': .05})
     elif name=="SA":
         optimizer=make_optimizer(OPTS.STIEFEL_ADAM, params, {'lr': .05})
 
-    iters=200
+    iters=500
     losses = []
 
     def get_lr(iter, lr):
@@ -247,8 +238,8 @@ def train(name):
     print(e-s)
     plt.plot(np.arange(0,iters), np.log(losses), label=name)
 
-#train("SG")
-train("SA")
+train("SG")
+# train("SA")
 train("SGU")
 plt.legend()
 plt.show()
