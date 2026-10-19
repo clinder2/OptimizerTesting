@@ -103,13 +103,25 @@ updated_coarse_grid = {
     'weight_decay': [0.0],
 }
 
-coarse_grid = {
-    'lr': [.01, .1, .2,.9],
-    'warmup_iters': [.1,.2,.3],
-    'lr_decay_iters': [.2,.3,.4],
-    'min_lr': [6e-5,6e-2,1e-2],
-    'max_iters': [4000],
-    'beta': [.85,.999]
+# Quadratic (100x100, spectrum 1..10) sweeps; Muon-style lr range ~1e-2..3e-1, momentum 0.9-0.98 as in Wen et al. 2025.
+Muon_coarse_grid = {
+    'lr': [.003, .01, .03, .1, .3],
+    'warmup_iters': [.05, .1, .2],
+    'lr_decay_iters': [.5, .8, 1],
+    'min_lr': [6e-5, 1e-3],
+    'max_iters': [1000],
+    'beta2': [0.95],
+    'momentum': [0.9],
+    'weight_decay': [1e-4],
+}
+
+stiefelAdam_coarse_grid = {
+    'lr': [.003, .01, .03, .1, .3],
+    'warmup_iters': [.05, .1, .2],
+    'lr_decay_iters': [.5, .8, 1],
+    'min_lr': [6e-5, 1e-3],
+    'max_iters': [1000],
+    'betas': [(0.9, 0.95)],
 }
 
 def save_grid_output_tsv(output, tsv_path):

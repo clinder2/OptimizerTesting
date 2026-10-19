@@ -2,9 +2,11 @@ import json
 import os
 import sys
 
-ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
-if ROOT_DIR not in sys.path:
-    sys.path.insert(0, ROOT_DIR)
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+# Repo root plus dirs imported by bare name in GridSearch/TrainingScripts; spawn workers inherit sys.path.
+for p in (ROOT_DIR, os.path.join(ROOT_DIR, "common"), os.path.join(ROOT_DIR, "models"), os.path.join(ROOT_DIR, "shampoo_variants")):
+    if p not in sys.path:
+        sys.path.insert(0, p)
 
 #from Base import *
 from grid_search.GridSearch import *
@@ -15,7 +17,7 @@ from grid_search.GridSearch import *
 # Compute output paths relative to the repo root instead of a hardcoded,
 # machine-specific absolute path, so this script also works unmodified when
 # deployed on another machine/cluster (e.g. PACE).
-DATA_DIR = os.path.abspath(os.path.join(ROOT_DIR, os.pardir, "data"))
+DATA_DIR = os.path.join(ROOT_DIR, "results", "data")
 HP_DIR = os.path.join(DATA_DIR, "optimalHyperParams")
 SWEEP_DIR = os.path.join(DATA_DIR, "hyperparams")
 os.makedirs(HP_DIR, exist_ok=True)
@@ -33,14 +35,13 @@ if __name__=='__main__':
     #     json.dump(hp, f)
 
     op=OPTS.MUON
-    print(Muon_updated_fine_grid)
     output, hp=grid_search(
-        op, model, Muon_updated_fine_grid,
-        tsv_path=os.path.join(SWEEP_DIR, f"Quad_n={n}_{op.name}_gridsweep.tsv"),
+        op, model, Muon_coarse_grid,
+        tsv_path=os.path.join(SWEEP_DIR, f"MuonvSteifelAdamV1_Quad_{n}_{op.name}_gridsweep.tsv"),
     )
     print(output)
     print(hp)
-    with open(os.path.join(HP_DIR, f"NewQuad_kappa=1_(n={n})_{op.name}_hp.json"), 'w') as f:
+    with open(os.path.join(HP_DIR, f"MuonvSteifelAdamV1_Quad_(n={n})_{op.name}_hp.json"), 'w') as f:
         json.dump(hp, f)
 
     # op=OPTS.SCS
@@ -66,12 +67,12 @@ if __name__=='__main__':
 
     op=OPTS.STIEFEL_ADAM
     output, hp=grid_search(
-        op, model, stiefelAdam_updated_fine_grid,
-        tsv_path=os.path.join(SWEEP_DIR, f"Quad_n={n}_{op.name}_gridsweep.tsv"),
+        op, model, stiefelAdam_coarse_grid,
+        tsv_path=os.path.join(SWEEP_DIR, f"MuonvSteifelAdamV1_Quad_{n}_{op.name}_gridsweep.tsv"),
     )
     print(output)
     print(hp)
-    with open(os.path.join(HP_DIR, f"NewQuad(n={n})_{op.name}_hp.json"), 'w') as f:
+    with open(os.path.join(HP_DIR, f"MuonvSteifelAdamV1_Quad_(n={n})_{op.name}_hp.json"), 'w') as f:
         json.dump(hp, f)
 
     # op=OPTS.STIEFEL_SGD
