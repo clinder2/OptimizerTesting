@@ -79,8 +79,12 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
             #print((probabilities > 0.5).float()-labels)
             diff=(probabilities > 0.5).float()-labels
             err+=torch.count_nonzero(diff).item()
-            optimizer.step()
-            optimizer.zero_grad(set_to_none=True)
+            try:
+                optimizer.step()
+                optimizer.zero_grad(set_to_none=True)
+            except torch._C._LinAlgError as e:
+                print("failed inv")
+                return loss_arr, e-s, val_err, iter_num
             sgd.step()
             sgd.zero_grad(set_to_none=True)
             iter_num+=1

@@ -230,7 +230,7 @@ def grid_search(optimizer, model, grid=grid, num_workers=DEFAULT_NUM_WORKERS, ts
             )
         elif model['model'] == 'MLPClassifier':
             output=pool.starmap(
-                grid_Search_MLPClassifier,
+                _safe_grid_Search_MLPClassifier,
                 [
                     (
                         optimizer,
@@ -259,6 +259,19 @@ def grid_search(optimizer, model, grid=grid, num_workers=DEFAULT_NUM_WORKERS, ts
 def _safe_grid_Search_Quad(OP, hyperparams, n, rand_seed=2):
     try:
         return grid_Search_Quad(OP, hyperparams, n, rand_seed=rand_seed)
+    except Exception as exc:
+        import traceback
+        return {
+            'error': repr(exc),
+            'traceback': traceback.format_exc(),
+            'optimizer': OP.name,
+            'hyperparams': hyperparams,
+        }
+
+
+def _safe_grid_Search_MLPClassifier(OP, hyperparams, *args, **kwargs):
+    try:
+        return grid_Search_MLPClassifier(OP, hyperparams, *args, **kwargs)
     except Exception as exc:
         import traceback
         return {
