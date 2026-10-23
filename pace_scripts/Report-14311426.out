@@ -1,0 +1,194 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-22-2026 22:41:22
+Job ID:    14311426
+User ID:   clinder9
+Account:   gts-mtao8
+Job name:  hp
+Partition: cpu-small
+QOS:       inferno
+---------------------------------------
+Resolved 54 packages in 79ms
+Audited 41 packages in 186ms
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Saved 90 grid-search rows to /storage/project/r-mtao8-0/clinder9/OptimizerTesting/common/results/data/hyperparams/MuonvSteifelAdamV1_MLP_100_MUON_gridsweep.tsv
+[{'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.503644597530365), 'time': 7.890438795089722}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.3140726238489151), 'time': 7.942708492279053}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.2785561069846153), 'time': 7.8591203689575195}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.10157112032175064), 'time': 7.863449573516846}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.23136375546455384), 'time': 7.968671798706055}, {'lr': 0.003, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.11075376495718955), 'time': 7.952418088912964}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.5071935057640076), 'time': 7.892937898635864}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.22714357525110246), 'time': 7.899828195571899}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.2612407058477402), 'time': 8.007114887237549}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.11923340559005738), 'time': 7.946893215179443}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.2332833468914032), 'time': 7.9537434577941895}, {'lr': 0.003, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.16953225210309028), 'time': 7.89172101020813}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.4505904972553253), 'time': 7.882112264633179}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.22574726790189742), 'time': 7.976415634155273}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.37175042033195493), 'time': 7.9114038944244385}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.1297903623431921), 'time': 7.966344594955444}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.19742031991481782), 'time': 7.886048078536987}, {'lr': 0.003, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.08147957548499107), 'time': 7.876944541931152}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.015616301214322448), 'time': 7.968775272369385}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.001844281330704689), 'time': 7.92723822593689}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(9.091527899727226e-05), 'time': 7.968994379043579}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.8189172007841988e-05), 'time': 10.644948244094849}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.0021950285692582837), 'time': 7.959090232849121}, {'lr': 0.01, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(7.297239229542285e-09), 'time': 7.883307933807373}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.01926529807969928), 'time': 7.703473329544067}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.0024994366220198573), 'time': 7.694861173629761}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.0002448917643050663), 'time': 7.711724042892456}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.267910642032802e-05), 'time': 7.715916872024536}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.816942721892701e-05), 'time': 7.708158731460571}, {'lr': 0.01, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.6611169609248576e-05), 'time': 7.731070280075073}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.0208291454706341), 'time': 7.737256765365601}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.002906609058845788), 'time': 7.704410791397095}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.00018824985309038312), 'time': 7.729896783828735}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(4.9750679818316715e-05), 'time': 7.727814197540283}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.2544994871509515e-05), 'time': 7.7350990772247314}, {'lr': 0.01, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.4510653926835815e-05), 'time': 7.764417409896851}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(7.43974702190405e-07), 'time': 7.7840540409088135}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(3.530549430405875e-07), 'time': 7.778106689453125}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.3414037296631286e-16), 'time': 7.812316656112671}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.0156499125369766e-13), 'time': 7.819619655609131}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.83107909235055e-15), 'time': 7.811020612716675}, {'lr': 0.03, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(3.157750954467282e-14), 'time': 7.792462348937988}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.533996700866156e-07), 'time': 7.7916951179504395}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.581303005497168e-07), 'time': 7.806353330612183}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(3.3965059812943764e-16), 'time': 7.802356243133545}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.661260397092638e-12), 'time': 7.788303852081299}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.536585581508777e-11), 'time': 7.832295894622803}, {'lr': 0.03, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.6112580125066292e-20), 'time': 10.476485013961792}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(7.538606091662567e-07), 'time': 7.708144903182983}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(3.8157083632890783e-07), 'time': 7.658391714096069}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.529583145967917e-16), 'time': 7.676670551300049}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.4111674051560849e-10), 'time': 7.70671010017395}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.9713857323418115e-13), 'time': 7.716206789016724}, {'lr': 0.03, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.13549028996101e-18), 'time': 7.696308612823486}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.9135207302807687e-10), 'time': 7.795285224914551}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(9.104138623100608e-10), 'time': 7.826199769973755}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.5515885494022612e-10), 'time': 7.759832382202148}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.7166235920740292e-06), 'time': 7.7393529415130615}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.03862064415588975), 'time': 7.726588726043701}, {'lr': 0.1, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.04449945436790585), 'time': 7.8322343826293945}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(8.946291429391485e-06), 'time': 7.753422260284424}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.68548928262909e-12), 'time': 7.823092222213745}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.313225956611006e-18), 'time': 7.793943643569946}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(6.022165696089415e-17), 'time': 7.782479286193848}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.652423504890313e-17), 'time': 7.784420967102051}, {'lr': 0.1, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(9.96322885305012e-12), 'time': 7.82204008102417}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(4.0408322499484895e-10), 'time': 7.829024791717529}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(9.162750029053925e-15), 'time': 7.838657379150391}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.204014796647005e-31), 'time': 7.851394176483154}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.03917649723589428), 'time': 7.825388193130493}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.922290787119689e-11), 'time': 7.868578195571899}, {'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.9566810977183365e-17), 'time': 10.353412389755249}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.553176810611716e-10), 'time': 7.723107814788818}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(4.2736120702381933e-10), 'time': 7.7225751876831055}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.7336996331752965e-19), 'time': 7.770240306854248}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(6.123987328155508e-18), 'time': 7.804378032684326}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.9450889787719915e-10), 'time': 7.697911500930786}, {'lr': 0.3, 'warmup_iters': 0.05, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.127857313160732e-24), 'time': 7.694231748580933}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(8.226510815929774e-10), 'time': 7.707988023757935}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.588824407723133e-11), 'time': 7.75663948059082}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(3.166607938114387e-13), 'time': 7.745478630065918}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(8.072952533742278e-26), 'time': 7.771289587020874}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.8662736673380997e-15), 'time': 7.759904384613037}, {'lr': 0.3, 'warmup_iters': 0.1, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(0.10237811766564846), 'time': 7.753584384918213}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(9.090631991170995e-07), 'time': 7.886951446533203}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.5, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(9.044452334858524e-10), 'time': 7.753203630447388}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.5953854888189796e-12), 'time': 7.8563172817230225}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.914770540552049e-24), 'time': 7.789692640304565}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(2.466108809724546e-18), 'time': 7.709315299987793}, {'lr': 0.3, 'warmup_iters': 0.2, 'lr_decay_iters': 1, 'min_lr': 0.001, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(1.3866357945224208e-15), 'time': 7.841594219207764}]
+{'lr': 0.1, 'warmup_iters': 0.2, 'lr_decay_iters': 0.8, 'min_lr': 6e-05, 'max_iters': 1000, 'beta2': 0.95, 'momentum': 0.9, 'weight_decay': 0.0001, 'beta': 0.95, 'loss': np.float64(5.204014796647005e-31), 'time': 7.851394176483154}
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5203028380870819 STIEFEL_ADAM
+TESTLOSS:  0.5203028380870819 13 100
+0.5113706976175308 STIEFEL_ADAM
+TESTLOSS:  0.5113706976175308 12 100
+0.509102076292038 STIEFEL_ADAM
+TESTLOSS:  0.509102076292038 11 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5117986470460891 STIEFEL_ADAM
+TESTLOSS:  0.5117986470460891 12 100
+0.5098682403564453 STIEFEL_ADAM
+TESTLOSS:  0.5098682403564453 12 100
+0.5081192374229431 STIEFEL_ADAM
+TESTLOSS:  0.5081192374229431 15 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5091270446777344 STIEFEL_ADAM
+TESTLOSS:  0.5091270446777344 11 100
+0.5128336280584336 STIEFEL_ADAM
+TESTLOSS:  0.5128336280584336 12 100
+0.50909044444561 STIEFEL_ADAM
+TESTLOSS:  0.50909044444561 11 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.515916857123375 STIEFEL_ADAM
+TESTLOSS:  0.515916857123375 10 100
+0.5118737757205963 STIEFEL_ADAM
+TESTLOSS:  0.5118737757205963 14 100
+0.5080863863229752 STIEFEL_ADAM
+TESTLOSS:  0.5080863863229752 15 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.510043615102768 STIEFEL_ADAM
+TESTLOSS:  0.510043615102768 13 100
+0.5133097976446152 STIEFEL_ADAM
+TESTLOSS:  0.5133097976446152 13 100
+0.5068013519048691 STIEFEL_ADAM
+TESTLOSS:  0.5068013519048691 13 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5125405728816986 STIEFEL_ADAM
+TESTLOSS:  0.5125405728816986 17 100
+0.5125997602939606 STIEFEL_ADAM
+TESTLOSS:  0.5125997602939606 13 100
+0.5090885490179062 STIEFEL_ADAM
+TESTLOSS:  0.5090885490179062 11 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5112830758094787 STIEFEL_ADAM
+TESTLOSS:  0.5112830758094787 13 100
+0.5115550935268403 STIEFEL_ADAM
+TESTLOSS:  0.5115550935268403 12 100
+0.5117345780134201 STIEFEL_ADAM
+TESTLOSS:  0.5117345780134201 11 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5100378334522248 STIEFEL_ADAM
+TESTLOSS:  0.5100378334522248 14 100
+0.5098725616931915 STIEFEL_ADAM
+TESTLOSS:  0.5098725616931915 12 100
+0.5088377147912979 STIEFEL_ADAM
+TESTLOSS:  0.5088377147912979 14 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5173853397369385 STIEFEL_ADAM
+TESTLOSS:  0.5173853397369385 10 100
+0.5083403587341309 STIEFEL_ADAM
+TESTLOSS:  0.5083403587341309 12 100
+0.5090857595205307 STIEFEL_ADAM
+TESTLOSS:  0.5090857595205307 11 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5132820695638657 STIEFEL_ADAM
+TESTLOSS:  0.5132820695638657 16 100
+0.5116190165281296 STIEFEL_ADAM
+TESTLOSS:  0.5116190165281296 12 100
+0.5118161559104919 STIEFEL_ADAM
+TESTLOSS:  0.5118161559104919 10 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5160253465175628 STIEFEL_ADAM
+TESTLOSS:  0.5160253465175628 13 100
+0.5098904132843017 STIEFEL_ADAM
+TESTLOSS:  0.5098904132843017 12 100
+0.5091098040342331 STIEFEL_ADAM
+TESTLOSS:  0.5091098040342331 11 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5134007573127747 STIEFEL_ADAM
+TESTLOSS:  0.5134007573127747 12 100
+0.5115148246288299 STIEFEL_ADAM
+TESTLOSS:  0.5115148246288299 11 100
+0.5119967341423035 STIEFEL_ADAM
+TESTLOSS:  0.5119967341423035 11 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5109768122434616 STIEFEL_ADAM
+TESTLOSS:  0.5109768122434616 11 100
+0.5134915381669998 STIEFEL_ADAM
+TESTLOSS:  0.5134915381669998 11 100
+0.5118208199739456 STIEFEL_ADAM
+TESTLOSS:  0.5118208199739456 10 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5130324810743332 STIEFEL_ADAM
+TESTLOSS:  0.5130324810743332 13 100
+0.5117690861225128 STIEFEL_ADAM
+TESTLOSS:  0.5117690861225128 12 100
+0.5117384940385818 STIEFEL_ADAM
+TESTLOSS:  0.5117384940385818 11 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5171715557575226 STIEFEL_ADAM
+TESTLOSS:  0.5171715557575226 11 100
+0.5132989704608917 STIEFEL_ADAM
+TESTLOSS:  0.5132989704608917 13 100
+0.5080558121204376 STIEFEL_ADAM
+TESTLOSS:  0.5080558121204376 14 100
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5098963558673859 STIEFEL_ADAM
+TESTLOSS:  0.5098963558673859 15 100
+0.508344492316246 STIEFEL_ADAM
+TESTLOSS:  0.508344492316246 12 100
+0.509010237455368 STIEFEL_ADAM
+TESTLOSS:  0.509010237455368 11 100
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/storage/home/hcoda1/7/clinder9/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/storage/home/hcoda1/7/clinder9/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 276, in grid_Search_MLPClassifier
+    loss_arr, elapsed, err, _ = trainMLPClassifier(OP, hp_dict, in_dimension, out_dimension,
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/shampoo_variants/MLPClassifier.py", line 85, in trainMLPClassifier
+    optimizer.step()
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/optim/optimizer.py", line 549, in wrapper
+    out = func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py", line 283, in step
+    torch.vmap(update_func, out_dims=None)(X, Y, V, X_grad, p_Y, p_V)
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/_functorch/apis.py", line 246, in wrapped
+    return vmap_impl(
+           ^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/_functorch/vmap.py", line 316, in vmap_impl
+    return _flat_vmap(
+           ^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/_functorch/vmap.py", line 507, in _flat_vmap
+    batched_outputs = func(*batched_inputs, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py", line 282, in <lambda>
+    update_func=lambda X, Y, V, X_grad, p_Y, p_V: _update_func_Stiefel_Adam(X, Y, V, X_grad, p_Y, p_V, step, square, a, b, lr, beta_1, beta_2, expm_method, inner_iter, epsilon)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py", line 173, in _update_func_Stiefel_Adam
+    V_tilde=V/denominator_V-X@torch.linalg.inv(X.t()@X)@(X.t()@(V/denominator_V))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+torch._C._LinAlgError: linalg.inv: (Batch element 0): The diagonal element 1 is zero, the inversion could not be completed because the input matrix is singular.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/MLPGridSearch.py", line 42, in <module>
+    output, hp=grid_search(
+               ^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 232, in grid_search
+    output=pool.starmap(
+           ^^^^^^^^^^^^^
+  File "/storage/home/hcoda1/7/clinder9/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 375, in starmap
+    return self._map_async(func, iterable, starmapstar, chunksize).get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/home/hcoda1/7/clinder9/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 774, in get
+    raise self._value
+torch._C._LinAlgError: linalg.inv: (Batch element 0): The diagonal element 1 is zero, the inversion could not be completed because the input matrix is singular.
+---------------------------------------
+Begin Slurm Epilog: Oct-22-2026 22:43:28
+Job ID:        14311426
+User ID:       clinder9
+Account:       gts-mtao8
+Job name:      hp
+Resources:     cpu=24,mem=128G,node=1
+Rsrc Used:     cput=00:51:12,vmem=0,walltime=00:02:08,mem=10726340K,energy_used=0
+Partition:     cpu-small
+QOS:           inferno
+Nodes:         atl1-1-02-010-21-1
+---------------------------------------

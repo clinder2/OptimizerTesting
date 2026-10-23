@@ -11,6 +11,7 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
 
 export VAR_STIEFEL_PATH=/storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer
 
@@ -37,4 +38,4 @@ uv sync
 # activate venv so that `python` uses the project's venv instead of system python
 source .venv/bin/activate
 
-python3 grid_search/QuadGridSearch.py
+python3 grid_search/MLPGridSearch.py
