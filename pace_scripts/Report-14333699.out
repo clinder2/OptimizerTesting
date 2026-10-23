@@ -1,0 +1,247 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-23-2026 12:55:04
+Job ID:    14333699
+User ID:   clinder9
+Account:   gts-mtao8
+Job name:  hp
+Partition: cpu-small
+QOS:       inferno
+---------------------------------------
+Resolved 54 packages in 19ms
+Audited 41 packages in 163ms
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.pyLoaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.pyLoaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.pyLoaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.pyLoaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.pyLoaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+
+
+
+
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.pyLoaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.pyLoaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.pyLoaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.pyLoaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+
+
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+Loaded StiefelSGD/StiefelAdam from /storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py
+0.5112186998128891 STIEFEL_ADAM
+TESTLOSS:  0.5112186998128891 10 100
+0.5142502099275589 STIEFEL_ADAM
+TESTLOSS:  0.5142502099275589 13 100
+0.5133441776037216 STIEFEL_ADAM
+TESTLOSS:  0.5133441776037216 14 100
+0.513034188747406 STIEFEL_ADAM
+TESTLOSS:  0.513034188747406 13 100
+0.5120698392391205 STIEFEL_ADAM
+TESTLOSS:  0.5120698392391205 13 100
+0.5126278132200242 STIEFEL_ADAM
+TESTLOSS:  0.5126278132200242 13 100
+0.5090706080198288 STIEFEL_ADAM
+TESTLOSS:  0.5090706080198288 11 100
+0.5144194066524506 STIEFEL_ADAM
+TESTLOSS:  0.5144194066524506 12 100
+0.5130000531673431 STIEFEL_ADAM
+TESTLOSS:  0.5130000531673431 13 100
+0.5117454081773758 STIEFEL_ADAM
+TESTLOSS:  0.5117454081773758 12 100
+0.5066997557878494 STIEFEL_ADAM
+TESTLOSS:  0.5066997557878494 14 100
+0.5085554331541061 STIEFEL_ADAM
+TESTLOSS:  0.5085554331541061 13 100
+0.5097821474075317 STIEFEL_ADAM
+TESTLOSS:  0.5097821474075317 12 100
+0.5151583790779114 STIEFEL_ADAM
+TESTLOSS:  0.5151583790779114 12 100
+0.5079622834920883 STIEFEL_ADAM
+TESTLOSS:  0.5079622834920883 12 100
+0.5124058693647384 STIEFEL_ADAM
+TESTLOSS:  0.5124058693647384 13 100
+0.50931136906147 STIEFEL_ADAM
+TESTLOSS:  0.50931136906147 12 100
+0.5121059358119965 STIEFEL_ADAM
+TESTLOSS:  0.5121059358119965 11 100
+0.5128944635391235 STIEFEL_ADAM
+TESTLOSS:  0.5128944635391235 11 100
+0.5156566858291626 STIEFEL_ADAM
+TESTLOSS:  0.5156566858291626 15 100
+0.5089456170797348 STIEFEL_ADAM
+TESTLOSS:  0.5089456170797348 12 100
+0.5128346800804138 STIEFEL_ADAM
+TESTLOSS:  0.5128346800804138 12 100
+0.5112801343202591 STIEFEL_ADAM
+TESTLOSS:  0.5112801343202591 12 100
+0.5077005714178086 STIEFEL_ADAM
+TESTLOSS:  0.5077005714178086 11 100
+0.510021197795868 STIEFEL_ADAM
+TESTLOSS:  0.510021197795868 12 100
+0.5117011547088623 STIEFEL_ADAM
+TESTLOSS:  0.5117011547088623 12 100
+0.5115148246288299 STIEFEL_ADAM
+TESTLOSS:  0.5115148246288299 11 100
+0.5131160587072372 STIEFEL_ADAM
+TESTLOSS:  0.5131160587072372 12 100
+0.5098682403564453 STIEFEL_ADAM
+TESTLOSS:  0.5098682403564453 12 100
+0.5116190165281296 STIEFEL_ADAM
+TESTLOSS:  0.5116190165281296 12 100
+0.5132989704608917 STIEFEL_ADAM
+TESTLOSS:  0.5132989704608917 13 100
+0.5119316935539245 STIEFEL_ADAM
+TESTLOSS:  0.5119316935539245 12 100
+0.5098904132843017 STIEFEL_ADAM
+TESTLOSS:  0.5098904132843017 12 100
+0.5118737757205963 STIEFEL_ADAM
+TESTLOSS:  0.5118737757205963 14 100
+0.5113706976175308 STIEFEL_ADAM
+TESTLOSS:  0.5113706976175308 12 100
+0.5133097976446152 STIEFEL_ADAM
+TESTLOSS:  0.5133097976446152 13 100
+0.5098725616931915 STIEFEL_ADAM
+TESTLOSS:  0.5098725616931915 12 100
+0.5134915381669998 STIEFEL_ADAM
+TESTLOSS:  0.5134915381669998 11 100
+0.5117690861225128 STIEFEL_ADAM
+TESTLOSS:  0.5117690861225128 12 100
+0.5121243834495545 STIEFEL_ADAM
+TESTLOSS:  0.5121243834495545 12 100
+0.5083403587341309 STIEFEL_ADAM
+TESTLOSS:  0.5083403587341309 12 100
+0.5115550935268403 STIEFEL_ADAM
+TESTLOSS:  0.5115550935268403 12 100
+0.5125997602939606 STIEFEL_ADAM
+TESTLOSS:  0.5125997602939606 13 100
+0.511918580532074 STIEFEL_ADAM
+TESTLOSS:  0.511918580532074 12 100
+0.5128336280584336 STIEFEL_ADAM
+TESTLOSS:  0.5128336280584336 12 100
+0.5118772864341736 STIEFEL_ADAM
+TESTLOSS:  0.5118772864341736 12 100
+0.508344492316246 STIEFEL_ADAM
+TESTLOSS:  0.508344492316246 12 100
+0.5119162976741791 STIEFEL_ADAM
+TESTLOSS:  0.5119162976741791 12 100
+0.5118208199739456 STIEFEL_ADAM
+TESTLOSS:  0.5118208199739456 10 100
+0.5118161559104919 STIEFEL_ADAM
+TESTLOSS:  0.5118161559104919 10 100
+0.5080233484506607 STIEFEL_ADAM
+TESTLOSS:  0.5080233484506607 13 100
+0.5119967341423035 STIEFEL_ADAM
+TESTLOSS:  0.5119967341423035 11 100
+0.5117345780134201 STIEFEL_ADAM
+TESTLOSS:  0.5117345780134201 11 100
+0.5080863863229752 STIEFEL_ADAM
+TESTLOSS:  0.5080863863229752 15 100
+0.5117384940385818 STIEFEL_ADAM
+TESTLOSS:  0.5117384940385818 11 100
+0.5088377147912979 STIEFEL_ADAM
+TESTLOSS:  0.5088377147912979 14 100
+0.5073725312948227 STIEFEL_ADAM
+TESTLOSS:  0.5073725312948227 14 100
+0.50755395591259 STIEFEL_ADAM
+TESTLOSS:  0.50755395591259 13 100
+0.5073407977819443 STIEFEL_ADAM
+TESTLOSS:  0.5073407977819443 14 100
+0.50909044444561 STIEFEL_ADAM
+TESTLOSS:  0.50909044444561 11 100
+0.5091098040342331 STIEFEL_ADAM
+TESTLOSS:  0.5091098040342331 11 100
+0.5080558121204376 STIEFEL_ADAM
+TESTLOSS:  0.5080558121204376 14 100
+0.509102076292038 STIEFEL_ADAM
+TESTLOSS:  0.509102076292038 11 100
+0.5081192374229431 STIEFEL_ADAM
+TESTLOSS:  0.5081192374229431 15 100
+0.5068013519048691 STIEFEL_ADAM
+TESTLOSS:  0.5068013519048691 13 100
+0.5073859363794326 STIEFEL_ADAM
+TESTLOSS:  0.5073859363794326 14 100
+0.5090885490179062 STIEFEL_ADAM
+TESTLOSS:  0.5090885490179062 11 100
+0.5117841422557831 STIEFEL_ADAM
+TESTLOSS:  0.5117841422557831 11 100
+0.5073941111564636 STIEFEL_ADAM
+TESTLOSS:  0.5073941111564636 14 100
+0.509010237455368 STIEFEL_ADAM
+TESTLOSS:  0.509010237455368 11 100
+0.5079296708106995 STIEFEL_ADAM
+TESTLOSS:  0.5079296708106995 13 100
+0.5090857595205307 STIEFEL_ADAM
+TESTLOSS:  0.5090857595205307 11 100
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/storage/home/hcoda1/7/clinder9/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/storage/home/hcoda1/7/clinder9/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 276, in grid_Search_MLPClassifier
+    loss_arr, elapsed, err, _ = trainMLPClassifier(OP, hp_dict, in_dimension, out_dimension,
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/shampoo_variants/MLPClassifier.py", line 85, in trainMLPClassifier
+    optimizer.step()
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/optim/optimizer.py", line 549, in wrapper
+    out = func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py", line 283, in step
+    torch.vmap(update_func, out_dims=None)(X, Y, V, X_grad, p_Y, p_V)
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/_functorch/apis.py", line 246, in wrapped
+    return vmap_impl(
+           ^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/_functorch/vmap.py", line 316, in vmap_impl
+    return _flat_vmap(
+           ^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/.venv/lib/python3.12/site-packages/torch/_functorch/vmap.py", line 507, in _flat_vmap
+    batched_outputs = func(*batched_inputs, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py", line 282, in <lambda>
+    update_func=lambda X, Y, V, X_grad, p_Y, p_V: _update_func_Stiefel_Adam(X, Y, V, X_grad, p_Y, p_V, step, square, a, b, lr, beta_1, beta_2, expm_method, inner_iter, epsilon)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/VariationalStiefelOptimizer/StiefelOptimizers.py", line 173, in _update_func_Stiefel_Adam
+    V_tilde=V/denominator_V-X@torch.linalg.inv(X.t()@X)@(X.t()@(V/denominator_V))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+torch._C._LinAlgError: linalg.inv: (Batch element 0): The diagonal element 1 is zero, the inversion could not be completed because the input matrix is singular.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/MLPGridSearch.py", line 42, in <module>
+    output, hp=grid_search(
+               ^^^^^^^^^^^^
+  File "/storage/project/r-mtao8-0/clinder9/OptimizerTesting/grid_search/GridSearch.py", line 232, in grid_search
+    output=pool.starmap(
+           ^^^^^^^^^^^^^
+  File "/storage/home/hcoda1/7/clinder9/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 375, in starmap
+    return self._map_async(func, iterable, starmapstar, chunksize).get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/home/hcoda1/7/clinder9/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 774, in get
+    raise self._value
+torch._C._LinAlgError: linalg.inv: (Batch element 0): The diagonal element 1 is zero, the inversion could not be completed because the input matrix is singular.
+---------------------------------------
+Begin Slurm Epilog: Oct-23-2026 12:56:30
+Job ID:        14333699
+User ID:       clinder9
+Account:       gts-mtao8
+Job name:      hp
+Resources:     cpu=24,mem=128G,node=1
+Rsrc Used:     cput=00:36:24,vmem=0,walltime=00:01:31,mem=10709844K,energy_used=0
+Partition:     cpu-small
+QOS:           inferno
+Nodes:         atl1-1-02-009-23-1
+---------------------------------------
