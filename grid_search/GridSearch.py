@@ -270,23 +270,10 @@ def _safe_grid_Search_Quad(OP, hyperparams, n, rand_seed=2):
 
 
 def grid_Search_MLPClassifier(OP, hyperparams, in_dimension, out_dimension, total_samples=100, test_samples=100, batch_size=100, rand_seed=2):
-    init_lr=hyperparams['lr']
-    warmup=hyperparams['warmup_iters']
-    decay=hyperparams['lr_decay_iters']
-    min_lr=hyperparams['min_lr']
-    beta=hyperparams.get('beta', hyperparams.get('beta2'))
     max_iters = hyperparams['max_iters']
+    hp_dict = dict(hyperparams)
 
-    hp_dict={
-        'lr': init_lr,
-        'warmup_iters': warmup,
-        'lr_decay_iters': decay,
-        'min_lr': min_lr,
-        'beta': beta,
-        'max_iters': max_iters,
-    }
-
-    loss_arr, elapsed, err = trainMLPClassifier(OP, hp_dict, in_dimension, out_dimension,
+    loss_arr, elapsed, err, _ = trainMLPClassifier(OP, hp_dict, in_dimension, out_dimension,
                                            max_iters=max_iters,
                                            total_train_samples=total_samples,
                                            total_test_samples=test_samples,
@@ -295,7 +282,6 @@ def grid_Search_MLPClassifier(OP, hyperparams, in_dimension, out_dimension, tota
 
     hp_dict['loss']=loss_arr[-1] if len(loss_arr) else float('inf')
     hp_dict['time']=elapsed
-    hp_dict['error']=err
     return hp_dict
 
 # if __name__=='__main__':

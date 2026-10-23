@@ -20,6 +20,8 @@ def get_uniform_normal_vectors(total_samples, in_dimension):
 def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_iters=1000, 
                        total_train_samples=100, total_test_samples=20, batch_size=10, 
                        rand_seed=2, debug=False, validate=False):
+    torch.manual_seed(rand_seed)
+
     name = optimizer.name
     model = MLP(in_dimension, out_dimension)
     model.train()
@@ -34,8 +36,6 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
 
     vector_params = [p for p in model.parameters() if len(p.shape)<=1]
     stiefel_params = [p for p in model.parameters() if len(p.shape)==2 and p.shape[0]>=p.shape[1]]
-    for s in stiefel_params:
-        print(s.name, s.shape)
     mat_params = [p for p in model.parameters() if len(p.shape)>1 and p.shape[0]<p.shape[1]]
     optimizer = make_optimizer(optimizer, stiefel_params, hyperparams)
     sgd = opt.SGD(mat_params + vector_params, lr=init_lr)
@@ -43,7 +43,6 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
     #optimizer = opt.SGD([p for p in model.parameters()])
     iter_num=0
 
-    torch.manual_seed(rand_seed)
     x_uniform, x_normal = get_uniform_normal_vectors(total_train_samples, in_dimension)
     x=torch.cat((x_uniform, x_normal), dim=0)
     y=torch.zeros((total_train_samples,1), dtype=torch.float32)
@@ -65,13 +64,12 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
     err=0
     loss_arr=[]
     while True:
-        lr = get_lr(iter_num, init_lr, warmup*max_iters, decay*max_iters, min_lr)
-        #lr=.1
-        for param_group in optimizer.param_groups:
-            param_group['lr'] = lr
         loss=0.0
         err=0
         for batch, labels in train_dl:
+            lr = get_lr(iter_num, init_lr, warmup*max_iters, decay*max_iters, min_lr)
+            for param_group in optimizer.param_groups:
+                param_group['lr'] = lr
             temp=model(batch)
             L=criterion(temp, labels)
             #L=torch.sum(torch.norm(temp-labels,dim=1))/batch_size
@@ -81,23 +79,19 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
             #print((probabilities > 0.5).float()-labels)
             diff=(probabilities > 0.5).float()-labels
             err+=torch.count_nonzero(diff).item()
+            optimizer.step()
+            optimizer.zero_grad(set_to_none=True)
+            sgd.step()
+            sgd.zero_grad(set_to_none=True)
+            iter_num+=1
         loss/=num_batches
         if debug:
             print(f"LOSS at iter {iter_num}: {loss}, ERROR: {err}/{total_train_samples}, lr: {lr}")
         loss_arr.append(loss)
-        optimizer.step()
-        optimizer.zero_grad(set_to_none=True)
-        sgd.step()
-        sgd.zero_grad()
-        iter_num+=1
-        # if loss<=.1 or (len(loss_arr) >= 2 and abs(loss-loss_arr[-2])<1e-4):
-        #     count+=1
-        # else:
-        #     count=0
-        if iter_num>max_iters: #5, 10
+        if iter_num>=max_iters:
             break
     e=time.time()
-    print(name, loss, err, total_train_samples)
+    print("end run ", name, loss, err, total_train_samples)
     if debug:
         print("TRAINLOSS: ", loss)
         print("TRAINERROR: ", err)
