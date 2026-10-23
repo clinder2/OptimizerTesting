@@ -24,25 +24,24 @@ class MatrixSimple(nn.Module):
         super().__init__()
         torch.manual_seed(i)
         self.A=torch.Tensor(A)
-        mult=1 #1
+        self.mult=1 #1
         self.P=self.A.T@self.A
 
-        # random_mat1 = torch.randn(self.A.shape)
-        # U, R = torch.linalg.qr(1*torch.eye(self.A.shape[0])+random_mat1)
-        # U[:,0]*=-1
-        # self.W = nn.Parameter(torch.diag(R).sign()*U)
+        random_mat1 = torch.randn(self.A.shape)
+        U, R = torch.linalg.qr(1*torch.eye(self.A.shape[0])+random_mat1)
+        #U[:,0]*=-1
+        self.W = nn.Parameter(torch.diag(R).sign()*U)
 
-        self.W=nn.Parameter(mult*torch.randn(self.A.shape)+1*torch.eye(self.A.shape[0])) #torch.randn(self.A.shape)
-        print("det: ", torch.linalg.det(self.W))
+        #self.W=nn.Parameter(mult*torch.randn(self.A.shape)+1*torch.eye(self.A.shape[0])) #torch.randn(self.A.shape)
 
     def forward(self):
         ### old
         #G=2*(self.W-self.A)
 
-        G=2*(self.P@self.W-self.P)
+        G=2*(self.P@self.W-self.mult*self.P)
         # with torch.no_grad():
         #     self.W.grad=G
-        return G, ((self.A@self.W-self.A)**2).sum()
+        return G, ((self.A@self.W-self.mult*self.A)**2).sum()
 
 class MLSimple(nn.Module):
     def __init__(self, A, i):
@@ -65,13 +64,12 @@ class MLP(nn.Module):
         self.in_dimension=in_dimension
         self.out_dimension=out_dimension
         intermediate = (in_dimension+out_dimension)//2
-        intermediate = 1*in_dimension #2
+        intermediate = 2*in_dimension #2
         #self.r1=torch.nn.RMSNorm(self.in_dimension,elementwise_affine=False)
         #self.r2=torch.nn.RMSNorm(2*self.in_dimension,elementwise_affine=False)
         self.l1=nn.Linear(self.in_dimension, self.in_dimension, True)
         self.relu=nn.ReLU()
         # self.lrelu=nn.LeakyReLU()
-        self.tanh=nn.Tanh()
         self.l2=nn.Linear(self.in_dimension, intermediate, True)
         #self.additional=nn.Linear(intermediate, intermediate, False)
         self.l3=nn.Linear(intermediate, self.out_dimension, True)
@@ -81,13 +79,9 @@ class MLP(nn.Module):
         X=self.l1(X)
         # X=self.r1(X)
         X=self.relu(X)
-        #X=self.tanh(X)
         X=self.l2(X)
-        #X=self.additional(X)
-        X=self.relu(X)
+        #X=self.relu(X)
         X=self.l3(X)
-        # X=self.r1(X)
-        #X=self.sigmoid(X)
         return X
     
 class ComplicatedMLP(nn.Module):

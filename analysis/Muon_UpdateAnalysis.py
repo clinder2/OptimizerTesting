@@ -27,7 +27,7 @@ def plotSpectra(arr: list[torch.Tensor]):
 
     ax.set(
         xlim=(1, dim),
-        ylim=(0, max(S0)),
+        ylim=(0, max(1,max(S0))),
         xlabel="Singular Value Index",
         ylabel="Magnitude",
         title="Singular Value Spectrum",
@@ -50,11 +50,11 @@ def plotSpectra(arr: list[torch.Tensor]):
 if __name__ == '__main__':
     n=100
     rand_seed=3
-    O=OPTS.STIEFEL_ADAM
+    O=OPTS.MUON
     with open(f"/Users/christopherlinder/Desktop/OptimizerTesting.worktrees/experimental-branch-analysis-muon-stiefel/data/optimalHyperParams/NewQuad(n=100)_{O.name}_hp.json", 'r') as f:
         hyper_params=json.load(f)
         print(hyper_params['lr'])
-    hyper_params['max_iters']=2000
+    hyper_params['max_iters']=200
     hyper_params['grafting']=True
     hyper_params['numIters']=20
     #hyper_params['lr_decay_iters']=.9
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # hyper_params['lr']=.5
     # hyper_params['warmup_iters']=.4
     print("hp: ", hyper_params)
-    loss, t, stats, kappa = analysis_Quad_Stats(O, hyper_params, n, [0,0], rand_seed=rand_seed)
+    loss, t, stats, kappa = analysis_Quad_Stats(O, hyper_params, n, [0,-5], rand_seed=rand_seed)
     # for i, p in enumerate(stats['P']):
     #     if torch.linalg.norm(p-p.T, ord='fro')<=1e-5:
     #         print(i)

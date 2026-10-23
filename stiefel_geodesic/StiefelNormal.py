@@ -5,8 +5,11 @@ ShampooExperiment_PATH = os.environ.get(
     "SHAMPOO_PATH", os.path.expanduser("~/Desktop/OptimizerTesting/ShampooExperiment")
 )
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
-if ROOT_DIR not in sys.path:
-    sys.path.insert(0, ROOT_DIR)
+# `common` lives at the project root, alongside `analysis`, rather than inside
+# this script's directory.
+PROJECT_ROOT = os.path.dirname(ROOT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
 import torch
 from torch.optim import Optimizer
@@ -18,20 +21,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-
-def skew(A: torch.Tensor):
-    return (A-A.mT)/2
-
-def sym(A: torch.Tensor):
-    return (A+A.mT)/2
-
-def proj_T(Z: torch.Tensor, Y: torch.Tensor):
-    I = torch.eye(Y.shape[1]).unsqueeze(0).repeat(Y.shape[0], 1, 1)
-    return Y@skew(Y.mT@Z) + (I-Y@Y.mT)@Z
-
-def stiefel_grad(G: torch.Tensor, Y: torch.Tensor):
-    return G - Y@G.mT@Y
-                
+from StiefelUtil import skew, sym, proj_T, stiefel_grad
 
 class StiefelGeod(Optimizer):
     def __init__(self, params, defaults={}):
@@ -146,9 +136,9 @@ class StiefelGeodUnconstrained(Optimizer):
             g['Ht'] = None
             g['St'] = None
             g['I'] = None
-            g['X'] = None
+            g['Xt'] = None
 
-    def step(self):
+    def step_old(self):
         for g in self.param_groups:
             n, p = g['params'][0].shape
             stacked_params = torch.stack([p.data for p in g['params']])
@@ -156,9 +146,9 @@ class StiefelGeodUnconstrained(Optimizer):
             b = stacked_params.shape[0]
 
             #X = NS(stacked_params)
-            if g['X']==None:
-                g['X'] = NS(stacked_params)
-            X = g['X']
+            if g['Xt']==None:
+                g['Xt'] = NS(stacked_params)
+            X = g['Xt']
             #H = stiefel_grad(stacked_grads, X) #search direction
             H = stacked_grads
             if g['I']==None:
@@ -186,15 +176,49 @@ class StiefelGeodUnconstrained(Optimizer):
             g['Ht'] = H
             g['St'] = S_t
             #g['St'] = g['I']
-            g['X'] = X_t
+            g['Xt'] = X_t
 
             for p, pt in zip(g['params'], Yt.unbind(0)):
                 p.data = pt
 
-def train(name):
-    rand_seed=0
-    n=100
-    spectrum = [0,0]
+    def step(self):
+        for g in self.param_groups:
+            n, p = g['params'][0].shape
+            stacked_params = torch.stack([p.data for p in g['params']])
+            stacked_grads = torch.stack([p.grad for p in g['params']])
+            b = stacked_params.shape[0]
+
+            if g['I']==None:
+                g['I'] = torch.eye(p).unsqueeze(0).repeat(b, 1, 1)
+            if g['Ht']==None:
+                g['Ht'] = stacked_grads.clone()
+            if g['St']==None:
+                g['St'] = g['I']
+            if g['Xt']==None:
+                g['Xt'] = g['I']
+
+            X = g['Xt']
+            S_t = g['St']
+            #g_X = stacked_grads@S_t.mT - X@sym(X.mT@stacked_grads@S_t.mT)
+            g_X=proj_T(stacked_grads@S_t.mT, X)
+            g_S = sym(X.mT@stacked_grads)
+
+            S_t = S_t - g['lr']*g_S
+            X_t = X - g['lr']*g_X
+    
+            Yt = X_t@S_t
+            print(torch.linalg.norm(X_t[0].mT@X_t[0]-torch.eye(p), ord='fro').item(), torch.linalg.norm(Yt[0]-g['I'][0], ord='fro').item())
+            
+            g['St'] = S_t
+            g['Xt'] = X_t
+
+            for p, pt in zip(g['params'], Yt.unbind(0)):
+                p.data = pt
+
+from JointStiefelEuclidean import JointStiefelEuclidean
+def train(name, rand_seed=0):
+    n=8
+    spectrum = [0,-4]
     target=make_target_param(n, rand_seed, spectrum)
 
     model=MatrixSimple(target, rand_seed)
@@ -205,42 +229,50 @@ def train(name):
     params=[p for p in model.parameters()]
 
     if name=="SG":
-        optimizer=StiefelGeod(params, {'lr': .5})
+        optimizer=StiefelGeod(params, {'lr': .1})
     elif name=="SGM":
         optimizer=StiefelGeodMomentum(params, {'lr': .5})
     elif name=="SGU":
-        optimizer=StiefelGeodUnconstrained(params, {'lr': .1})
+        optimizer=JointStiefelEuclidean(params, {'lr': .003})
     elif name=="MUON":
-        optimizer=make_optimizer(OPTS.MUON, params, {'lr': .05})
+        optimizer=make_optimizer(OPTS.MUON, params, {'lr': .2})
     elif name=="SA":
         optimizer=make_optimizer(OPTS.STIEFEL_ADAM, params, {'lr': .05})
 
-    iters=500
+    iters=150
     losses = []
 
     def get_lr(iter, lr):
         percent_done: float = iter/iters
         return lr * np.cos(percent_done*np.pi/2)
 
+    data = []
     s=time.time()
     for i in range(iters):
         lr = get_lr(i, optimizer.defaults['lr'])
         for g in optimizer.param_groups:
             g['lr'] = lr
-        _, L = model()
+        G, L = model()
         L.backward()
         losses.append(L.item())
-        print(L.item(),  torch.allclose(model.W.T@model.W, torch.eye(n)))
 
-        optimizer.step()
+        S, X = optimizer.step()
+        print(L.item(), (X@S).squeeze())
+        data.append(X.squeeze().detach().numpy())
         optimizer.zero_grad(set_to_none=True)
     e=time.time()
     print(e-s)
     plt.plot(np.arange(0,iters), np.log(losses), label=name)
+    return data
 
-train("SG")
-# train("SA")
-train("SGU")
+from common.visual import heat_map_matrix_series
+for i in range(1):
+    data = train("SGU", i)
+    # train("SG", i)
+    #data = train("SA", i)
 plt.legend()
 plt.show()
+
+data = np.stack(data, axis=0)
+heat_map_matrix_series(data)
 # python3 -m stiefel_geodesic.StiefelNormal

@@ -1,61 +1,49 @@
+import sys
 import os
-import mplcursors
 
-from TrainingScripts import *
-
+ShampooExperiment_PATH = os.environ.get(
+    "SHAMPOO_PATH", os.path.expanduser("~/Desktop/OptimizerTesting/ShampooExperiment")
+)
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
-DATA_DIR = os.path.abspath(os.path.join(ROOT_DIR, os.pardir, "data"))
-HP_DIR = os.path.join(DATA_DIR, "optimalHyperParams")
+# `common` lives at the project root, alongside `analysis`, rather than inside
+# this script's directory.
+PROJECT_ROOT = os.path.dirname(ROOT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
-muon_hp={
-  "lr": 0.9,
-  "warmup_iters": 0.1,
-  "lr_decay_iters": 0.4,
-  "min_lr": 0.00006,
-  "max_iters": 999,
-  "beta2": 0.8,
-  "momentum": 0.8,
-  "weight_decay": 0.00001,
-  "beta": 0.8,
-  "optimizer": "MUON",
-  "rand_seed": 2,
-  "loss": 0.000002680559418877,
-  "time": 3.33208513259888
-}
+import mplcursors
+from common.TrainingScripts import *
+import json
 
-stiefel_hp={
-  "lr": 0.99,
-  "warmup_iters": 0.05,
-  "lr_decay_iters": 0.3,
-  "min_lr": 0.06,
-  "max_iters": 999,
-  "betas": [0.7, 0.999],
-  "beta": 0.999,
-  "optimizer": "STIEFEL_ADAM",
-  "rand_seed": 2,
-  "loss": 1.88961108045504e-12,
-  "time": 10.6982145309448
-}
+with open("/Users/christopherlinder/Desktop/OptimizerTesting/common/results/data/optimalHyperParams/MuonvSteifelAdamV1_Quad_(n=100)_MUON_hp.json") as f:
+    muon_hp = json.load(f)
+
+with open("/Users/christopherlinder/Desktop/OptimizerTesting/common/results/data/optimalHyperParams/MuonvSteifelAdamV1_Quad_(n=100)_STIEFEL_ADAM_hp.json") as f:
+    stiefel_hp = json.load(f)
 
 if __name__=='__main__':
     n=100
-    rand_seed=2
-    spectrum=[0,0]  # kappa ~= 1 (well-conditioned target)
+    spectrum=[0,-5]  # kappa ~= 1 (well-conditioned target)
     max_iters=2000
 
-    runs=2
-    optimizers=[OPTS.MUON, OPTS.STIEFEL_ADAM]
+    runs=1
+    optimizers=[OPTS.JSE]
     cmap=plt.colormaps['tab20']
-    colors=cmap(np.linspace(0, 1, runs))
+    colors=cmap(np.linspace(0, 1, runs+1))
 
     results={o.name:[] for o in optimizers}
     #results={OPTS.MUON.name:[], 'StiefelAdam-plateau':[], 'StiefelAdam':[]}
     for color, curr_optimizer in zip(colors, optimizers):
         if curr_optimizer==OPTS.MUON:
             hyper_params=muon_hp
+            # hyper_params['warmup_iters']=.05
+            # hyper_params['lr_decay_iters']=1
         elif curr_optimizer==OPTS.STIEFEL_ADAM:
             hyper_params=stiefel_hp
-            hyper_params['lr_decay_iters']=.9
+            #hyper_params['lr_decay_iters']=.9
+        else:
+            hyper_params = stiefel_hp
+            hyper_params['lr']=.0001
         hyper_params['max_iters']=max_iters
         for j in range(runs):
             #spectrum=[0,-j]
@@ -81,12 +69,12 @@ if __name__=='__main__':
         # for i,s in enumerate(stats):
         #     plt.plot(np.arange(max_iters), np.log(s['loss']), color=colors[i], label=f"{name},{i}")
         plt.plot(np.arange(max_iters), loss, color=color,
-                  label=f"{name}, {mean_time:.2f}_sec")
+                  label=f"{name}, mean time={mean_time:.2f} sec")
         plt.fill_between(np.arange(max_iters), loss - std, loss + std, alpha=0.5, color=color)
     mplcursors.cursor(hover=True)
     plt.xlabel('iter')
     plt.ylabel('Log Loss (base 10)')
-    plt.title(rf'Muon vs StiefelAdam-Quadratic Problem with $\kappa={float(kappa):.2f}$')
+    plt.title(rf'Muon vs StiefelAdam-Ave of {runs} runs-Quadratic Problem with $\kappa={float(kappa):.2f}$')
     plt.legend()
 
     # --- Empirical loss-decrease decomposition (arXiv 2606.04662v1 eq. 4.1) ---

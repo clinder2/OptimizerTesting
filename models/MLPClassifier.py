@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-from model import *
+from sympy import O
+from models.model import *
 import torch.optim as opt
 import torch.multiprocessing as mp
 from torch.utils.data import DataLoader, TensorDataset
@@ -32,9 +33,12 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
     hyperparams['beta'] = beta
 
     vector_params = [p for p in model.parameters() if len(p.shape)<=1]
-    mat_params = [p for p in model.parameters() if len(p.shape)>1]
-    optimizer = make_optimizer(optimizer, mat_params, hyperparams)
-    sgd = opt.SGD(vector_params, lr=init_lr)
+    stiefel_params = [p for p in model.parameters() if len(p.shape)==2 and p.shape[0]>=p.shape[1]]
+    for s in stiefel_params:
+        print(s.name, s.shape)
+    mat_params = [p for p in model.parameters() if len(p.shape)>1 and p.shape[0]<p.shape[1]]
+    optimizer = make_optimizer(optimizer, stiefel_params, hyperparams)
+    sgd = opt.SGD(mat_params + vector_params, lr=init_lr)
     #optimizer = optimizer(W=[p for p in model.parameters()], **hyperparams)
     #optimizer = opt.SGD([p for p in model.parameters()])
     iter_num=0
@@ -57,7 +61,6 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
 
     s=time.time()
 
-    count=0
     loss=0.0
     err=0
     loss_arr=[]
@@ -80,21 +83,21 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
             err+=torch.count_nonzero(diff).item()
         loss/=num_batches
         if debug:
-            print(f"LOSS at iter {iter_num}: {loss}, ERROR: {err}/{.8*total_train_samples}, lr: {lr}")
+            print(f"LOSS at iter {iter_num}: {loss}, ERROR: {err}/{total_train_samples}, lr: {lr}")
         loss_arr.append(loss)
         optimizer.step()
         optimizer.zero_grad(set_to_none=True)
         sgd.step()
         sgd.zero_grad()
         iter_num+=1
-        if loss<=.1 or (len(loss_arr) >= 2 and abs(loss-loss_arr[-2])<1e-4):
-            count+=1
-        else:
-            count=0
+        # if loss<=.1 or (len(loss_arr) >= 2 and abs(loss-loss_arr[-2])<1e-4):
+        #     count+=1
+        # else:
+        #     count=0
         if iter_num>max_iters: #5, 10
             break
     e=time.time()
-    print(loss, name)
+    print(name, loss, err, total_train_samples)
     if debug:
         print("TRAINLOSS: ", loss)
         print("TRAINERROR: ", err)
@@ -113,9 +116,9 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
             err+=torch.count_nonzero(diff).item()
         val_err=err/total_test_samples
         if debug:
-            print("TESTLOSS: ", loss)
-            print("VALIDATIONERROR: ", err, .2*total_train_samples)
-    print("TESTLOSS: ", loss, err, total_test_samples)
+            print("VALIDATELOSS: ", loss)
+            print("VALIDATIONERROR: ", err, total_train_samples)
+        print(f"VALIDATELOSS {name}: ", loss, err, total_test_samples)
     
     if name=="CS":
         print(optimizer.fails)

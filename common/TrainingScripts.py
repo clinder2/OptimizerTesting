@@ -318,6 +318,11 @@ def analysis_Quad_LossDecrease(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5],
     kappa=torch.linalg.cond(target)
 
     model=MatrixSimple(target, rand_seed)
+    print("det1: ", torch.linalg.det(model.W))
+    if torch.linalg.det(model.W)<0:
+        with torch.no_grad():
+            model.W[:,0]*=-1
+            print("det2: ", torch.linalg.det(model.W))
     params=[p for p in model.parameters()]
 
     optimizer=make_optimizer(OP, params, hyperparams)
@@ -371,6 +376,7 @@ def analysis_Quad_LossDecrease(OP, hyperparams, n, rand_seed=2, spectrum=[0,-5],
     stats['time']=e-s
     stats['kappa']=kappa
     stats['target']=target
+    print(torch.linalg.norm(model.W - torch.eye(n), ord='fro'))
     return stats
 
 def analysis_split(unconstrained_hyperparams, stiefel_hyperparams, n, rand_seed=2, spectrum=[0,-5], eye=False):

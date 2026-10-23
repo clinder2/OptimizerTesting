@@ -9,6 +9,7 @@ from shampoo_variants.ExperimentalShampoo import ExperimentalShampoo
 from shampoo_variants.CustomShampoo import CustomShampoo
 from shampoo_variants.WhiteningShampoo import WhiteningShampoo
 from shampoo_variants.SCIShampoo import SCIShampoo
+from stiefel_geodesic.JointStiefelEuclidean import JointStiefelEuclidean
 
 # Ensure local ShampooExperiment modules can be imported when this package
 # is imported from a child process or from the workspace root.
@@ -60,6 +61,7 @@ class OPTS(IntEnum):
     SCS=10 #stacked shampoo
     SS=11
     EXS=12
+    JSE=13
 
 #OPTS=[S,CS,WS,S_P2,SCI,SGD]
 
@@ -166,5 +168,13 @@ def make_optimizer(optimizer_type: OPTS, params, hyperparams: dict, **kwargs):
                     beta2=beta2,
                 ))
             return ExperimentalShampoo(param_groups)
+        case OPTS.JSE:
+            param_groups=[]
+            for shape in sorted({p.shape for p in params}):
+                group_params = [p for p in params if p.shape == shape]
+                param_groups.append(dict(
+                    kind='JSE', params=group_params, lr=lr,
+                ))
+            return JointStiefelEuclidean(param_groups, hyperparams)
         case _:
             raise ValueError(f"Unknown optimizer type: {optimizer_type}")
