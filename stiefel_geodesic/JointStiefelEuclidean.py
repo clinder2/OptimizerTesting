@@ -44,6 +44,7 @@ class JointStiefelEuclidean(Optimizer):
 
             X_t = g['Xt']
             S_t = g['St']
+            #X_t, S_t = torch.linalg.qr(stacked_params)
             g_X = proj_T(stacked_grads@S_t.mT, X_t)
             g_S = sym(X_t.mT@stacked_grads)
 
@@ -51,7 +52,7 @@ class JointStiefelEuclidean(Optimizer):
             X_next = X_t - g['lr']*g_X
             X_next = (X_next)/(np.sqrt(1+g['lr']**2))
     
-            Y_next = X_next@S_t
+            Y_next = X_next@S_next
 
             g['Xt'] = X_next
             g['St'] = S_next

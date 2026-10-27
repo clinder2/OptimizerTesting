@@ -84,7 +84,8 @@ def trainMLPClassifier(optimizer, hyperparams, in_dimension, out_dimension, max_
                 optimizer.zero_grad(set_to_none=True)
             except torch._C._LinAlgError as e:
                 print("failed inv")
-                return loss_arr, e-s, val_err, iter_num
+                e=time.time()
+                return loss_arr, e-s, 0, iter_num
             sgd.step()
             sgd.zero_grad(set_to_none=True)
             iter_num+=1

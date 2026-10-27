@@ -27,7 +27,7 @@ if __name__=='__main__':
     max_iters=2000
 
     runs=1
-    optimizers=[OPTS.JSE]
+    optimizers=[OPTS.MUON, OPTS.STIEFEL_ADAM]
     cmap=plt.colormaps['tab20']
     colors=cmap(np.linspace(0, 1, runs+1))
 
