@@ -1,0 +1,35 @@
+{
+  "variant": "default",
+  "device": "cuda",
+  "seed": 0,
+  "matrix_size": 100,
+  "spectrum": [
+    0,
+    -5
+  ],
+  "condition_number": 99996.5234375,
+  "iterations": 1,
+  "learning_rate": 0.1,
+  "beta2": 0.85,
+  "power_iterations": 20,
+  "grafting": false,
+  "elapsed_seconds": 231.41260107400012,
+  "optimizer_seconds": 231.06577371200547,
+  "cholesky_failures": 0,
+  "final_loss": 15.586512565612793,
+  "loss": [
+    8.870447158813477
+  ],
+  "first_order": [
+    38.88087463378906
+  ],
+  "curvature": [
+    45.59693908691406
+  ],
+  "predicted_decrease": [
+    -6.716064453125
+  ],
+  "actual_decrease": [
+    -6.716065406799316
+  ]
+}
