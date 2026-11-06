@@ -40,7 +40,6 @@ class StackedShampoo(Optimizer):
         total=0
         for g in self.param_groups:
             state = self.state[g['params'][0]]
-            stacked_params = torch.stack([p.data for p in g['params']])
             stacked_grads = torch.stack([p.grad for p in g['params']])
             graft = state['graft']
             L = state['L']
